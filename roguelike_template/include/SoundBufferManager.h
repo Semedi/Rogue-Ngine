@@ -28,12 +28,15 @@ public:
 	 * @return A reference to the sound buffer.
 	 */
 	static sf::SoundBuffer& GetSoundBuffer(int soundBufferId);
+	static sf::Sound& GetSound(int id);
+
+	static sf::Sound& GetSoundbyKey(std::string key);
 
 private:
 	/**
 	 * A map of each sound name with its ID.
 	 */
-	static std::map<std::string, std::pair<int, std::unique_ptr<sf::SoundBuffer>>> m_soundBuffers;
+	static std::map<std::string, std::tuple<int, std::unique_ptr<sf::SoundBuffer>, std::unique_ptr<sf::Sound>>> SoundBufferManager::m_soundBuffers;
 
 	/**
 	 * The current key value.

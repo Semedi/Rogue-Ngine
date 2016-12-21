@@ -2,18 +2,21 @@
 #define AUDIO_H
 
 #include "Component.h"
-#include "SFML/Audio.hpp"
 
 class Audio : public Component
 {
 public : 
+
 	Audio();
-	bool SetSoundBuffer(sf::SoundBuffer& buffer);
+	void Play();
 	bool SetSoundBuffer(std::string filePath);
+	
+
+	void PlaySound(sf::Sound & sound, sf::Vector2f position = { 0.f, 0.f });
 
 private:
-	sf::Sound m_sound;
-
+	
+	std::string _id;
 };
 
 #endif

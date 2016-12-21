@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "Transform.h"
+#include "Audio.h"
 #include "Sprite.h"
 
 class Object
@@ -105,7 +106,7 @@ public:
 		for (std::shared_ptr<Component>& existingComponent : m_components)
 		{
 			if (std::dynamic_pointer_cast<T>(existingComponent))
-				return existingComponent;		
+				return std::dynamic_pointer_cast<T>(existingComponent);
 		}
 		return nullptr;
 	}

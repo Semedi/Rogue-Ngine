@@ -12,6 +12,13 @@ Gem::Gem()
 	m_scoreValue = std::rand() % 100;
 	// Set the item type.
 	m_type = ITEM::GEM;
+
+	AttachComponent<Audio>();
+	
+	GetComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_gem_pickup.wav");
+	
+	
+	
 }
 
 // Gets the amount of score this pickup gives.

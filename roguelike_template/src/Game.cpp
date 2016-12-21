@@ -16,12 +16,14 @@ m_goldTotal(0),
 m_projectileTextureID(0),
 m_levelWasGenerated(false)
 {
+	
 	// Enable VSync.
 	m_window.setVerticalSyncEnabled(true);
 
 	// Hide the mouse cursor.
 	m_window.setMouseCursorVisible(false);
 
+	//m_window.setSize(m_screenSize);
 	// Calculate and store the center of the screen.
 	m_screenCenter = { m_window.getSize().x / 2.f, m_window.getSize().y / 2.f };
 
@@ -31,13 +33,9 @@ m_levelWasGenerated(false)
 	// Create the game font.
 	m_font.loadFromFile("../resources/fonts/ADDSBP__.TTF");
 
-	// Setup the main game music.
+	// Setup the main game music & Load the music track, play the music
 	int trackIndex = std::rand() % static_cast<int>(MUSIC_TRACK::COUNT) + 1;
-
-	
-	// Load the music track.
 	m_music.openFromFile("../resources/music/msc_main_track_" + std::to_string(trackIndex) + ".wav");
-
 	m_music.play();
 
 }
@@ -50,6 +48,9 @@ void Game::Initialize()
 
 	// Get the screen size.
 	m_screenSize = m_window.getSize();
+
+	/*to dprecate*/
+	/********/
 
 	// Load the correct projectile texture.
 	//m_projectileTextureID = TextureManager::AddTexture("../resources/projectiles/spr_sword.png");
@@ -67,9 +68,8 @@ void Game::Initialize()
 	case PLAYER_CLASS::WARRIOR:
 		m_projectileTextureID = TextureManager::AddTexture("../resources/projectiles/spr_sword.png");
 		break;
-
-
 	}
+
 	// Initialize the UI.
 	LoadUI();
 
@@ -85,27 +85,10 @@ void Game::Initialize()
 	//m_level.LoadLevelFromFile("../resources/data/level_data.txt");
 	GenerateLevel();
 
-	/*********************************************/
-	// PLAYER SPAWN
-	/* this kind of shit defines 3 possible positions 4 the player */
-	sf::Vector2f point1 = sf::Vector2f(m_screenCenter.x + 197.f, m_screenCenter.y + 410.f);
-	sf::Vector2f point2 = sf::Vector2f(m_screenCenter.x , m_screenCenter.y);
-	sf::Vector2f point3 = sf::Vector2f(m_screenCenter.x - 197.f, m_screenCenter.y - 410.f);
-	sf::Vector2f pos;
 
-		if (std::rand() % 3 <= 1) pos = point3;
-		else pos = point2;
-
-	// Set the position of the player.
 	//m_player.SetPosition(pos);
-
-	/**********************************************/
 	//SpawnRandomTiles(TILE::FLOOR_ALT, 15);
-
 	//SpawnRandomTiles(TILE::CRATE, 15);
-
-
-	// Populate level.
 	//PopulateLevel();
 
 	// Load all game sounds.
@@ -118,6 +101,7 @@ void Game::Initialize()
 	m_fireSound.setAttenuation(5.f);
 	m_fireSound.setMinDistance(80.f);
 	m_fireSound.play();
+
 
 	// Load enemy die sound.
 	soundBufferId = SoundBufferManager::AddSoundBuffer("../resources/sounds/snd_enemy_dead.wav");
@@ -656,7 +640,7 @@ void Game::UpdateItems(sf::Vector2f playerPosition)
 		// Get the item from the iterator.
 		Item& item = **itemIterator;
 
-		// Check if the player is within pickup range of the item.
+		// Players gets the item (Poor distance)
 		if (DistanceBetweenPoints(item.GetPosition(), playerPosition) < 40.f)
 		{
 			// Check what type of object it was.
@@ -682,11 +666,15 @@ void Game::UpdateItems(sf::Vector2f playerPosition)
 			case ITEM::GEM:
 			{
 				// Get the score of the gem.
-				int scoreValue = dynamic_cast<Gem&>(item).GetScoreValue();
+				Gem g = dynamic_cast<Gem&>(item);
+				int scoreValue = g.GetScoreValue();
 
+				
 				// Add to the score total
 				m_scoreTotal += scoreValue;
-				PlaySound(m_gemPickupSound);
+				
+				g.GetComponent<Audio>()->Play();
+				
 
 				if (m_activeGoal)
 					--m_gemGoal;
@@ -958,6 +946,12 @@ void Game::DrawString(std::string text, sf::Vector2f position, unsigned int size
 	m_stringStream.str(std::string());
 	m_string.clear();
 
+	sf::RectangleShape rectangle;
+	rectangle.setSize({500, 200});
+	rectangle.setPosition(0, m_window.getSize().y/3);
+
+
+	m_window.draw(rectangle);
 	m_stringStream << text;
 	m_string = m_stringStream.str();
 
