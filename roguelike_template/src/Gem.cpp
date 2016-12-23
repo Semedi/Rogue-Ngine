@@ -13,9 +13,7 @@ Gem::Gem()
 	// Set the item type.
 	m_type = ITEM::GEM;
 
-	AttachComponent<Audio>();
-	
-	GetComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_gem_pickup.wav");
+	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_gem_pickup.wav");
 	
 	
 	

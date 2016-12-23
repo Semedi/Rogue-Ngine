@@ -8,7 +8,7 @@ class Audio : public Component
 public : 
 
 	Audio();
-	void Play();
+	void Play(sf::Vector2f position = { 0.f, 0.f });
 	bool SetSoundBuffer(std::string filePath);
 	
 
