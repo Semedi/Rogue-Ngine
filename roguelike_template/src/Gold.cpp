@@ -21,6 +21,7 @@ Gold::Gold()
 	// Set the sprite.
 	this->SetSprite(TextureManager::GetTexture(textureID), false, 8, 12);
 
+	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_coin_pickup.wav");
 	// Set the item type.
 	m_type = ITEM::GOLD;
 }

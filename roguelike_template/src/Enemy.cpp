@@ -27,6 +27,9 @@ Enemy::Enemy()
 	m_text.setFont(m_font);
 	m_text.setCharacterSize(12);
 	/**************************************************************************************************************************/
+	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_enemy_dead.wav", true);
+	
+
 }
 
 // Applies the given amount of damage to the enemy.

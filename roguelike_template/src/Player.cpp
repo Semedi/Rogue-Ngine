@@ -61,6 +61,7 @@ m_canTakeDamage(true)
 	//Add transform component
 	AttachComponent<Transform>();
 	AttachComponent<Sprite>();
+	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_player_hit.wav");
 
 }
 

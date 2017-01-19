@@ -15,6 +15,7 @@ public:
 	 * @return The id to the sound buffer created, or the id in the map if it already exists.
 	 */
 	static int AddSoundBuffer(std::string filePath);
+	static int AddSoundBuffer(std::string filePath, float attenuation, float distance);
 
 	/**
 	 * Removes a sound buffer from the manager from a given id.
@@ -28,6 +29,7 @@ public:
 	 * @return A reference to the sound buffer.
 	 */
 	static sf::SoundBuffer& GetSoundBuffer(int soundBufferId);
+	static sf::SoundBuffer & GetSoundBuffer(std::string key);
 	static sf::Sound& GetSound(int id);
 
 	static sf::Sound& GetSoundbyKey(std::string key);

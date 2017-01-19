@@ -39,6 +39,38 @@ int SoundBufferManager::AddSoundBuffer(std::string filePath)
 	return m_currentId;
 }
 
+int SoundBufferManager::AddSoundBuffer(std::string filePath, float attenuation, float distance)
+{
+	// First check if the sound has already been created. If so, simply return that one.
+	auto it = m_soundBuffers.find(filePath);
+
+	if (it != m_soundBuffers.end())
+	{
+		return std::get<0>(it->second);
+
+	}
+
+	// At this point the texture doesn't exists, so we'll create and add it.
+	m_currentId++;
+
+	std::unique_ptr<sf::SoundBuffer> buffer = std::make_unique<sf::SoundBuffer>();
+	if (!buffer->loadFromFile(filePath))
+	{
+		return -1;
+	}
+
+	std::unique_ptr<sf::Sound> sound = std::make_unique<sf::Sound>();
+	sound->setBuffer(*buffer);
+	sound->setRelativeToListener(true);
+	sound->setAttenuation(5.0f);
+	sound->setMinDistance(80.0f);
+
+	m_soundBuffers.insert(std::make_pair(filePath, std::make_tuple(m_currentId, std::move(buffer), std::move(sound))));
+
+	// Return the texture.
+	return m_currentId;
+}
+
 // Gets a texture from the texture manager from an ID.
 sf::SoundBuffer& SoundBufferManager::GetSoundBuffer(int textureId)
 {
@@ -48,6 +80,11 @@ sf::SoundBuffer& SoundBufferManager::GetSoundBuffer(int textureId)
 		if (std::get<0>(it->second) == textureId)
 			return *std::get<1>(it->second);
 	}
+}
+
+sf::SoundBuffer& SoundBufferManager::GetSoundBuffer(std::string key)
+{
+	return *std::get<1>(m_soundBuffers[key]);
 }
 
 sf::Sound & SoundBufferManager::GetSound(int textureId)

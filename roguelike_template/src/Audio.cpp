@@ -20,14 +20,20 @@ void Audio::PlaySound(sf::Sound & sound, sf::Vector2f position)
 }
 void Audio::Play(sf::Vector2f position)
 {
-	SoundBufferManager::GetSoundbyKey(_id).setPitch((rand() % 11 + 95) / 100.f);
-	SoundBufferManager::GetSoundbyKey(_id).setPosition(position.x, position.y, 0.0f);
-	SoundBufferManager::GetSoundbyKey(_id).play();
+
+	PlaySound(SoundBufferManager::GetSoundbyKey(_id), position);
 }
 
-bool Audio::SetSoundBuffer(std::string filePath)
+
+
+bool Audio::SetSoundBuffer(std::string filePath, bool pos, float a, float d)
 {
-	int id = SoundBufferManager::AddSoundBuffer(filePath);
+	int id;
+
+	if (pos)
+		id = SoundBufferManager::AddSoundBuffer(filePath, a, d);
+	else
+		id = SoundBufferManager::AddSoundBuffer(filePath);
 
 	if (id == -1)
 		return false;

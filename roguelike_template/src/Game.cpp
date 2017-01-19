@@ -94,6 +94,14 @@ void Game::Initialize()
 	// Load all game sounds.
 	int soundBufferId;
 
+	// Load enemy die sound.
+	
+	soundBufferId = SoundBufferManager::AddSoundBuffer("../resources/sounds/snd_enemy_dead.wav", 5.0f, 80.0f);
+	m_enemyDieSound.setBuffer(SoundBufferManager::GetSoundBuffer("../resources/sounds/snd_enemy_dead.wav"));
+	m_enemyDieSound.setAttenuation(5.f);
+	m_enemyDieSound.setMinDistance(80.f);
+	
+
 	// Load torch sound.
 	soundBufferId = SoundBufferManager::AddSoundBuffer("../resources/sounds/snd_fire.wav");
 	m_fireSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
@@ -101,35 +109,6 @@ void Game::Initialize()
 	m_fireSound.setAttenuation(5.f);
 	m_fireSound.setMinDistance(80.f);
 	m_fireSound.play();
-
-
-	// Load enemy die sound.
-	soundBufferId = SoundBufferManager::AddSoundBuffer("../resources/sounds/snd_enemy_dead.wav");
-	m_enemyDieSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
-	m_enemyDieSound.setAttenuation(5.f);
-	m_enemyDieSound.setMinDistance(80.f);
-
-	// Load gem pickup sound.
-	soundBufferId = SoundBufferManager::AddSoundBuffer("../resources/sounds/snd_gem_pickup.wav");
-	m_gemPickupSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
-	m_gemPickupSound.setRelativeToListener(true);
-
-	// Load coin pickup sound.
-	soundBufferId = SoundBufferManager::AddSoundBuffer("../resources/sounds/snd_coin_pickup.wav");
-	m_coinPickupSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
-	m_coinPickupSound.setRelativeToListener(true);
-
-	// Load key pickup sound.
-	soundBufferId = SoundBufferManager::AddSoundBuffer("../resources/sounds/snd_key_pickup.wav");
-	m_keyPickupSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
-	m_keyPickupSound.setRelativeToListener(true);
-
-	// Load player hit sound.
-	soundBufferId = SoundBufferManager::AddSoundBuffer("../resources/sounds/snd_player_hit.wav");
-	m_playerHitSound.setBuffer(SoundBufferManager::GetSoundBuffer(soundBufferId));
-	m_playerHitSound.setRelativeToListener(true);
-
-
 }
 
 // Constructs the grid of sprites that are used to draw the game light system.
@@ -436,7 +415,7 @@ void Game::Update(float timeDelta)
 		Tile& playerTile = *m_level.GetTile(m_player.GetPosition());
 
 
-		/* THE PLAYER REACHES THE DOOR*/
+		/* THE PLAYER ENTER IN A NEW AREA*/
 		if (playerTile.type == TILE::WALL_DOOR_UNLOCKED)
 		{
 			m_items.clear();
@@ -486,7 +465,11 @@ void Game::Update(float timeDelta)
 
 
 
-			// Find the nearest torch
+			/*
+			* AMBIANCE =================================================================================
+			*/
+
+			// Find the nearest torch 4 playing de sound
 			auto torches = m_level.GetTorches();
 
 			if (!torches->empty())
@@ -530,8 +513,9 @@ void Game::Update(float timeDelta)
 				}
 			}
 
-
-
+			/*
+			*QUEST COMPLETION ===========================================================
+			*/
 			// Check if we have completed an active goal.
 			if (m_activeGoal)
 			{
@@ -563,8 +547,7 @@ void Game::Update(float timeDelta)
 				}
 			}
 
-
-
+			//==========================================================================================
 
 			/* LAST INSTRUCTION*/
 			// Venter the view.
@@ -649,16 +632,15 @@ void Game::UpdateItems(sf::Vector2f playerPosition)
 			case ITEM::GOLD:
 			{
 				// Get the amount of gold.
-				int goldValue = dynamic_cast<Gold&>(item).GetGoldValue();
-			
+				Gold gold = dynamic_cast<Gold&>(item);
+				int goldvalue = gold.GetGoldValue();
 				// Add to the gold total.
-				m_goldTotal += goldValue;
-
+				m_goldTotal += goldvalue;
 				//Play gold collect sound effect
-				PlaySound(m_coinPickupSound);
-
+				gold.GetComponent<Audio>()->Play();
+				
 				if (m_activeGoal)
-					m_goldGoal -= goldValue;
+					m_goldGoal -= goldvalue;
 			}
 
 			break;
@@ -668,11 +650,9 @@ void Game::UpdateItems(sf::Vector2f playerPosition)
 				// Get the score of the gem.
 				Gem g = dynamic_cast<Gem&>(item);
 				int scoreValue = g.GetScoreValue();
-
 				
 				// Add to the score total
-				m_scoreTotal += scoreValue;
-				
+				m_scoreTotal += scoreValue;			
 				g.GetComponent<Audio>()->Play();
 				
 
@@ -684,11 +664,13 @@ void Game::UpdateItems(sf::Vector2f playerPosition)
 
 			case ITEM::KEY:
 			{
+				Key k = dynamic_cast<Key&>(item);
 				// Unlock the door.
 				m_level.UnlockDoor();
 
 				// Set the key as collected.
 				m_keyUiSprite->setColor(sf::Color::White);
+				k.GetComponent<Audio>()->Play();
 			}
 			break;
 
@@ -830,7 +812,8 @@ void Game::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 					}
 
 					//Play enemy kill sound.
-					PlaySound(m_enemyDieSound, enemy.GetPosition());
+					//enemy.GetComponent<Audio>()->Play();
+					PlaySound(m_enemyDieSound, position);
 
 					// Delete enemy.
 					enemyIterator = m_enemies.erase(enemyIterator);
@@ -867,6 +850,7 @@ void Game::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 		}
 	}
 }
+
 
 // Updates all projectiles in the level.
 void Game::UpdateProjectiles(float timeDelta)
@@ -929,8 +913,6 @@ void Game::GenerateLevelGoal()
 
 	m_activeGoal = true;
 }
-
-
 
 
 // Calculates the distance between two given points.
