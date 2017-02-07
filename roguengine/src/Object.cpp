@@ -2,7 +2,7 @@
 #include <Object.h>
 
 // Default constructor.
-Object::Object() : 
+Object::Object() :
 m_position{ 0.f, 0.f },
 m_animationSpeed(0),
 m_isAnimated(false),
@@ -12,6 +12,15 @@ m_frameWidth(0),
 m_frameHeight(0),
 m_timeDelta(0)
 {
+
+	transform = dynamic_cast<Transform&>(*(AttachComponent<Transform>()));
+
+	/* testing component 
+	
+	transform.SetPosition({2.f, 0.f});
+	std::cout << "pos :" << transform.GetPosition().x << std::endl;
+
+	*/
 }
 
 // Gives the object the given sprite.

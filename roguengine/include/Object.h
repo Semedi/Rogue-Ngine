@@ -168,6 +168,8 @@ private:
 	 */
 	float m_timeDelta;
 
+	Transform transform;
+
 	/*
 	* Collection 4 all the components attached to the object
 	*/

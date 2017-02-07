@@ -1,0 +1,24 @@
+{
+    "files.associations": {
+        "sstream": "cpp",
+        "fstream": "cpp",
+        "memory": "cpp",
+        "iostream": "cpp",
+        "cstdio": "cpp",
+        "exception": "cpp",
+        "typeinfo": "cpp",
+        "type_traits": "cpp",
+        "*hcstdint": "cpp",
+        "*h*h*h*h*h*hcstdlib": "cpp",
+        "cstdlib": "cpp",
+        "*hnew": "cpp",
+        "*h*h*hcwchar": "cpp",
+        "cwchar": "cpp",
+        "cctype": "cpp",
+        "initializer_list": "cpp",
+        "cstdarg": "cpp",
+        "clocale": "cpp",
+        "cwctype": "cpp",
+        "ctime": "cpp"
+    }
+}

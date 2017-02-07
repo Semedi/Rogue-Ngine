@@ -19,7 +19,7 @@ m_levelWasGenerated(false)
 	
 	// Enable VSync.
 	m_window.setVerticalSyncEnabled(true);
-
+	
 	// Hide the mouse cursor.
 	m_window.setMouseCursorVisible(false);
 
@@ -97,9 +97,9 @@ void Game::Initialize()
 	// Load enemy die sound.
 	
 	soundBufferId = SoundBufferManager::AddSoundBuffer("../resources/sounds/snd_enemy_dead.wav", 5.0f, 80.0f);
-	m_enemyDieSound.setBuffer(SoundBufferManager::GetSoundBuffer("../resources/sounds/snd_enemy_dead.wav"));
-	m_enemyDieSound.setAttenuation(5.f);
-	m_enemyDieSound.setMinDistance(80.f);
+	//m_enemyDieSound.setBuffer(SoundBufferManager::GetSoundBuffer("../resources/sounds/snd_enemy_dead.wav"));
+	//m_enemyDieSound.setAttenuation(5.f);
+	//m_enemyDieSound.setMinDistance(80.f);
 	
 
 	// Load torch sound.
@@ -348,6 +348,7 @@ void Game::GenerateLevel()
 
 	// Moves the player to the start.
 	m_player.SetPosition(m_level.SpawnLocation());
+	m_player.GetComponent<Transform>()->SetPosition(m_level.SpawnLocation());
 
 }
 
@@ -413,14 +414,15 @@ void Game::Update(float timeDelta)
 	{
 		// First check if the player is at the exit. If so there's no need to update anything.
 		Tile& playerTile = *m_level.GetTile(m_player.GetPosition());
-
+		//_posTile& playerTile = *m_level.GetTile(m_player.GetComponent<Transform>()->GetPosition());
 
 		/* THE PLAYER ENTER IN A NEW AREA*/
 		if (playerTile.type == TILE::WALL_DOOR_UNLOCKED)
 		{
+
+			//flush and generate random!
 			m_items.clear();
 			m_enemies.clear();
-
 			GenerateLevel();
 			m_keyUiSprite->setColor(sf::Color(255, 255, 255, 60));
 		}
@@ -431,6 +433,7 @@ void Game::Update(float timeDelta)
 
 			// Store the player position as it's used many times.
 			sf::Vector2f playerPosition = m_player.GetPosition();
+			//_possf::Vector2f playerPosition = m_player.GetComponent<Transform>()->GetPosition();
 
 			// move the listener to players location.
 			sf::Listener::setPosition(playerPosition.x, playerPosition.y, 0.f);
@@ -451,6 +454,9 @@ void Game::Update(float timeDelta)
 				}
 			}
 
+
+
+			/* UPDATE PART*/
 			// Update all items.
 			UpdateItems(playerPosition);
 
@@ -462,6 +468,8 @@ void Game::Update(float timeDelta)
 
 			// Update all projectiles.
 			UpdateProjectiles(timeDelta);
+
+			/*********************************************/
 
 
 
@@ -506,6 +514,10 @@ void Game::Update(float timeDelta)
 				// Update path finding for all enemies if within range of the player.
 				for (const auto& enemy : m_enemies)
 				{
+					/* vision 4 the enemy? 
+					   we check 4 every position the actual distance between player and enemy
+					   if is less than 300.f we call pathfinding
+					*/
 					if (DistanceBetweenPoints(enemy->GetPosition(), playerPosition) < 300.f)
 					{
 						enemy->UpdatePathfinding(m_level, playerPosition);
@@ -550,7 +562,7 @@ void Game::Update(float timeDelta)
 			//==========================================================================================
 
 			/* LAST INSTRUCTION*/
-			// Venter the view.
+			// Center the view.
 			m_views[static_cast<int>(VIEW::MAIN)].setCenter(playerPosition);
 		}
 	}
@@ -813,7 +825,7 @@ void Game::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 
 					//Play enemy kill sound.
 					//enemy.GetComponent<Audio>()->Play();
-					PlaySound(m_enemyDieSound, position);
+					//PlaySound(m_enemyDieSound, position);
 
 					// Delete enemy.
 					enemyIterator = m_enemies.erase(enemyIterator);
