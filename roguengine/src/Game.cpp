@@ -414,7 +414,7 @@ void Game::Update(float timeDelta)
 	{
 		// First check if the player is at the exit. If so there's no need to update anything.
 		Tile& playerTile = *m_level.GetTile(m_player.GetPosition());
-		//_posTile& playerTile = *m_level.GetTile(m_player.GetComponent<Transform>()->GetPosition());
+		//_posTile& playerTile = *m_level.GetTile(m_player.transform.GetPosition());
 
 		/* THE PLAYER ENTER IN A NEW AREA*/
 		if (playerTile.type == TILE::WALL_DOOR_UNLOCKED)

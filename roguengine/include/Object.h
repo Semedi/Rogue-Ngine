@@ -124,6 +124,8 @@ protected:
 	 */
 	sf::Vector2f m_position;
 
+	Transform transform;
+
 private:
 
 	/**
@@ -168,7 +170,6 @@ private:
 	 */
 	float m_timeDelta;
 
-	Transform transform;
 
 	/*
 	* Collection 4 all the components attached to the object

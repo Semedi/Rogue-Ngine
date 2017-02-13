@@ -112,7 +112,15 @@ void Player::Update(float timeDelta, Level& level)
 	// Calculate horizontal movement.
 	if (CausesCollision(sf::Vector2f(movementSpeed.x, 0.0f), level))
 	{
+		std::cout << std::endl;
+		std:: cout << " m_position " << m_position.x << std::endl;
+		std:: cout << " transform " << transform.GetPosition().x << std::endl;
+
 		m_position.x = previousPosition.x;
+		transform.GetPosition().x = previousPosition.x;
+
+		std:: cout << " m_position " << m_position.x << std::endl;
+		std:: cout << " transform " << transform.GetPosition().x << std::endl;
 	}
 	else
 	{
