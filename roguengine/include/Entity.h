@@ -94,7 +94,7 @@ protected:
 	/**
 	 * A vector of all texture IDs.
 	 */
-	int m_textureIDs[static_cast<int>(ANIMATION_STATE::COUNT)];
+	int _textureIDs[static_cast<int>(ANIMATION_STATE::COUNT)];
 
 	/**
 	 * The index of the current texture.

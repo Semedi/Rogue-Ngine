@@ -20,22 +20,22 @@ Humanoid::Humanoid()
 	}
 
 	// Load textures.
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("../resources/enemies/"+enemyName+"/spr_" + enemyName + "_walk_up.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_down.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_right.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_left.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_up.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_down.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_right.png");
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_left.png");
+	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture("../resources/enemies/"+enemyName+"/spr_" + enemyName + "_walk_up.png");
+	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_down.png");
+	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_right.png");
+	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_walk_left.png");
+	_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_up.png");
+	_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_down.png");
+	_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_right.png");
+	_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture("../resources/enemies/" + enemyName + "/spr_" + enemyName + "_idle_left.png");
 
 	// Set initial sprite.
-	SetSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	SetSprite(TextureManager::GetTexture(_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
 
 	// Copy textures.
 	for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); i++)
 	{
-		m_textures[i] = TextureManager::GetTexture(m_textureIDs[i]);
+		_textures[i] = TextureManager::GetTexture(_textureIDs[i]);
 	}
 
 	// Generate the armor
@@ -55,7 +55,7 @@ void Humanoid::GenerateArmor()
 	// Setup all render textures.
 	for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); i++)
 	{
-		sf::Vector2u textureSize = m_textures[i].getSize();
+		sf::Vector2u textureSize = _textures[i].getSize();
 
 		armorTextures[i].create(textureSize.x, textureSize.y);
 		finalTextures[i].create(textureSize.x, textureSize.y);
@@ -222,7 +222,7 @@ void Humanoid::GenerateArmor()
 		sf::Sprite baseSprite, armorSprite;
 
 		// Draw the default texture.
-		baseSprite.setTexture(m_textures[i]);
+		baseSprite.setTexture(_textures[i]);
 		finalTextures[i].draw(baseSprite);
 
 		// Draw armor on top.
@@ -234,7 +234,7 @@ void Humanoid::GenerateArmor()
 		img.flipVertically();
 
 		// Store the resulting texture.
-		m_textures[i].loadFromImage(img);
+		_textures[i].loadFromImage(img);
 
 		/*Debugging options:
 		if ((hasHelmet == 0) || hasTorso == 0 || (hasLegs == 0))
@@ -257,5 +257,5 @@ void Humanoid::Update(float timeDelta)
 	Enemy::Update(timeDelta);
 
 	// Update the texture with our custom textures.
-	m_sprite.setTexture(m_textures[m_currentTextureIndex]);
+	m_sprite.setTexture(_textures[m_currentTextureIndex]);
 }

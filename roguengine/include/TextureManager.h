@@ -33,7 +33,7 @@ private:
 	/**
 	 * A map of each texture name with its ID.
 	 */
-	static std::map<std::string, std::pair<int, std::unique_ptr<sf::Texture>>> m_textures;
+	static std::map<std::string, std::pair<int, std::unique_ptr<sf::Texture>>> _textures;
 
 	/**
 	 * The current key value.

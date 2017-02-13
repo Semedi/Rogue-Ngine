@@ -43,7 +43,7 @@ public:
 	/**
 	 * The name of the item.
 	 */
-	std::string m_name;
+	std::string _name;
 
 	/**
 	 * The type of item.
@@ -53,16 +53,16 @@ public:
 	/**
 	 * A text object storing the name of the item.
 	 */
-	sf::Text m_text;
+	sf::Text _text;
 
 	/**
 	 * A font object storing the name of the item.
 	 */
-	sf::Font m_font;
+	sf::Font _font;
 
 	/*
 	 * The dimensions of the items name in text.
 	 */
-	sf::Vector2f m_textOffset;
+	sf::Vector2f _textOffset;
 };
 #endif

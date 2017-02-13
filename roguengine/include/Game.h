@@ -142,220 +142,220 @@ private:
 	/**
 	 * The main application window.
 	 */
-	sf::RenderWindow& m_window;
+	sf::RenderWindow& _window;
 
 	/**
 	 * An array of the different views the game needs.
 	 */
-	sf::View m_views[static_cast<int>(VIEW::COUNT)];
+	sf::View _views[static_cast<int>(VIEW::COUNT)];
 
 	/**
 	 * Used in the main game time step.
 	 */
-	sf::Clock m_timestepClock;
+	sf::Clock _stepCLK;
 
-	Tile* m_playerPreviousTile;
+	Tile* _playerPrevTile;
 
 	/**
 	 * The default font to be used when drawing text.
 	 */
-	sf::Font m_font;
+	sf::Font _font;
 
 	/**
 	 * The game state.
 	 */
-	GAME_STATE m_gameState;
+	GAME_STATE _gameState;
 
 	/**
 	 * A vector that holds all items within the level.
 	 */
-	std::vector<std::unique_ptr<Item>> m_items;
+	std::vector<std::unique_ptr<Item>> _items;
 
 	/**
 	 * A vector that holds all the enemies within the level.
 	 */
-	std::vector<std::unique_ptr<Enemy>> m_enemies;
+	std::vector<std::unique_ptr<Enemy>> _enemies;
 
 	/**
 	 * A bool that tracks the running state of the game. It's used in the main loop.
 	 */
-	bool m_isRunning;
+	bool _isRunning;
 
 	/**
 	 * The main level object. All data and functionally regarding the level lives in this class/object.
 	 */
-	Level m_level;
+	Level _level;
 
 	/**
 	 * The main player object. Only one instance of this object should be created at any one time.
 	 */
-	Player m_player;
+	Player _player;
 
 	/**
 	 * String stream used by the DrawText() function.
 	 */
-	std::ostringstream m_stringStream;
+	std::ostringstream _strStream;
 
 	/**
 	 * String used by the DrawText() function.
 	 */
-	std::string m_string;
+	std::string _string;
 
 	/**
 	 * Text used by the DrawText() function.
 	 */
-	sf::Text m_text;
+	sf::Text _text;
 
 	/**
 	 * A vector containing all sprites that make up the lighting grid.
 	 */
-	std::vector<sf::Sprite> m_lightGrid;
+	std::vector<sf::Sprite> _lightGrid;
 
 	/**
 	 * The size of the screen and window.
 	 */
-	sf::Vector2u m_screenSize;
+	sf::Vector2u _screenSize;
 
 	/**
 	* The center of the screen.
 	*/
-	sf::Vector2f m_screenCenter;
+	sf::Vector2f _screenCenter;
 
 	/**
 	 * The current game score.
 	 */
-	int m_scoreTotal;
+	int _scoreTotal;
 
 	/**
 	* The amount of gold that the player currently has.
 	*/
-	int m_goldTotal;
+	int _goldTotal;
 
 	/**
 	 * The sprite that shows the player class in the UI.
 	 */
-	std::shared_ptr<sf::Sprite> m_playerUiSprite;
+	std::shared_ptr<sf::Sprite> _playerUiSprite;
 
 	/**
 	 * The sprite used to show how many coins the player has.
 	 */
-	std::shared_ptr<sf::Sprite> m_coinUiSprite;
+	std::shared_ptr<sf::Sprite> _coinUiSprite;
 
 	/**
 	* The sprite used to show how much score the player has.
 	*/
-	std::shared_ptr<sf::Sprite> m_gemUiSprite;
+	std::shared_ptr<sf::Sprite> _gemUiSprite;
 
 	/**
 	 * Key ui sprite.
 	 */
-	std::shared_ptr<sf::Sprite> m_keyUiSprite;
+	std::shared_ptr<sf::Sprite> _keyUiSprite;
 
 	/**
 	 * The sprite for the players attack stat.
 	 */
-	std::shared_ptr<sf::Sprite> m_attackStatSprite;
+	std::shared_ptr<sf::Sprite> _attackStatSprite;
 
 	/**
 	 * The texture IDs for the attack stat textures.
 	 */
-	int m_attackStatTextureIDs[2];
+	int _attackStatTextureIDs[2];
 
 	/**
 	* The sprite for the players defense stat.
 	*/
-	std::shared_ptr<sf::Sprite> m_defenseStatSprite;
+	std::shared_ptr<sf::Sprite> _defenseStatSprite;
 
 	/**
 	* The texture IDs for the defense stat textures.
 	*/
-	int m_defenseStatTextureIDs[2];
+	int _defenseStatTextureIDs[2];
 
 	/**
 	* The sprite for the players strength stat.
 	*/
-	std::shared_ptr<sf::Sprite> m_strengthStatSprite;
+	std::shared_ptr<sf::Sprite> _strengthStatSprite;
 
 	/**
 	* The texture IDs for the strength stat textures.
 	*/
-	int m_strengthStatTextureIDs[2];
+	int _strengthStatTextureIDs[2];
 
 	/**
 	* The sprite for the players dexterity stat.
 	*/
-	std::shared_ptr<sf::Sprite> m_dexterityStatSprite;
+	std::shared_ptr<sf::Sprite> _dexterityStatSprite;
 
 	/**
 	* The texture IDs for the dexterity stat textures.
 	*/
-	int m_dexterityStatTextureIDs[2];
+	int _dexterityStatTextureIDs[2];
 
 	/**
 	* The sprite for the players stamina stat.
 	*/
-	std::shared_ptr<sf::Sprite> m_staminaStatSprite;
+	std::shared_ptr<sf::Sprite> _staminaStatSprite;
 
 	/**
 	* The texture IDs for the stamina stat textures.
 	*/
-	int m_staminaStatTextureIDs[2];
+	int _staminaStatTextureIDs[2];
 
 	/**
 	 * A vector of all the player's projectiles.
 	 */
-	std::vector<std::unique_ptr<Projectile>> m_playerProjectiles;
+	std::vector<std::unique_ptr<Projectile>> _playerProjectiles;
 
 	/**
 	 * The ID of the player's projectile texture.
 	 */
-	int m_projectileTextureID;
+	int _projectileTextureID;
 
 	/**
 	 * A boolean denoting if a new level was generated.
 	 */
-	bool m_levelWasGenerated;
+	bool _levelWasGenerated;
 
 	/**
 	 * Sprite for the health bar.
 	 */
-	std::shared_ptr<sf::Sprite> m_healthBarSprite;
+	std::shared_ptr<sf::Sprite> _healthBarSprite;
 
 	/**
 	* Sprite for the health bar outline.
 	*/
-	std::shared_ptr<sf::Sprite> m_healthBarOutlineSprite;
+	std::shared_ptr<sf::Sprite> _healthBarOutlineSprite;
 
 	/**
 	 * Sprite for the mana bar.
 	 */
-	std::shared_ptr<sf::Sprite> m_manaBarSprite;
+	std::shared_ptr<sf::Sprite> _manaBarSprite;
 
 	/**
 	* Sprite for the mana bar outline.
 	*/
-	std::shared_ptr<sf::Sprite> m_manaBarOutlineSprite;
+	std::shared_ptr<sf::Sprite> _manaBarOutlineSprite;
 
 	/**
 	 * A vector of all ui sprites.
 	 */
-	std::vector<std::shared_ptr<sf::Sprite>> m_uiSprites;
+	std::vector<std::shared_ptr<sf::Sprite>> _uiSprites;
 
 	/****************************************************
 	*
 	*    MUSIC PART
 	*****************************************************/
 
-	sf::Music m_music;
+	sf::Music _music;
 	/**
 	* Torch sound.
 	*/
-	sf::Sound m_fireSound;
+	sf::Sound _fireSound;
 
 	/**
 	* Enemy die sound.
 	*/
-	sf::Sound m_enemyDieSound;
+	sf::Sound _enemyDieSound;
 
 
 
@@ -364,12 +364,12 @@ private:
 	*
 	*GOAL VARIABLES
 	************************/
-	int m_goldGoal;
-	int m_gemGoal;
-	int m_killGoal;
-	sf::String m_goalString;
+	int _goldGoal;
+	int _gemGoal;
+	int _killGoal;
+	sf::String _goalString;
 
-	bool m_activeGoal;
+	bool _activeGoal;
 
 
 

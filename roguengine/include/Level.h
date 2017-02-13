@@ -269,7 +269,7 @@ private:
 	/**
 	 * An array containing all texture IDs of the level tiles.
 	 */
-	int m_textureIDs[static_cast<int>(TILE::COUNT)];
+	int _textureIDs[static_cast<int>(TILE::COUNT)];
 
 	/**
 	 * The indices of the tile containing the levels door.

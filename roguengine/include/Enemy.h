@@ -55,7 +55,7 @@ private:
 	sf::Sprite m_pathSprite;
 
 	//debug
-	sf::Font m_font;
-	sf::Text m_text;
+	sf::Font _font;
+	sf::Text _text;
 };
 #endif

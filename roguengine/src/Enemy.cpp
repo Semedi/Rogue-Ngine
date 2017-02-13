@@ -22,10 +22,10 @@ Enemy::Enemy()
 	// Set the sprite origin.
 	sf::Vector2u spriteSize = m_pathSprite.getTexture()->getSize();
 	m_pathSprite.setOrigin(sf::Vector2f(static_cast<float>(spriteSize.x / 2), static_cast<float>(spriteSize.y / 2)));
-	m_font.loadFromFile("../resources/fonts/04B_03__.TTF");
+	_font.loadFromFile("../resources/fonts/04B_03__.TTF");
 
-	m_text.setFont(m_font);
-	m_text.setCharacterSize(12);
+	_text.setFont(_font);
+	_text.setCharacterSize(12);
 	/**************************************************************************************************************************/
 	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_enemy_dead.wav", true);
 
@@ -272,9 +272,9 @@ void Enemy::Draw(sf::RenderWindow & window, float timeDelta)
 		std::ostringstream ss;
 		ss << i;
 		std::string str(ss.str());
-		m_text.setString(str);
-		m_text.setPosition(m_targetPositions[i]);
-		window.draw(m_text);
+		_text.setString(str);
+		_text.setPosition(m_targetPositions[i]);
+		window.draw(_text);
 
 	}
 

@@ -3,37 +3,37 @@
 
 // Default constructor.
 Item::Item() :
-	m_name(""),
-	m_textOffset({0.f, 0.f})
+	_name(""),
+	_textOffset({0.f, 0.f})
 {
 	// Load font.
-	m_font.loadFromFile("../resources/fonts/ADDSBP__.TTF");
-	m_text.setFont(m_font);
+	_font.loadFromFile("../resources/fonts/ADDSBP__.TTF");
+	_text.setFont(_font);
 
 	// Setup the text.
-	m_text.setCharacterSize(12);
+	_text.setCharacterSize(12);
 }
 
 // Gets the name of the item.
 std::string Item::GetItemName() const
 {
-	return m_name;
+	return _name;
 }
 
 // Sets the item name.
 void Item::SetItemName(std::string name)
 {
 	// Store new name.
-	m_name = name;
+	_name = name;
 
 	// Set the item name.
 	std::ostringstream ss;
-	ss << m_name;
+	ss << _name;
 	std::string str(ss.str());
-	m_text.setString(str);
+	_text.setString(str);
 
 	// Store the text offset needed when drawing.
-	m_textOffset = sf::Vector2f(m_text.getLocalBounds().width / 2, m_text.getLocalBounds().height / 2);
+	_textOffset = sf::Vector2f(_text.getLocalBounds().width / 2, _text.getLocalBounds().height / 2);
 }
 
 // Gets the item type.
@@ -49,6 +49,6 @@ void Item::Draw(sf::RenderWindow& window, float timeDelta)
 	Object::Draw(window, timeDelta);
 
 	// Draw the item name.
-	m_text.setPosition(transform.position.x - m_textOffset.x, (transform.position.y - 30.f) - m_textOffset.y);
-	window.draw(m_text);
+	_text.setPosition(transform.position.x - _textOffset.x, (transform.position.y - 30.f) - _textOffset.y);
+	window.draw(_text);
 }

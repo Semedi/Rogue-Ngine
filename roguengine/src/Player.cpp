@@ -15,20 +15,20 @@ m_canTakeDamage(true)
 	
 	std::vector<std::string> paths = BuildPlayer(m_class);
 	// Load textures.
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture(paths[0]);
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture(paths[1]);
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture(paths[2]);
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture(paths[3]);
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture(paths[4]);
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture(paths[5]);
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture(paths[6]);
-	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture(paths[7]);
+	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture(paths[0]);
+	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture(paths[1]);
+	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_RIGHT)] = TextureManager::AddTexture(paths[2]);
+	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_LEFT)] = TextureManager::AddTexture(paths[3]);
+	_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_UP)] = TextureManager::AddTexture(paths[4]);
+	_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_DOWN)] = TextureManager::AddTexture(paths[5]);
+	_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_RIGHT)] = TextureManager::AddTexture(paths[6]);
+	_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture(paths[7]);
 
 
 	
 
 	// Set initial sprite.
-	SetSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	SetSprite(TextureManager::GetTexture(_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
 	m_currentTextureIndex = static_cast<int>(ANIMATION_STATE::WALK_UP);
 	m_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
 
@@ -137,7 +137,7 @@ void Player::Update(float timeDelta, Level& level)
 	if (m_currentTextureIndex != static_cast<int>(animState))
 	{
 		m_currentTextureIndex = static_cast<int>(animState);
-		m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
+		m_sprite.setTexture(TextureManager::GetTexture(_textureIDs[m_currentTextureIndex]));
 	}
 
 	// set animation speed
@@ -150,7 +150,7 @@ void Player::Update(float timeDelta, Level& level)
 			// In our enum we have 4 walking sprites followed by 4 idle sprites.
 			// Given this, we can simply add 4 to a walking sprite to get its idle counterpart.
 			m_currentTextureIndex += 4;
-			m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
+			m_sprite.setTexture(TextureManager::GetTexture(_textureIDs[m_currentTextureIndex]));
 
 			// Stop movement animations.
 			SetAnimated(false);
@@ -163,7 +163,7 @@ void Player::Update(float timeDelta, Level& level)
 		{
 			// Update sprite to walking version.
 			m_currentTextureIndex -= 4;
-			m_sprite.setTexture(TextureManager::GetTexture(m_textureIDs[m_currentTextureIndex]));
+			m_sprite.setTexture(TextureManager::GetTexture(_textureIDs[m_currentTextureIndex]));
 
 			// Start movement animations.
 			SetAnimated(true);

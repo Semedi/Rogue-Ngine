@@ -2,7 +2,7 @@
 #include <Projectile.h>
 
 // Default constructor.
-Projectile::Projectile(sf::Texture& texture, sf::Vector2f origin, sf::Vector2f screenCenter, sf::Vector2f target)
+Projectile::Projectile(sf::Texture& texture, sf::Vector2f origin, sf::Vector2f _screenCenter, sf::Vector2f target)
 {
 	// Create the sprite.
 	SetSprite(texture, false);
@@ -14,7 +14,7 @@ Projectile::Projectile(sf::Texture& texture, sf::Vector2f origin, sf::Vector2f s
 	transform.position = origin;
 
 	// Calculate the velocity of the object.
-	m_velocity = target - screenCenter;
+	m_velocity = target - _screenCenter;
 
 	float length = sqrt((m_velocity.x * m_velocity.x) + (m_velocity.y * m_velocity.y));
 	m_velocity.x /= length;
