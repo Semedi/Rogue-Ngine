@@ -22,12 +22,12 @@ class Sprite : public Component
 		void NextFrame();
 
 private:
-	int m_animationSpeed;
-	bool m_isAnimated;
-	int m_frameCount;
-	int m_currentFrame;
-	int m_FrameWidth;
-	int m_frameHeight;
+	int _animationSpeed;
+	bool _animated;
+	int _nframe;
+	int _currentFrame;
+	int _frameWidth;
+	int _frameHeight;
 
 
 

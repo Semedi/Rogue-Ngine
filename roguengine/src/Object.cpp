@@ -3,22 +3,15 @@
 
 // Default constructor.
 Object::Object() :
-m_animationSpeed(0),
-m_isAnimated(false),
-m_frameCount(0),
-m_currentFrame(0),
-m_frameWidth(0),
-m_frameHeight(0),
-m_timeDelta(0)
+_animationSpeed(0),
+_animated(false),
+_nframe(0),
+_currentFrame(0),
+_frameWidth(0),
+_frameHeight(0),
+_timeDelta(0)
 {
-
 	transform = (dynamic_cast<Transform&>(*(AttachComponent<Transform>())));
-	/* testing component 
-	
-	transform.SetPosition({2.f, 0.f});
-	std::cout << "pos :" << transform.GetPosition().x << std::endl;
-
-	*/
 }
 
 // Gives the object the given sprite.
@@ -28,33 +21,33 @@ bool Object::SetSprite(sf::Texture& texture, bool isSmooth, int frames, int fram
 	m_sprite.setTexture(texture);
 
 	// Set animation speed.
-	m_animationSpeed = frameSpeed;
+	_animationSpeed = frameSpeed;
 
 	// Store the number of frames.
-	m_frameCount = frames;
+	_nframe = frames;
 
 	// Calculate frame dimensions.
 	sf::Vector2u texSize = m_sprite.getTexture()->getSize();
-	m_frameWidth = texSize.x / m_frameCount;
-	m_frameHeight = texSize.y;
+	_frameWidth = texSize.x / _nframe;
+	_frameHeight = texSize.y;
 
 	// Check if animated or static.
 	if (frames > 1)
 	{
 		// Set sprite as animated.
-		m_isAnimated = true;
+		_animated = true;
 
 		// Set the texture rect of the first frame.
-		m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
+		m_sprite.setTextureRect(sf::IntRect(0, 0, _frameWidth, _frameHeight));
 	}
 	else
 	{
 		// Set sprite as non animated.
-		m_isAnimated = false;
+		_animated = false;
 	}
 
 	// Set the origin of the sprite.
-	m_sprite.setOrigin(m_frameWidth / 2.f, m_frameHeight / 2.f);
+	m_sprite.setOrigin(_frameWidth / 2.f, _frameHeight / 2.f);
 
 	return true;
 }
@@ -87,22 +80,22 @@ sf::Vector2f Object::GetPosition() const
 // Gets the current animation state of the object.
 bool Object::IsAnimated()
 {
-	return m_isAnimated;
+	return _animated;
 }
 
 // Sets the animation state of the object.
 void Object::SetAnimated(bool isAnimated)
 {
-	m_isAnimated = isAnimated;
+	_animated = isAnimated;
 
 	if (isAnimated)
 	{
-		m_currentFrame = 0;
+		_currentFrame = 0;
 	}
 	else
 	{
 		// set the texture rect of the first frame
-		m_sprite.setTextureRect(sf::IntRect(0, 0, m_frameWidth, m_frameHeight));
+		m_sprite.setTextureRect(sf::IntRect(0, 0, _frameWidth, _frameHeight));
 	}
 }
 
@@ -110,16 +103,16 @@ void Object::SetAnimated(bool isAnimated)
 void Object::Draw(sf::RenderWindow &window, float timeDelta)
 {
 	// check if the sprite is animated
-	if (m_isAnimated)
+	if (_animated)
 	{
 		// add the elapsed time since the last draw call to the aggregate
-		m_timeDelta += timeDelta;
+		_timeDelta += timeDelta;
 
 		// check if the frame should be updated
-		if (m_timeDelta >= (1.f / m_animationSpeed))
+		if (_timeDelta >= (1.f / _animationSpeed))
 		{
 			NextFrame();
-			m_timeDelta = 0;
+			_timeDelta = 0;
 		}
 	}
 
@@ -130,17 +123,17 @@ void Object::Draw(sf::RenderWindow &window, float timeDelta)
 void Object::NextFrame()
 {
 	// check if we reached the last frame
-	if (m_currentFrame == (m_frameCount - 1))
-		m_currentFrame = 0;
+	if (_currentFrame == (_nframe - 1))
+		_currentFrame = 0;
 	else
-		m_currentFrame++;
+		_currentFrame++;
 
 	// update the texture rect
-	m_sprite.setTextureRect(sf::IntRect(m_frameWidth * m_currentFrame, 0, m_frameWidth, m_frameHeight));
+	m_sprite.setTextureRect(sf::IntRect(_frameWidth * _currentFrame, 0, _frameWidth, _frameHeight));
 }
 
 // Gets the frame count of the object.
 int Object::GetFrameCount() const
 {
-	return m_frameCount;
+	return _nframe;
 }

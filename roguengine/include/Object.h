@@ -138,37 +138,37 @@ private:
 	 * The animation speed of the image if applicable.
 	 * Value is frames per second.
 	 */
-	int m_animationSpeed;
+	int _animationSpeed;
 
 	/**
 	 * Used to determine if the given sprite is animated.
 	 */
-	bool m_isAnimated;
+	bool _animated;
 
 	/**
 	 * The total number of frames the sprite has.
 	 */
-	int m_frameCount;
+	int _nframe;
 
 	/**
 	 * The current frame of the sprite.
 	 */
-	int m_currentFrame;
+	int _currentFrame;
 
 	/**
 	 * The width of each frame of the animated sprite if applicable.
 	 */
-	int m_frameWidth;
+	int _frameWidth;
 
 	/**
 	 * The height of each frame of the animated sprite if applicable.
 	 */
-	int m_frameHeight;
+	int _frameHeight;
 
 	/**
 	 * An aggregate of the time passed between draw calls.
 	 */
-	float m_timeDelta;
+	float _timeDelta;
 
 
 	/*
