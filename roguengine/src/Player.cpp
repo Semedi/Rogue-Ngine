@@ -59,7 +59,6 @@ m_canTakeDamage(true)
 	m_stamina += m_statPoints * (staminaBias / total);
 
 	//Add transform component
-	AttachComponent<Transform>();
 	AttachComponent<Sprite>();
 	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_player_hit.wav");
 
@@ -70,7 +69,9 @@ void Player::Update(float timeDelta, Level& level)
 {
 	// Calculate movement speed based on the timeDelta since the last update.
 	sf::Vector2f movementSpeed(0.f, 0.f);
-	sf::Vector2f previousPosition = m_position;
+
+
+	sf::Vector2f previousPosition = transform.position;
 
 	// Calculate where the current movement will put us.
 	ANIMATION_STATE animState = static_cast<ANIMATION_STATE>(m_currentTextureIndex);
@@ -112,33 +113,25 @@ void Player::Update(float timeDelta, Level& level)
 	// Calculate horizontal movement.
 	if (CausesCollision(sf::Vector2f(movementSpeed.x, 0.0f), level))
 	{
-		std::cout << std::endl;
-		std:: cout << " m_position " << m_position.x << std::endl;
-		std:: cout << " transform " << transform.GetPosition().x << std::endl;
-
-		m_position.x = previousPosition.x;
-		transform.GetPosition().x = previousPosition.x;
-
-		std:: cout << " m_position " << m_position.x << std::endl;
-		std:: cout << " transform " << transform.GetPosition().x << std::endl;
+		transform.position.x = previousPosition.x;
 	}
 	else
 	{
-		m_position.x += movementSpeed.x;
+		transform.position.x += movementSpeed.x;
 	}
 
 	// Calculate horizontal movement.
 	if (CausesCollision(sf::Vector2f(0.0f, movementSpeed.y), level))
 	{
-		m_position.y = previousPosition.y;
+		transform.position.y = previousPosition.y;
 	}
 	else
 	{
-		m_position.y += movementSpeed.y;
+		transform.position.y += movementSpeed.y;
 	}
 
 	// update the sprite position
-	m_sprite.setPosition(m_position);
+	m_sprite.setPosition(transform.position);
 
 	// Set the sprite.
 	if (m_currentTextureIndex != static_cast<int>(animState))
@@ -293,7 +286,7 @@ bool Player::CausesCollision(sf::Vector2f movement, Level& level)
 {
 	// Get the tiles that the four corners other player are overlapping with.
 	Tile* overlappingTiles[4];
-	sf::Vector2f newPosition = m_position + movement;
+	sf::Vector2f newPosition = transform.position + movement;
 
 	// Top left.
 	overlappingTiles[0] = level.GetTile(sf::Vector2f(newPosition.x - 14.f, newPosition.y - 14.f));

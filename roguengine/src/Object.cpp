@@ -3,7 +3,6 @@
 
 // Default constructor.
 Object::Object() :
-m_position{ 0.f, 0.f },
 m_animationSpeed(0),
 m_isAnimated(false),
 m_frameCount(0),
@@ -13,8 +12,7 @@ m_frameHeight(0),
 m_timeDelta(0)
 {
 
-	transform = dynamic_cast<Transform&>(*(AttachComponent<Transform>()));
-
+	transform = (dynamic_cast<Transform&>(*(AttachComponent<Transform>())));
 	/* testing component 
 	
 	transform.SetPosition({2.f, 0.f});
@@ -70,15 +68,20 @@ sf::Sprite& Object::GetSprite()
 // Sets the position of the object.
 void Object::SetPosition(sf::Vector2f position)
 {
-	m_position.x = position.x;
-	m_position.y = position.y;
+
+	transform.position.x = position.x;
+	transform.position.y = position.y;
 	m_sprite.setPosition(position.x, position.y);
+
+
+
 }
 
 // Returns the position of the object.
 sf::Vector2f Object::GetPosition() const
 {
-	return m_position;
+	//return transform.position();
+	return transform.position;
 }
 
 // Gets the current animation state of the object.

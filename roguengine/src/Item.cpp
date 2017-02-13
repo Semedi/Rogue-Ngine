@@ -49,6 +49,6 @@ void Item::Draw(sf::RenderWindow& window, float timeDelta)
 	Object::Draw(window, timeDelta);
 
 	// Draw the item name.
-	m_text.setPosition(m_position.x - m_textOffset.x, (m_position.y - 30.f) - m_textOffset.y);
+	m_text.setPosition(transform.position.x - m_textOffset.x, (transform.position.y - 30.f) - m_textOffset.y);
 	window.draw(m_text);
 }

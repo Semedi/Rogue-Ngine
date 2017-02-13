@@ -122,7 +122,7 @@ protected:
 	/**
 	 * The position of the object in the game window.
 	 */
-	sf::Vector2f m_position;
+	//sf::Vector2f m_position;
 
 	Transform transform;
 

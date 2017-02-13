@@ -10,9 +10,10 @@ class Transform : public Component
 		Transform();
 		void SetPosition(sf::Vector2f position);
 		sf::Vector2f& GetPosition();
+		sf::Vector2f position;
 
 	private:
-		sf::Vector2f m_position;
+		
 		
 	
 };

@@ -56,7 +56,7 @@ void Enemy::UpdatePathfinding(Level & level, sf::Vector2f playerPosition)
 	level.ResetNodes();
 
 	//Store the start and goal nodes.
-	Tile* startNode = level.GetTile(m_position);
+	Tile* startNode = level.GetTile(transform.position);
 	Tile* goalNode = level.GetTile(playerPosition);
 
 	// Check we have a valid path to find. If not we can just end the function as there's no path to find.
@@ -232,7 +232,7 @@ void Enemy::Update(float timeDelta)
 	if (!m_targetPositions.empty())
 	{
 		sf::Vector2f targetLocation = m_targetPositions.front();
-		m_velocity = sf::Vector2f(targetLocation.x - m_position.x, targetLocation.y - m_position.y);
+		m_velocity = sf::Vector2f(targetLocation.x - transform.position.x, targetLocation.y - transform.position.y);
 
 		if (abs(m_velocity.x) < 10.f && abs(m_velocity.y) < 10.f)
 		{
@@ -244,10 +244,10 @@ void Enemy::Update(float timeDelta)
 			m_velocity.x /= length;
 			m_velocity.y /= length;
 
-			m_position.x += m_velocity.x * (m_speed * timeDelta);
-			m_position.y += m_velocity.y * (m_speed * timeDelta);
+			transform.position.x += m_velocity.x * (m_speed * timeDelta);
+			transform.position.y += m_velocity.y * (m_speed * timeDelta);
 
-			m_sprite.setPosition(m_position);
+			m_sprite.setPosition(transform.position);
 		}
 
 		// Call Entity update.
