@@ -161,6 +161,7 @@
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\PCH.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\polla\polla.cpp" />
     <ClCompile Include="src\Potion.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\Slime.cpp" />

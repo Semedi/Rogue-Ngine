@@ -29,6 +29,8 @@ _levelWasGenerated(false)
 
 	// Create the level object.
 	_level = Level(*window);
+	
+	Polla::Polla();
 
 	// Create the game font.
 	_font.loadFromFile("../resources/fonts/ADDSBP__.TTF");
