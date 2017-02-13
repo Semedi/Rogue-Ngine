@@ -43,16 +43,16 @@ private:
 	/**
 	* The target positions of th enemy.
 	*/
-	std::vector<sf::Vector2f> m_targetPositions;
+	std::vector<sf::Vector2f> _targetPositions;
 
 	/**
 	* The current target of th enemy.
 	*/
-	sf::Vector2f m_currentTarget;
+	sf::Vector2f _currentTarget;
 
 
 	//debug
-	sf::Sprite m_pathSprite;
+	sf::Sprite _pathSprite;
 
 	//debug
 	sf::Font _font;

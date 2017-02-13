@@ -13,7 +13,7 @@ bool Sprite::SetSprite(sf::Texture & texture, bool isSmoth, int frames, int fram
 sf::Sprite & Sprite::GetSprite()
 {
 	// TODO: insert return statement here
-	return m_sprite;
+	return _sprite;
 }
 
 int Sprite::GetFrameCount() const

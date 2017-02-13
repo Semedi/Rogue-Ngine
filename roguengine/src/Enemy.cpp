@@ -5,23 +5,23 @@
 Enemy::Enemy()
 {
 	// Set stats.
-	m_health = std::rand() % 41 + 80;
-	m_attack = std::rand() % 5 + 6;
-	m_defense = std::rand() % 5 + 6;
-	m_strength = std::rand() % 5 + 6;
-	m_dexterity = std::rand() % 5 + 6;
-	m_stamina = std::rand() % 5 + 6;
+	_health = std::rand() % 41 + 80;
+	_attack = std::rand() % 5 + 6;
+	_defense = std::rand() % 5 + 6;
+	_strength = std::rand() % 5 + 6;
+	_dexterity = std::rand() % 5 + 6;
+	_stamina = std::rand() % 5 + 6;
 
 	// Set speed.
-	m_speed = rand() % 51 + 150;
+	_speed = rand() % 51 + 150;
 
 	/* DEBUG **************************************************************************************************************/
 	int textureID = TextureManager::AddTexture("../resources/spr_path.png");
-	m_pathSprite.setTexture(TextureManager::GetTexture(textureID));
+	_pathSprite.setTexture(TextureManager::GetTexture(textureID));
 
 	// Set the sprite origin.
-	sf::Vector2u spriteSize = m_pathSprite.getTexture()->getSize();
-	m_pathSprite.setOrigin(sf::Vector2f(static_cast<float>(spriteSize.x / 2), static_cast<float>(spriteSize.y / 2)));
+	sf::Vector2u spriteSize = _pathSprite.getTexture()->getSize();
+	_pathSprite.setOrigin(sf::Vector2f(static_cast<float>(spriteSize.x / 2), static_cast<float>(spriteSize.y / 2)));
 	_font.loadFromFile("../resources/fonts/04B_03__.TTF");
 
 	_text.setFont(_font);
@@ -35,13 +35,13 @@ Enemy::Enemy()
 // Applies the given amount of damage to the enemy.
 void Enemy::Damage(int damage)
 {
-	m_health -= damage;
+	_health -= damage;
 }
 
 // Checks if the enemy has taken enough damage that they are now dead.
 bool Enemy::IsDead()
 {
-	return (m_health <= 0);
+	return (_health <= 0);
 }
 void Enemy::UpdatePathfinding(Level & level, sf::Vector2f playerPosition)
 {
@@ -63,7 +63,7 @@ void Enemy::UpdatePathfinding(Level & level, sf::Vector2f playerPosition)
 	if (startNode == goalNode)
 	{
 		// Clear the vector of target positions.
-		m_targetPositions.clear();
+		_targetPositions.clear();
 
 		// Exit the function.
 		return;
@@ -214,40 +214,40 @@ void Enemy::UpdatePathfinding(Level & level, sf::Vector2f playerPosition)
 	}//main loop
 
 	 // Clear the vector of target positions.
-	m_targetPositions.clear();
+	_targetPositions.clear();
 
 	// Store the node locations as the enemies target locations.
 	for (Tile* tile : pathList)
 	{
-		m_targetPositions.push_back(level.GetActualTileLocation(tile->columnIndex, tile->rowIndex));
+		_targetPositions.push_back(level.GetActualTileLocation(tile->columnIndex, tile->rowIndex));
 	}
 
 	// Reverse the target position as we read them from goal to origin and we need them the other way around.
-	std::reverse(m_targetPositions.begin(), m_targetPositions.end());
+	std::reverse(_targetPositions.begin(), _targetPositions.end());
 }
 
 void Enemy::Update(float timeDelta)
 {
 	// Move towards current target location.
-	if (!m_targetPositions.empty())
+	if (!_targetPositions.empty())
 	{
-		sf::Vector2f targetLocation = m_targetPositions.front();
-		m_velocity = sf::Vector2f(targetLocation.x - transform.position.x, targetLocation.y - transform.position.y);
+		sf::Vector2f targetLocation = _targetPositions.front();
+		_velocity = sf::Vector2f(targetLocation.x - transform.position.x, targetLocation.y - transform.position.y);
 
-		if (abs(m_velocity.x) < 10.f && abs(m_velocity.y) < 10.f)
+		if (abs(_velocity.x) < 10.f && abs(_velocity.y) < 10.f)
 		{
-			m_targetPositions.erase(m_targetPositions.begin());
+			_targetPositions.erase(_targetPositions.begin());
 		}
 		else
 		{
-			float length = sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y);
-			m_velocity.x /= length;
-			m_velocity.y /= length;
+			float length = sqrt(_velocity.x * _velocity.x + _velocity.y * _velocity.y);
+			_velocity.x /= length;
+			_velocity.y /= length;
 
-			transform.position.x += m_velocity.x * (m_speed * timeDelta);
-			transform.position.y += m_velocity.y * (m_speed * timeDelta);
+			transform.position.x += _velocity.x * (_speed * timeDelta);
+			transform.position.y += _velocity.y * (_speed * timeDelta);
 
-			m_sprite.setPosition(transform.position);
+			_sprite.setPosition(transform.position);
 		}
 
 		// Call Entity update.
@@ -263,17 +263,17 @@ void Enemy::Draw(sf::RenderWindow & window, float timeDelta)
 	/* DEBUG*/
 	/******************************************************/
 	// DEBUG Draw the current path
-	for (int i = 0; i < m_targetPositions.size(); i++)
+	for (int i = 0; i < _targetPositions.size(); i++)
 	{
-		m_pathSprite.setPosition(m_targetPositions[i]);
-		window.draw(m_pathSprite);
+		_pathSprite.setPosition(_targetPositions[i]);
+		window.draw(_pathSprite);
 
 		// set the path index
 		std::ostringstream ss;
 		ss << i;
 		std::string str(ss.str());
 		_text.setString(str);
-		_text.setPosition(m_targetPositions[i]);
+		_text.setPosition(_targetPositions[i]);
 		window.draw(_text);
 
 	}

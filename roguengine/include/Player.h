@@ -115,40 +115,40 @@ private:
 	/**
 	 * The sprite for the player's aim cross hair.
 	 */
-	sf::Sprite m_aimSprite;
+	sf::Sprite _aimSprite;
 
 	/**
 	 * The time since the player's last attack.
 	 */
-	float m_attackDelta;
+	float _attackDelta;
 
 	/**
 	 * The time since the player last took damage.
 	 */
-	float m_damageDelta;
+	float _damageDt;
 
 	/**
 	 * The time since the last mana regeneration.
 	 */
-	float m_manaDelta;
+	float _manaDt;
 
 	/**
 	 * Is the player attacking.
 	 */
-	bool m_isAttacking;
+	bool _attacking;
 
 	/**
 	 * Can the player take damage.
 	 */
-	bool m_canTakeDamage;
+	bool _canTakeDamage;
 
 	/* number of stats points*/
-	int m_statPoints;
+	int _statPoints;
 
-	/* player class reference to enum_class created in Util*/
-	PLAYER_CLASS m_class;
+	/* player class reference to enu_class created in Util*/
+	PLAYER_CLASS _class;
 
-	PLAYER_TRAIT m_traits[PLAYER_TRAIT_COUNT];
+	PLAYER_TRAIT _traits[PLAYER_TRAIT_COUNT];
 
 };
 #endif

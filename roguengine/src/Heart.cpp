@@ -8,15 +8,15 @@ Heart::Heart()
 	SetSprite(TextureManager::GetTexture(TextureManager::AddTexture("../resources/loot/heart/spr_pickup_heart.png")), false, 8, 12);
 
 	// Set health value.
-	m_health = 15;
-	m_health = std::rand() % 11 + 10;
+	_health = 15;
+	_health = std::rand() % 11 + 10;
 
 	// Set item type.
-	m_type = ITEM::HEART;
+	_type = ITEM::HEART;
 }
 
 // Returns the amount of health that the heart gives.
 int Heart::GetHealth() const
 {
-	return m_health;
+	return _health;
 }

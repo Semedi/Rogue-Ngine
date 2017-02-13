@@ -38,11 +38,11 @@ private:
 	/**
 	 * A map of each sound name with its ID.
 	 */
-	static std::map<std::string, std::tuple<int, std::unique_ptr<sf::SoundBuffer>, std::unique_ptr<sf::Sound>>> m_soundBuffers;
+	static std::map<std::string, std::tuple<int, std::unique_ptr<sf::SoundBuffer>, std::unique_ptr<sf::Sound>>> _soundBuffers;
 
 	/**
 	 * The current key value.
 	 */
-	static int m_currentId;
+	static int _currentId;
 };
 #endif

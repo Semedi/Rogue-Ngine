@@ -203,7 +203,7 @@ public:
 	// Returns spawn location
 	sf::Vector2f SpawnLocation()
 	{
-		return m_spawnLocation;
+		return _spawnLocation;
 	}
 
 
@@ -238,33 +238,33 @@ private:
 	 * A 2D array that describes the level data.
 	 * The type is Tile, which holds a sprite and an index.
 	 */
-	Tile m_grid[GRID_WIDTH][GRID_HEIGHT];
+	Tile _grid[GRID_WIDTH][GRID_HEIGHT];
 
 	/**
 	 * A vector off all the sprites in the level.
 	 */
-	std::vector<sf::Sprite> m_tileSprites;
+	std::vector<sf::Sprite> _tileSprites;
 
 	/**
 	 * The position of the level relative to the window.
 	 * This is to the top-left of the level grid.
 	 */
-	sf::Vector2i m_origin;
+	sf::Vector2i _origin;
 
 	/**
 	* The floor number that the player is currently on.
 	*/
-	int m_floorNumber;
+	int _floorNumber;
 
 	/**
 	* The room number that the player is currently in.
 	*/
-	int m_roomNumber;
+	int _roomNumber;
 
 	/**
 	* A 2D array that contains the room layout for the current floor.
 	*/
-	int m_roomLayout[3][10];
+	int _roomLayout[3][10];
 
 	/**
 	 * An array containing all texture IDs of the level tiles.
@@ -274,14 +274,14 @@ private:
 	/**
 	 * The indices of the tile containing the levels door.
 	 */
-	sf::Vector2i m_doorTileIndices;
+	sf::Vector2i _doorTileIndices;
 
 	/**
 	 * A vector of all tiles in the level.
 	 */
-	std::vector<std::shared_ptr<Torch>> m_torches;
+	std::vector<std::shared_ptr<Torch>> _torches;
 
 	/* The spawn location for the current level */
-	sf::Vector2f m_spawnLocation;
+	sf::Vector2f _spawnLocation;
 };
 #endif

@@ -3,18 +3,18 @@
 
 // Default constructor.
 Entity::Entity() :
-m_currentTextureIndex(static_cast<int>(ANIMATION_STATE::WALK_DOWN)),
-m_health(0),
-m_maxHealth(0),
-m_mana(0),
-m_maxMana(0),
-m_attack(0),
-m_defense(0),
-m_strength(0),
-m_dexterity(0),
-m_stamina(0),
-m_speed(0),
-m_velocity({0.f, 0.f})
+_currentTextureIndex(static_cast<int>(ANIMATION_STATE::WALK_DOWN)),
+_health(0),
+_maxHealth(0),
+_mana(0),
+_maxMana(0),
+_attack(0),
+_defense(0),
+_strength(0),
+_dexterity(0),
+_stamina(0),
+_speed(0),
+_velocity({0.f, 0.f})
 {
 }
 
@@ -22,13 +22,13 @@ m_velocity({0.f, 0.f})
 void Entity::Update(float timeDelta)
 {
 	// Choose animation state.
-	ANIMATION_STATE animState = static_cast<ANIMATION_STATE>(m_currentTextureIndex);
+	ANIMATION_STATE animState = static_cast<ANIMATION_STATE>(_currentTextureIndex);
 
-	if ((m_velocity.x != 0) || (m_velocity.y != 0))
+	if ((_velocity.x != 0) || (_velocity.y != 0))
 	{
-		if (abs(m_velocity.x) > abs(m_velocity.y))
+		if (abs(_velocity.x) > abs(_velocity.y))
 		{
-			if (m_velocity.x <= 0)
+			if (_velocity.x <= 0)
 			{
 				animState = ANIMATION_STATE::WALK_LEFT;
 			}
@@ -39,7 +39,7 @@ void Entity::Update(float timeDelta)
 		}
 		else
 		{
-			if (m_velocity.y <= 0)
+			if (_velocity.y <= 0)
 			{
 				animState = ANIMATION_STATE::WALK_UP;
 			}
@@ -51,13 +51,13 @@ void Entity::Update(float timeDelta)
 	}
 
 	// Set animation speed.
-	if ((m_velocity.x == 0) && (m_velocity.y == 0))
+	if ((_velocity.x == 0) && (_velocity.y == 0))
 	{
 		// The character is still.
 		if (IsAnimated())
 		{
 			// Update sprite to idle version.
-			m_currentTextureIndex += 4;
+			_currentTextureIndex += 4;
 
 			// Stop movement animations.
 			SetAnimated(false);
@@ -69,7 +69,7 @@ void Entity::Update(float timeDelta)
 		if (!IsAnimated())
 		{
 			// Update sprite to walking version.
-			m_currentTextureIndex -= 4;
+			_currentTextureIndex -= 4;
 
 			// Start movement animations.
 			SetAnimated(true);
@@ -77,81 +77,81 @@ void Entity::Update(float timeDelta)
 	}
 
 	// Set the sprite.
-	if (m_currentTextureIndex != static_cast<int>(animState))
+	if (_currentTextureIndex != static_cast<int>(animState))
 	{
-		m_currentTextureIndex = static_cast<int>(animState);
-		m_sprite.setTexture(TextureManager::GetTexture(_textureIDs[m_currentTextureIndex]));
+		_currentTextureIndex = static_cast<int>(animState);
+		_sprite.setTexture(TextureManager::GetTexture(_textureIDs[_currentTextureIndex]));
 	}
 }
 
 // Gets the entities health.
 int Entity::GetHealth() const
 {
-	return m_health;
+	return _health;
 }
 
 // Gets the entities max health.
 int Entity::GetMaxHealth() const
 {
-	return m_maxHealth;
+	return _maxHealth;
 }
 
 // Gets the entities attack.
 int Entity::GetAttack() const
 {
-	return m_attack;
+	return _attack;
 }
 
 // Gets the entities defense.
 int Entity::GetDefense() const
 {
-	return m_defense;
+	return _defense;
 }
 
 // Gets the entities strength.
 int Entity::GetStrength() const
 {
-	return m_strength;
+	return _strength;
 }
 
 // Gets the entities dexterity.
 int Entity::GetDexterity() const
 {
-	return m_dexterity;
+	return _dexterity;
 }
 
 // Gets the entities stamina.
 int Entity::GetStamina() const
 {
-	return m_stamina;
+	return _stamina;
 }
 
 // Sets the entities attack stat.
 void Entity::SetAttack(int attackValue)
 {
-	m_attack = attackValue;
+	_attack = attackValue;
 }
 
 // Sets the entities defense stat.
 void Entity::SetDefense(int defenseValue)
 {
-	m_defense = defenseValue;
+	_defense = defenseValue;
 }
 
 // Sets the entities strength stat.
 void Entity::SetStrength(int strengthValue)
 {
-	m_strength = strengthValue;
+	_strength = strengthValue;
 }
 
 // Sets the entities dexterity stat.
 void Entity::SetDexterity(int dexterityValue)
 {
-	m_dexterity = dexterityValue;
+	_dexterity = dexterityValue;
 }
 
 // Sets the entities stamina stat.
 void Entity::SetStamina(int staminaValue)
 {
-	m_stamina = staminaValue;
+	_stamina = staminaValue;
 }

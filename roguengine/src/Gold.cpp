@@ -23,7 +23,7 @@ Gold::Gold()
 
 	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_coin_pickup.wav");
 	// Set the item type.
-	m_type = ITEM::GOLD;
+	_type = ITEM::GOLD;
 }
 
 //  Returns the amount of gold this pickup has.

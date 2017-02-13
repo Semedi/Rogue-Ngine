@@ -12,7 +12,7 @@ Key::Key()
 	SetItemName("Key");
 
 	// Set item type.
-	m_type = ITEM::KEY;
+	_type = ITEM::KEY;
 	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_key_pickup.wav");
 
 }

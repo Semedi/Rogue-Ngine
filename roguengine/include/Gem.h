@@ -21,6 +21,6 @@ private:
 	/**
 	 * The value of this gem pickup.
 	 */
-	int m_scoreValue;
+	int _scoreValue;
 };
 #endif

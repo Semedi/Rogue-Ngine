@@ -99,61 +99,61 @@ protected:
 	/**
 	 * The index of the current texture.
 	 */
-	int m_currentTextureIndex;
+	int _currentTextureIndex;
 
 	/**
 	 * The entities current health.
 	 */
-	int m_health;
+	int _health;
 
 	/**
 	 * The entities maximum health.
 	 */
-	int m_maxHealth;
+	int _maxHealth;
 
 	/**
 	 * The entities current mana.
 	 */
-	int m_mana;
+	int _mana;
 
 	/**
 	 * The entities maximum mana.
 	 */
-	int m_maxMana;
+	int _maxMana;
 
 	/**
 	 * The entities attack stat. Effects damage dealt.
 	 */
-	int m_attack;
+	int _attack;
 
 	/**
 	 * The entities defense stat. Effects damage taken.
 	 */
-	int m_defense;
+	int _defense;
 
 	/**
 	 * The entities strength. Effects damage dealt.
 	 */
-	int m_strength;
+	int _strength;
 
 	/**
 	 * The entities dexterity. Effects movement speed.
 	 */
-	int m_dexterity;
+	int _dexterity;
 
 	/**
 	 * The entities stamina. Effects health.
 	 */
-	int m_stamina;
+	int _stamina;
 
 	/**
 	 * The entities movement speed.
 	 */
-	int m_speed;
+	int _speed;
 
 	/**
 	 * The entities current velocity.
 	 */
-	sf::Vector2f m_velocity;
+	sf::Vector2f _velocity;
 };
 #endif

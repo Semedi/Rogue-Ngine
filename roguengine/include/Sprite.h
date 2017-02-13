@@ -15,7 +15,7 @@ class Sprite : public Component
 		void SetAnimated(bool isAnimated);
 
 	protected:
-		sf::Sprite m_sprite;
+		sf::Sprite _sprite;
 
 	private:
 

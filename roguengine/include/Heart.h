@@ -23,6 +23,6 @@ private:
 	/**
 	 * The amount of health the heart gives.
 	 */
-	int m_health;
+	int _health;
 };
 #endif

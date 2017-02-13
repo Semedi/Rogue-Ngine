@@ -39,7 +39,7 @@ void Item::SetItemName(std::string name)
 // Gets the item type.
 ITEM Item::GetType() const
 {
-	return m_type;
+	return _type;
 }
 
 // Draws the item and its name if it has one.

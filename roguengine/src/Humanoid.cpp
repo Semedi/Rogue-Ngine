@@ -257,5 +257,5 @@ void Humanoid::Update(float timeDelta)
 	Enemy::Update(timeDelta);
 
 	// Update the texture with our custom textures.
-	m_sprite.setTexture(_textures[m_currentTextureIndex]);
+	_sprite.setTexture(_textures[_currentTextureIndex]);
 }

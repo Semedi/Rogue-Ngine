@@ -1,7 +1,7 @@
 #include <PCH.h>
 
 std::map<std::string, std::pair<int, std::unique_ptr<sf::Texture>>> TextureManager::_textures;
-int TextureManager::m_currentId = 0;
+int TextureManager::_currentId = 0;
 
 // Default Constructor.
 TextureManager::TextureManager()
@@ -20,7 +20,7 @@ int TextureManager::AddTexture(std::string filePath)
 	}
 
 	// At this point the texture doesn't exists, so we'll create and add it.
-	m_currentId++;
+	_currentId++;
 
 	std::unique_ptr<sf::Texture> texture = std::make_unique<sf::Texture>();
 	if (!texture->loadFromFile(filePath))
@@ -28,10 +28,10 @@ int TextureManager::AddTexture(std::string filePath)
 		return -1;
 	}
 
-	_textures.insert(std::make_pair(filePath, std::make_pair(m_currentId, std::move(texture))));
+	_textures.insert(std::make_pair(filePath, std::make_pair(_currentId, std::move(texture))));
 
 	// Return the texture.
-	return m_currentId;
+	return _currentId;
 }
 
 // Removes a texture from the manager from a given id.

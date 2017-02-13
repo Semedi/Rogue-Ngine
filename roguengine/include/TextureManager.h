@@ -38,6 +38,6 @@ private:
 	/**
 	 * The current key value.
 	 */
-	static int m_currentId;
+	static int _currentId;
 };
 #endif

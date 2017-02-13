@@ -84,7 +84,7 @@ public:
 		std::shared_ptr<T> newComponent = std::make_shared<T>();
 
 		//check if we already have th ecomponent
-		for (std::shared_ptr<Component>& existingComponent : m_components)
+		for (std::shared_ptr<Component>& existingComponent : _components)
 		{
 			//exists
 			if (std::dynamic_pointer_cast<T>(existingComponent))
@@ -94,7 +94,7 @@ public:
 
 			}
 		}
-		m_components.push_back(newComponent);
+		_components.push_back(newComponent);
 		return newComponent;
 
 	}
@@ -103,7 +103,7 @@ public:
 	template <typename T>
 	std::shared_ptr<T> GetComponent()
 	{
-		for (std::shared_ptr<Component>& existingComponent : m_components)
+		for (std::shared_ptr<Component>& existingComponent : _components)
 		{
 			if (std::dynamic_pointer_cast<T>(existingComponent))
 				return std::dynamic_pointer_cast<T>(existingComponent);
@@ -117,13 +117,11 @@ protected:
 	/**
 	 * The object's sprite.
 	 */
-	sf::Sprite m_sprite;
+	sf::Sprite _sprite;
 
 	/**
-	 * The position of the object in the game window.
+	 * Transform component, position
 	 */
-	//sf::Vector2f m_position;
-
 	Transform transform;
 
 private:
@@ -174,6 +172,6 @@ private:
 	/*
 	* Collection 4 all the components attached to the object
 	*/
-	std::vector<std::shared_ptr<Component>> m_components;
+	std::vector<std::shared_ptr<Component>> _components;
 };
 #endif

@@ -24,23 +24,23 @@ Slime::Slime()
 	int a = rand() % 156 + 100;
 	sf::Color color(r, g, b, 255);
 
-	m_sprite.setColor(color);
+	_sprite.setColor(color);
 
 	// Generate a random scale between 0.5 and 1.5 and set it.
 	float scale;
 	scale = (rand() % 11 + 5) / 10.f;
 
-	m_sprite.setScale(sf::Vector2f(scale, scale));
+	_sprite.setScale(sf::Vector2f(scale, scale));
 
 
 	/*
 	sf::RenderTexture texture;
 
-	int textureWidth(m_sprite.getTexture()->getSize().x);
-	int textureHeight(m_sprite.getTexture()->getSize().y);
+	int textureWidth(_sprite.getTexture()->getSize().x);
+	int textureHeight(_sprite.getTexture()->getSize().y);
 
 	texture.create(textureWidth*scale, textureHeight*scale);
 
-	texture.draw(m_sprite);
+	texture.draw(_sprite);
 	*/
 }

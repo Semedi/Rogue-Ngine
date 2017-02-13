@@ -18,7 +18,7 @@ _timeDelta(0)
 bool Object::SetSprite(sf::Texture& texture, bool isSmooth, int frames, int frameSpeed)
 {
 	// Create a sprite from the loaded texture.
-	m_sprite.setTexture(texture);
+	_sprite.setTexture(texture);
 
 	// Set animation speed.
 	_animationSpeed = frameSpeed;
@@ -27,7 +27,7 @@ bool Object::SetSprite(sf::Texture& texture, bool isSmooth, int frames, int fram
 	_nframe = frames;
 
 	// Calculate frame dimensions.
-	sf::Vector2u texSize = m_sprite.getTexture()->getSize();
+	sf::Vector2u texSize = _sprite.getTexture()->getSize();
 	_frameWidth = texSize.x / _nframe;
 	_frameHeight = texSize.y;
 
@@ -38,7 +38,7 @@ bool Object::SetSprite(sf::Texture& texture, bool isSmooth, int frames, int fram
 		_animated = true;
 
 		// Set the texture rect of the first frame.
-		m_sprite.setTextureRect(sf::IntRect(0, 0, _frameWidth, _frameHeight));
+		_sprite.setTextureRect(sf::IntRect(0, 0, _frameWidth, _frameHeight));
 	}
 	else
 	{
@@ -47,7 +47,7 @@ bool Object::SetSprite(sf::Texture& texture, bool isSmooth, int frames, int fram
 	}
 
 	// Set the origin of the sprite.
-	m_sprite.setOrigin(_frameWidth / 2.f, _frameHeight / 2.f);
+	_sprite.setOrigin(_frameWidth / 2.f, _frameHeight / 2.f);
 
 	return true;
 }
@@ -55,7 +55,7 @@ bool Object::SetSprite(sf::Texture& texture, bool isSmooth, int frames, int fram
 // Returns the object's sprite.
 sf::Sprite& Object::GetSprite()
 {
-	return m_sprite;
+	return _sprite;
 }
 
 // Sets the position of the object.
@@ -64,7 +64,7 @@ void Object::SetPosition(sf::Vector2f position)
 
 	transform.position.x = position.x;
 	transform.position.y = position.y;
-	m_sprite.setPosition(position.x, position.y);
+	_sprite.setPosition(position.x, position.y);
 
 
 
@@ -95,7 +95,7 @@ void Object::SetAnimated(bool isAnimated)
 	else
 	{
 		// set the texture rect of the first frame
-		m_sprite.setTextureRect(sf::IntRect(0, 0, _frameWidth, _frameHeight));
+		_sprite.setTextureRect(sf::IntRect(0, 0, _frameWidth, _frameHeight));
 	}
 }
 
@@ -116,7 +116,7 @@ void Object::Draw(sf::RenderWindow &window, float timeDelta)
 		}
 	}
 
-	window.draw(m_sprite);
+	window.draw(_sprite);
 }
 
 // Advances the sprite forward a frame.
@@ -129,7 +129,7 @@ void Object::NextFrame()
 		_currentFrame++;
 
 	// update the texture rect
-	m_sprite.setTextureRect(sf::IntRect(_frameWidth * _currentFrame, 0, _frameWidth, _frameHeight));
+	_sprite.setTextureRect(sf::IntRect(_frameWidth * _currentFrame, 0, _frameWidth, _frameHeight));
 }
 
 // Gets the frame count of the object.

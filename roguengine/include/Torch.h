@@ -29,6 +29,6 @@ private:
 	/**
 	 * The brightness modifier of the torch. This is used to denote flicker.
 	 */
-	float m_brightness;
+	float _brightness;
 };
 #endif

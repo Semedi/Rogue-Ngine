@@ -8,10 +8,10 @@ Gem::Gem()
 	SetSprite(TextureManager::GetTexture(TextureManager::AddTexture("../resources/loot/gem/spr_pickup_gem.png")), false, 8, 12);
 
 	// Set the value of the gem.
-	m_scoreValue = 50;
-	m_scoreValue = std::rand() % 100;
+	_scoreValue = 50;
+	_scoreValue = std::rand() % 100;
 	// Set the item type.
-	m_type = ITEM::GEM;
+	_type = ITEM::GEM;
 
 	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_gem_pickup.wav");
 	
@@ -22,5 +22,5 @@ Gem::Gem()
 // Gets the amount of score this pickup gives.
 int Gem::GetScoreValue() const
 {
-	return m_scoreValue;
+	return _scoreValue;
 }

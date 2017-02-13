@@ -3,17 +3,17 @@
 
 // Constructor.
 Player::Player() :
-m_attackDelta(0.f),
-m_damageDelta(0.f),
-m_manaDelta(0.f),
-m_isAttacking(false),
-m_statPoints(50),
-m_canTakeDamage(true)
+_attackDelta(0.f),
+_damageDt(0.f),
+_manaDt(0.f),
+_attacking(false),
+_statPoints(50),
+_canTakeDamage(true)
 {
-	m_class = static_cast<PLAYER_CLASS>(std::rand() % static_cast<int>(PLAYER_CLASS::COUNT));
+	_class = static_cast<PLAYER_CLASS>(std::rand() % static_cast<int>(PLAYER_CLASS::COUNT));
 	
 	
-	std::vector<std::string> paths = BuildPlayer(m_class);
+	std::vector<std::string> paths = BuildPlayer(_class);
 	// Load textures.
 	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)] = TextureManager::AddTexture(paths[0]);
 	_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_DOWN)] = TextureManager::AddTexture(paths[1]);
@@ -29,19 +29,19 @@ m_canTakeDamage(true)
 
 	// Set initial sprite.
 	SetSprite(TextureManager::GetTexture(_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
-	m_currentTextureIndex = static_cast<int>(ANIMATION_STATE::WALK_UP);
-	m_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
+	_currentTextureIndex = static_cast<int>(ANIMATION_STATE::WALK_UP);
+	_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
 
 	// Create the player's aim sprite.
 	int textureID = TextureManager::AddTexture("../resources/ui/spr_aim.png");
-	m_aimSprite.setTexture(TextureManager::GetTexture(textureID));
-	m_aimSprite.setOrigin(sf::Vector2f(16.5f, 16.5f));
-	m_aimSprite.setScale(2.f, 2.f);
+	_aimSprite.setTexture(TextureManager::GetTexture(textureID));
+	_aimSprite.setOrigin(sf::Vector2f(16.5f, 16.5f));
+	_aimSprite.setScale(2.f, 2.f);
 
 	// Set stats.
-	m_health = m_maxHealth = 100;
-	m_mana = m_maxMana = 50;
-	m_speed = 200;
+	_health = _maxHealth = 100;
+	_mana = _maxMana = 50;
+	_speed = 200;
 
 
 	float attackBias = std::rand() % 101;
@@ -52,11 +52,11 @@ m_canTakeDamage(true)
 
 	float total = attackBias + defenseBias + strenghtBias + dexteryBias + staminaBias;
 
-	m_attack += m_statPoints * (attackBias / total);
-	m_defense += m_statPoints * (defenseBias / total);
-	m_strength += m_statPoints * (strenghtBias / total);
-	m_dexterity += m_statPoints * (dexteryBias / total);
-	m_stamina += m_statPoints * (staminaBias / total);
+	_attack += _statPoints * (attackBias / total);
+	_defense += _statPoints * (defenseBias / total);
+	_strength += _statPoints * (strenghtBias / total);
+	_dexterity += _statPoints * (dexteryBias / total);
+	_stamina += _statPoints * (staminaBias / total);
 
 	//Add transform component
 	AttachComponent<Sprite>();
@@ -74,12 +74,12 @@ void Player::Update(float timeDelta, Level& level)
 	sf::Vector2f previousPosition = transform.position;
 
 	// Calculate where the current movement will put us.
-	ANIMATION_STATE animState = static_cast<ANIMATION_STATE>(m_currentTextureIndex);
+	ANIMATION_STATE animState = static_cast<ANIMATION_STATE>(_currentTextureIndex);
 
 	if (Input::IsKeyPressed(Input::KEY::KEY_LEFT))
 	{
 		// Set movement speed.
-		movementSpeed.x = -m_speed * timeDelta;
+		movementSpeed.x = -_speed * timeDelta;
 
 		// Chose animation state.
 		animState = ANIMATION_STATE::WALK_LEFT;
@@ -87,7 +87,7 @@ void Player::Update(float timeDelta, Level& level)
 	else if (Input::IsKeyPressed(Input::KEY::KEY_RIGHT))
 	{
 		// Set movement speed.
-		movementSpeed.x = m_speed * timeDelta;
+		movementSpeed.x = _speed * timeDelta;
 
 		// Chose animation state.
 		animState = ANIMATION_STATE::WALK_RIGHT;
@@ -96,7 +96,7 @@ void Player::Update(float timeDelta, Level& level)
 	if (Input::IsKeyPressed(Input::KEY::KEY_UP))
 	{
 		// Set movement speed.
-		movementSpeed.y = -m_speed * timeDelta;
+		movementSpeed.y = -_speed * timeDelta;
 
 		// Chose animation state.
 		animState = ANIMATION_STATE::WALK_UP;
@@ -104,7 +104,7 @@ void Player::Update(float timeDelta, Level& level)
 	else if (Input::IsKeyPressed(Input::KEY::KEY_DOWN))
 	{
 		// Set movement speed.
-		movementSpeed.y = m_speed * timeDelta;
+		movementSpeed.y = _speed * timeDelta;
 
 		// Chose animation state.
 		animState = ANIMATION_STATE::WALK_DOWN;
@@ -131,13 +131,13 @@ void Player::Update(float timeDelta, Level& level)
 	}
 
 	// update the sprite position
-	m_sprite.setPosition(transform.position);
+	_sprite.setPosition(transform.position);
 
 	// Set the sprite.
-	if (m_currentTextureIndex != static_cast<int>(animState))
+	if (_currentTextureIndex != static_cast<int>(animState))
 	{
-		m_currentTextureIndex = static_cast<int>(animState);
-		m_sprite.setTexture(TextureManager::GetTexture(_textureIDs[m_currentTextureIndex]));
+		_currentTextureIndex = static_cast<int>(animState);
+		_sprite.setTexture(TextureManager::GetTexture(_textureIDs[_currentTextureIndex]));
 	}
 
 	// set animation speed
@@ -149,8 +149,8 @@ void Player::Update(float timeDelta, Level& level)
 			// Update sprite to idle version.
 			// In our enum we have 4 walking sprites followed by 4 idle sprites.
 			// Given this, we can simply add 4 to a walking sprite to get its idle counterpart.
-			m_currentTextureIndex += 4;
-			m_sprite.setTexture(TextureManager::GetTexture(_textureIDs[m_currentTextureIndex]));
+			_currentTextureIndex += 4;
+			_sprite.setTexture(TextureManager::GetTexture(_textureIDs[_currentTextureIndex]));
 
 			// Stop movement animations.
 			SetAnimated(false);
@@ -162,8 +162,8 @@ void Player::Update(float timeDelta, Level& level)
 		if (!IsAnimated())
 		{
 			// Update sprite to walking version.
-			m_currentTextureIndex -= 4;
-			m_sprite.setTexture(TextureManager::GetTexture(_textureIDs[m_currentTextureIndex]));
+			_currentTextureIndex -= 4;
+			_sprite.setTexture(TextureManager::GetTexture(_textureIDs[_currentTextureIndex]));
 
 			// Start movement animations.
 			SetAnimated(true);
@@ -172,53 +172,53 @@ void Player::Update(float timeDelta, Level& level)
 
 	// Calculate aim based on mouse.
 	sf::Vector2i mousePos = sf::Mouse::getPosition();
-	m_aimSprite.setPosition((float)mousePos.x, (float)mousePos.y);
+	_aimSprite.setPosition((float)mousePos.x, (float)mousePos.y);
 
 	// Check if shooting.
-	if ((m_attackDelta += timeDelta) > 0.25f)
+	if ((_attackDelta += timeDelta) > 0.25f)
 	{
 		if (Input::IsKeyPressed(Input::KEY::KEY_ATTACK))
 		{
 			// Mark player as attacking.
-			m_isAttacking = true;
+			_attacking = true;
 		}
 	}
 
 	// Determine if the player can take damage.
-	if (!m_canTakeDamage)
+	if (!_canTakeDamage)
 	{
-		if ((m_damageDelta += timeDelta) > 1.f)
+		if ((_damageDt += timeDelta) > 1.f)
 		{
-			m_canTakeDamage = true;
-			m_damageDelta = 0.f;
+			_canTakeDamage = true;
+			_damageDt = 0.f;
 		}
 	}
 
 	// Increase player mana.
-	if ((m_manaDelta += timeDelta) > 0.20)
+	if ((_manaDt += timeDelta) > 0.20)
 	{
-		if (m_mana < m_maxMana)
+		if (_mana < _maxMana)
 		{
-			m_mana += 1;
+			_mana += 1;
 		}
 
-		m_manaDelta = 0.f;
+		_manaDt = 0.f;
 	}
 }
 
 // Returns a reference to the player's aim sprite.
 sf::Sprite& Player::GetAimSprite()
 {
-	return m_aimSprite;
+	return _aimSprite;
 }
 
 // Checks if the player is attacking.
 bool Player::IsAttacking()
 {
-	if (m_isAttacking)
+	if (_attacking)
 	{
-		m_isAttacking = false;
-		m_attackDelta = 0.f;
+		_attacking = false;
+		_attackDelta = 0.f;
 		return true;
 	}
 	else
@@ -230,52 +230,52 @@ bool Player::IsAttacking()
 // Checks if the player can take damage.
 bool Player::CanTakeDamage()
 {
-	return m_canTakeDamage;
+	return _canTakeDamage;
 }
 
 // Apply the given amount of damage to the player.
 void Player::Damage(int damage)
 {
-	m_health -= damage;
+	_health -= damage;
 
-	if (m_health < 0)
+	if (_health < 0)
 	{
-		m_health = 0;
+		_health = 0;
 	}
 
-	m_canTakeDamage = false;
+	_canTakeDamage = false;
 }
 
 PLAYER_CLASS Player::GetClass() const
 {
-	return m_class;
+	return _class;
 }
 
 void Player::SetRandomTraits()
 {
 	//generate traits..
 	for (int i = 0; i < PLAYER_TRAIT_COUNT; ++i)
-		m_traits[i] = static_cast<PLAYER_TRAIT>(std::rand() % static_cast<int>(PLAYER_TRAIT::COUNT));
+		_traits[i] = static_cast<PLAYER_TRAIT>(std::rand() % static_cast<int>(PLAYER_TRAIT::COUNT));
 
 	//Action the traits
-	for (PLAYER_TRAIT trait : m_traits)
+	for (PLAYER_TRAIT trait : _traits)
 	{
 		switch (trait)
 		{
 		case PLAYER_TRAIT::ATTACK: default:
-			m_attack += rand() % 6 + 5;
+			_attack += rand() % 6 + 5;
 			break;
 		case PLAYER_TRAIT::DEFENSE:
-			m_defense += std::rand() % 6 + 5;
+			_defense += std::rand() % 6 + 5;
 			break;
 		case PLAYER_TRAIT::STRENGTH:
-			m_strength += std::rand() % 6 + 5;
+			_strength += std::rand() % 6 + 5;
 			break;
 		case PLAYER_TRAIT::DEXTERY:
-			m_dexterity += std::rand() % 6 + 5;
+			_dexterity += std::rand() % 6 + 5;
 			break;
 		case PLAYER_TRAIT::STAMINA :
-			m_stamina += std::rand() % 6 + 5;
+			_stamina += std::rand() % 6 + 5;
 			break;
 		}
 	}
@@ -319,18 +319,18 @@ std::vector<std::string> Player::BuildPlayer(PLAYER_CLASS c)
 	switch (c){
 	case PLAYER_CLASS::WARRIOR:
 		name = "warrior";
-		m_strength += std::rand() % 6 + 5;
+		_strength += std::rand() % 6 + 5;
 		break;
 	case PLAYER_CLASS:: ARCHER:
-		m_dexterity += std::rand() % 6 + 5;
+		_dexterity += std::rand() % 6 + 5;
 		name = "archer";
 		break;
 	case PLAYER_CLASS::THIEF:
 		name = "thief";
-		m_stamina += std::rand() % 6 + 5;
+		_stamina += std::rand() % 6 + 5;
 		break;
 	case PLAYER_CLASS::MAGE:
-		m_defense += std::rand() % 6 + 5;
+		_defense += std::rand() % 6 + 5;
 		name = "mage";
 		break;
 	}
@@ -353,18 +353,18 @@ std::vector<std::string> Player::BuildPlayer(PLAYER_CLASS c)
 // Gets the player's mana.
 int Player::GetMana() const
 {
-	return m_mana;
+	return _mana;
 }
 
 // Gets the player's max mana.
 int Player::GetMaxMana() const
 {
-	return m_maxMana;
+	return _maxMana;
 }
 
 PLAYER_TRAIT * Player::GetTraits()
 {
-	return &m_traits[0];
+	return &_traits[0];
 }
 
 int Player::GetTraitCount()
@@ -377,17 +377,17 @@ void Player::SetMana(int manaValue)
 {
 	if (manaValue >= 0)
 	{
-		m_mana = manaValue;
+		_mana = manaValue;
 	}
 }
 
 // Set the player's health.
 void Player::SetHealth(int healthValue)
 {
-	m_health = healthValue;
+	_health = healthValue;
 
-	if (m_health > m_maxHealth)
+	if (_health > _maxHealth)
 	{
-		m_health = m_maxHealth;
+		_health = _maxHealth;
 	}
 }

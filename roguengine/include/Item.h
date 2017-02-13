@@ -48,7 +48,7 @@ public:
 	/**
 	 * The type of item.
 	 */
-	ITEM m_type;
+	ITEM _type;
 
 	/**
 	 * A text object storing the name of the item.
