@@ -941,11 +941,11 @@ void Game::DrawString(std::string text, sf::Vector2f position, unsigned int size
 	_string.clear();
 
 	sf::RectangleShape rectangle;
-	rectangle.setSize({500, 200});
+	//rectangle.setSize({500, 200});
 	rectangle.setPosition(0, _window.getSize().y/3);
 
 
-	_window.draw(rectangle);
+	//_window.draw(rectangle);
 	_strStream << text;
 	_string = _strStream.str();
 

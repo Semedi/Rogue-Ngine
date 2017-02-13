@@ -8,7 +8,8 @@ int main()
 	srand(static_cast<unsigned int>(time(nullptr)));
 
 	// Create the main game object.
-	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Template", sf::Style::Default);
+	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+	sf::RenderWindow window(sf::VideoMode(1.5*960, 1.5*544, desktop.bitsPerPixel), "Rogue Ngine", sf::Style::Default);
 	Game game(&window);
 
 	// Initialize and run the game object.
