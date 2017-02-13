@@ -36,7 +36,7 @@ _levelWasGenerated(false)
 	// Setup the main game music & Load the music track, play the music
 	int trackIndex = std::rand() % static_cast<int>(MUSIC_TRACK::COUNT) + 1;
 	_music.openFromFile("../resources/music/msc_main_track_" + std::to_string(trackIndex) + ".wav");
-	_music.play();
+	//_music.play();
 
 }
 
@@ -940,12 +940,19 @@ void Game::DrawString(std::string text, sf::Vector2f position, unsigned int size
 	_strStream.str(std::string());
 	_string.clear();
 
+
+	/* CONSOLE*/
+	/*
 	sf::RectangleShape rectangle;
-	//rectangle.setSize({500, 200});
-	rectangle.setPosition(0, _window.getSize().y/3);
+	int y = _screenSize.y/4;
+	rectangle.setSize({(float)_screenSize.x/4, (float)y});
+	rectangle.setPosition(0, _window.getSize().y-y);
+	rectangle.setFillColor(sf::Color(0, 0, 0, 100));
+	_window.draw(rectangle);
+	*/
 
 
-	//_window.draw(rectangle);
+
 	_strStream << text;
 	_string = _strStream.str();
 
@@ -1088,8 +1095,8 @@ void Game::Draw(float timeDelta)
 		}
 
 		// Draw the current room and floor.
-		DrawString("Floor " + std::to_string(_level.GetFloorNumber()), sf::Vector2f(70.f, _screenSize.y - 65.f), 25);
-		DrawString("Room " + std::to_string(_level.GetRoomNumber()), sf::Vector2f(70.f, _screenSize.y - 30.f), 25);
+		DrawString("Floor " + std::to_string(_level.GetFloorNumber()), sf::Vector2f(_screenSize.x - 50, _screenSize.y - 300.f), 20);
+		DrawString("Room " + std::to_string(_level.GetRoomNumber()), sf::Vector2f(_screenSize.x - 50, _screenSize.y - 275.f), 20);
 
 		// Draw health and mana bars.
 		_healthBarSprite->setTextureRect(sf::IntRect(0, 0, (213.f / _player.GetMaxHealth()) * _player.GetHealth(), 8));
