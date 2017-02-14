@@ -167,5 +167,14 @@
     <ClCompile Include="src\polla\polla.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="include\modules\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\modules\imgui\imgui-SFML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\modules\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
