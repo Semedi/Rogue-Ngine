@@ -44,14 +44,19 @@ set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/;${CMAKE_MODULE_PATH}")
 # Find SFML
 # Note: SFML_STATIC_LIBRARIES determines which libraries are found by find_package()
 find_package(SFML 2 COMPONENTS audio graphics window system network)
+find_package(OpenGL REQUIRED)
+
+#include_directories( ${OPENGL_INCLUDE_DIRS} )
+
+#target_link_libraries(testas ${OPENGL_LIBRARIES})
 
 # If found, include and link; otherwise output error message
-if(SFML_FOUND)
-	include_directories(${SFML_INCLUDE_DIR})
+if((SFML_FOUND) AND (OPENGL_FOUND))
+	include_directories(${SFML_INCLUDE_DIR} ${OPENGL_INCLUDE_DIRS})
 else()
 	set(SFML_ROOT "" CACHE PATH "SFML top-level directory")
-	message("\n-> SFML directory not found. Set SFML_ROOT to SFML's top-level path (containing \"include\" and \"lib\" directories).")
-	message("-> Make sure the SFML libraries with the same configuration (Release/Debug, Static/Dynamic) exist.\n")
+	message("\n-> OpenGL or SFML directory not found. Set SFML_ROOT to SFML's top-level path (containing \"include\" and \"lib\" directories).")
+	message("-> Make sure the SFML libraries with the same configuration (Release/Debug, Static/Dynamic) exist. and OPENGL installed in the system!\n")
 endif()
 
 ############
@@ -130,7 +135,7 @@ macro(build _NAME)
 	if(SFML_VERSION_MINOR LESS 2)
         set(SFML_DEPENDENCIES "")
 	endif()
-	target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+	target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${OPENGL_LIBRARIES})
 
 	install(TARGETS ${PROJECT_NAME}	RUNTIME DESTINATION ${_NAME})
 	message(STATUS "install == ${PROJECT_NAME}	RUNTIME DESTINATION ${_NAME}")
