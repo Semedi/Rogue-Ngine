@@ -47,6 +47,8 @@ _levelWasGenerated(false)
 void Game::Initialize()
 {
 
+	ImGui::SFML::Init(_window);
+
 	_level.AddTile("../resources/tiles/spr_tile_floor_alt.png", TILE::FLOOR_ALT);
 
 	// Get the screen size.
@@ -367,13 +369,26 @@ void Game::Run()
 	float currentTime = _stepCLK.restart().asSeconds();
 	float timeDelta = 0.f;
 
+
+
+	sf::Clock clk;
+
+
+
+
+
+
+
 	// Loop until there is a quite message from the window or the user pressed escape.
 	while (_isRunning)
 	{
+		sf::Time dt = clk.restart();
+
 		// Check if the game was closed.
 		sf::Event event;
 		if (_window.pollEvent(event))
 		{
+			ImGui::SFML::ProcessEvent(event);
 			if ((event.type == sf::Event::Closed) || (Input::IsKeyPressed(Input::KEY::KEY_ESC)))
 			{
 				_window.close();
@@ -388,10 +403,13 @@ void Game::Run()
 		// Update all items in the level.
 		if (!_levelWasGenerated)
 		{
-			Update(frameTime);
-
+			
+			
+			Update(frameTime, dt);
+			
 			// Draw all items in the level.
 			Draw(frameTime);
+			
 		}
 		else
 		{
@@ -399,12 +417,14 @@ void Game::Run()
 		}
 	}
 
+
+	ImGui::SFML::Shutdown();
 	// Shut the game down.
 	_window.close();
 }
 
 // Updates the game.
-void Game::Update(float timeDelta)
+void Game::Update(float timeDelta, sf::Time dt)
 {
 	// Check what state the game is in.
 	switch (_gameState)
@@ -415,6 +435,13 @@ void Game::Update(float timeDelta)
 
 	case GAME_STATE::PLAYING:
 	{
+
+
+		/*
+	
+		*/
+
+		ImGui::SFML::Update(_window, dt);
 		// First check if the player is at the exit. If so there's no need to update anything.
 		Tile& playerTile = *_level.GetTile(_player.GetPosition());
 		//_posTile& playerTile = *_level.GetTile(_player.transform.GetPosition());
@@ -528,12 +555,17 @@ void Game::Update(float timeDelta)
 				}
 			}
 
+			//==========================================================================================
+
+
 			/*
-			*QUEST COMPLETION ===========================================================
+			*QUEST COMPLETION SYSTEM =========================================================================================================================================================
 			*/
 			// Check if we have completed an active goal.
 			if (_activeGoal)
 			{
+
+
 				if ((_gemGoal <= 0) &&
 					(_goldGoal <= 0) &&
 					(_killGoal <= 0))
@@ -543,6 +575,9 @@ void Game::Update(float timeDelta)
 				}
 				else
 				{
+
+
+
 					std::ostringstream ss;
 
 					if (_goldGoal > 0)
@@ -557,12 +592,18 @@ void Game::Update(float timeDelta)
 					{
 						ss << "Current Goal: Kill " << _killGoal << " enemies" << "!" << std::endl;
 					}
-
 					_goalString = ss.str();
-				}
-			}
+					/* NEW GUI, DEBUG PURPOSES !*/
+					ImGui::Begin("Bienvenido a Rogue Ngine!");
+					ImGui::Text("Eres un parguelon, hijo puta ha ve si aprendeeeeeeeh");
+					ImGui::Text("y por eso te voy a mandar esta tarea:");
+					ImGui::Text(ss.str().c_str());
+					ImGui::End();
 
-			//==========================================================================================
+				}
+
+			}
+			//=============================================================================================================================================================================
 
 			/* LAST INSTRUCTION*/
 			// Center the view.
@@ -965,6 +1006,7 @@ void Game::DrawString(std::string text, sf::Vector2f position, unsigned int size
 	_text.setPosition(position.x - (_text.getLocalBounds().width / 2.f), position.y - (_text.getLocalBounds().height / 2.f));
 
 	_window.draw(_text);
+	
 }
 
 // Draw the current game scene.
@@ -989,7 +1031,8 @@ void Game::Draw(float timeDelta)
 
 
 		/* Draw Entities && lights*/
-		/*********************************************************/
+		/****************************************************************************************************************************/
+		/****************************************************************************************************************************/
 		// Draw the level.
 		_level.Draw(_window, timeDelta);
 
@@ -1007,21 +1050,26 @@ void Game::Draw(float timeDelta)
 		// Draw level light.
 		for (const sf::Sprite& sprite : _lightGrid)
 			_window.draw(sprite);	
-		/************************************************************/
+		/****************************************************************************************************************************/
+		/****************************************************************************************************************************/
 
 
 		/* GUI*/
-		/**********************/
+		/****************************************************************************************************************************/
+		/****************************************************************************************************************************/
+			
 		// Switch to UI view.
 		_window.setView(_views[static_cast<int>(VIEW::UI)]);
 		// Draw player aim.
 		_window.draw(_player.GetAimSprite());
+		ImGui::Render();
 
-
+		
 		// Draw the level goal if active.
 		if (_activeGoal)
 		{
 			DrawString(_goalString, sf::Vector2f(static_cast<float>(_window.getSize().x / 2), static_cast<float>(_window.getSize().y - 75)), 30);
+			
 		}
 
 		// Draw player stats.
@@ -1100,13 +1148,17 @@ void Game::Draw(float timeDelta)
 		// Draw the current room and floor.
 		DrawString("Floor " + std::to_string(_level.GetFloorNumber()), sf::Vector2f(_screenSize.x - 50, _screenSize.y - 300.f), 20);
 		DrawString("Room " + std::to_string(_level.GetRoomNumber()), sf::Vector2f(_screenSize.x - 50, _screenSize.y - 275.f), 20);
+		
 
 		// Draw health and mana bars.
 		_healthBarSprite->setTextureRect(sf::IntRect(0, 0, (213.f / _player.GetMaxHealth()) * _player.GetHealth(), 8));
+		
 		_window.draw(*_healthBarSprite);
-
+		
 		_manaBarSprite->setTextureRect(sf::IntRect(0, 0, (213.f / _player.GetMaxMana()) * _player.GetMana(), 8));
 		_window.draw(*_manaBarSprite);
+		
+		//
 	}
 	break;
 
@@ -1115,8 +1167,10 @@ void Game::Draw(float timeDelta)
 		break;
 	}
 
+	
 	// Present the back-buffer to the screen.
 	_window.display();
+	
 }
 
 //Choose a random, unused spawn location if not overriden.

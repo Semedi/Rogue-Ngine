@@ -50,7 +50,7 @@ public:
 	 * The main update loop. This loop in turns calls the update loops of all game objects.
 	 * @param timeDelta The time, in MS, since the last update call.
 	 */
-	void Update(float timeDelta);
+	void Update(float timeDelta, sf::Time dt);
 
 	/**
 	 * Draws all game objects to screen.
