@@ -22,6 +22,7 @@ set (SRC
 	Sprite.cpp
 	TextureManager.cpp
 	Torch.cpp
-	Transform.cpp)
+	Transform.cpp
+	polla/polla.cpp)
 
 build(roguengine SOURCES ${SRC})

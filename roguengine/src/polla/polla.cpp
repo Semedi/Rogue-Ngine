@@ -6,5 +6,6 @@ Polla::Polla()
 {
 	// Set item name.
 	SetItemName("Polla");
+	std::cout << "polla" << std::endl;
 	
 }

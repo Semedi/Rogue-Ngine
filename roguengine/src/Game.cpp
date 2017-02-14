@@ -1,5 +1,6 @@
 #include <PCH.h>
 #include <Game.h>
+#include <polla/polla.h>
 
 // Default constructor.
 Game::Game(sf::RenderWindow* window) :
@@ -30,7 +31,7 @@ _levelWasGenerated(false)
 	// Create the level object.
 	_level = Level(*window);
 	
-	Polla::Polla();
+	Polla();
 
 	// Create the game font.
 	_font.loadFromFile("../resources/fonts/ADDSBP__.TTF");
