@@ -1,0 +1,11 @@
+#include <PCH.h>
+#include <polla/polla.h>
+
+// Default constructor.
+Polla::Polla()
+{
+	// Set item name.
+	SetItemName("Polla");
+	std::cout << "polla" << std::endl;
+	
+}
