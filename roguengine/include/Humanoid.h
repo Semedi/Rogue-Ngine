@@ -21,10 +21,7 @@ public:
 
 private:
 
-	/**
-	* An array of modified textures.
-	*/
-	sf::Texture _textures[static_cast<int>(ANIMATION_STATE::COUNT)];
+	sf::Texture _textures[static_cast<int>(ANIMATION_STATE::COUNT)]; //An array of modified textures.
 
 
 	/**

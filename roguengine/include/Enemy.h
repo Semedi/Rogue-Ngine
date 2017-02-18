@@ -40,19 +40,11 @@ public:
 	void Draw(sf::RenderWindow& window, float timeDelta) override;
 
 private:
-	/**
-	* The target positions of th enemy.
-	*/
-	std::vector<sf::Vector2f> _targetPositions;
 
-	/**
-	* The current target of th enemy.
-	*/
-	sf::Vector2f _currentTarget;
+	std::vector<sf::Vector2f> _targetPositions; //The target positions of th enemy.
+	sf::Vector2f _currentTarget; //The current target of th enemy.
 
-
-	//debug
-	sf::Sprite _pathSprite;
+	sf::Sprite _pathSprite; //debug
 
 	//debug
 	sf::Font _font;

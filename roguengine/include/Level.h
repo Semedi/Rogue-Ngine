@@ -233,17 +233,17 @@ private:
 	/* Generate entry/exit points */
 	void GenerateEntryExit();
 
+	/**/
+	void LoadTiles();
+
 private:
 	/**
 	 * A 2D array that describes the level data.
 	 * The type is Tile, which holds a sprite and an index.
 	 */
-	Tile _grid[GRID_WIDTH][GRID_HEIGHT];
+	Tile _grid[GRID_WIDTH][GRID_HEIGHT]; 
 
-	/**
-	 * A vector off all the sprites in the level.
-	 */
-	std::vector<sf::Sprite> _tileSprites;
+	std::vector<sf::Sprite> _tileSprites; //A vector off all the sprites in the level.
 
 	/**
 	 * The position of the level relative to the window.
@@ -251,37 +251,15 @@ private:
 	 */
 	sf::Vector2i _origin;
 
-	/**
-	* The floor number that the player is currently on.
-	*/
-	int _floorNumber;
 
-	/**
-	* The room number that the player is currently in.
-	*/
-	int _roomNumber;
+	int _floorNumber; //The floor number that the player is currently on.
+	int _roomNumber; //The room number that the player is currently in.
+	int _roomLayout[3][10]; //A 2D array that contains the room layout for the current floor.
 
-	/**
-	* A 2D array that contains the room layout for the current floor.
-	*/
-	int _roomLayout[3][10];
+	int _textureIDs[static_cast<int>(TILE::COUNT)]; //An array containing all texture IDs of the level tiles.
 
-	/**
-	 * An array containing all texture IDs of the level tiles.
-	 */
-	int _textureIDs[static_cast<int>(TILE::COUNT)];
-
-	/**
-	 * The indices of the tile containing the levels door.
-	 */
-	sf::Vector2i _doorTileIndices;
-
-	/**
-	 * A vector of all tiles in the level.
-	 */
-	std::vector<std::shared_ptr<Torch>> _torches;
-
-	/* The spawn location for the current level */
-	sf::Vector2f _spawnLocation;
+	sf::Vector2i _doorTileIndices; //The indices of the tile containing the levels door.
+	std::vector<std::shared_ptr<Torch>> _torches; //A vector of all tiles in the level.
+	sf::Vector2f _spawnLocation; //The spawn location for the current level
 };
 #endif

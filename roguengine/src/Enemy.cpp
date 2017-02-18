@@ -15,7 +15,7 @@ Enemy::Enemy()
 	// Set speed.
 	_speed = rand() % 51 + 150;
 
-	/* DEBUG **************************************************************************************************************/
+	/* DEBUG 
 	int textureID = TextureManager::AddTexture("../resources/spr_path.png");
 	_pathSprite.setTexture(TextureManager::GetTexture(textureID));
 
@@ -27,10 +27,13 @@ Enemy::Enemy()
 	_text.setFont(_font);
 	_text.setCharacterSize(12);
 	/**************************************************************************************************************************/
+
+
 	AttachComponent<Audio>()->SetSoundBuffer("../resources/sounds/snd_enemy_dead.wav", true);
 
 
 }
+
 
 // Applies the given amount of damage to the enemy.
 void Enemy::Damage(int damage)

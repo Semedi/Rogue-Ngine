@@ -20,9 +20,6 @@ public:
 
 private:
 
-	/**
-	 * The amount of health the heart gives.
-	 */
-	int _health;
+	int _health; //The amount of health the heart gives.
 };
 #endif

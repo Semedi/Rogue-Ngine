@@ -30,8 +30,6 @@ _levelWasGenerated(false)
 
 	// Create the level object.
 	_level = Level(*window);
-	
-	Polla();
 
 	// Create the game font.
 	_font.loadFromFile("../resources/fonts/ADDSBP__.TTF");
@@ -44,12 +42,12 @@ _levelWasGenerated(false)
 }
 
 // Initializes the game.
-void Game::Initialize()
+void Game::Init()
 {
 
 	ImGui::SFML::Init(_window);
 
-	_level.AddTile("../resources/tiles/spr_tile_floor_alt.png", TILE::FLOOR_ALT);
+	_level.AddTile("../resources/tiles/floor_alt.png", TILE::FLOOR_ALT);
 
 	// Get the screen size.
 	_screenSize = _window.getSize();
@@ -330,9 +328,9 @@ void Game::PopulateLevel()
 		if (std::rand() % 2)
 			SpawnEnemy(static_cast<ENEMY>(std::rand() % static_cast<int>(ENEMY::COUNT)));
 	}
-
-	
 }
+
+
 
 void Game::GenerateLevel()
 {
@@ -372,12 +370,6 @@ void Game::Run()
 
 
 	sf::Clock clk;
-
-
-
-
-
-
 
 	// Loop until there is a quite message from the window or the user pressed escape.
 	while (_isRunning)
@@ -436,10 +428,6 @@ void Game::Update(float timeDelta, sf::Time dt)
 	case GAME_STATE::PLAYING:
 	{
 
-
-		/*
-	
-		*/
 
 		ImGui::SFML::Update(_window, dt);
 		// First check if the player is at the exit. If so there's no need to update anything.
@@ -779,6 +767,8 @@ void Game::UpdateItems(sf::Vector2f playerPosition)
 	}
 }
 
+
+
 // Updates all enemies in the level.
 void Game::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 {
@@ -984,7 +974,6 @@ void Game::DrawString(std::string text, sf::Vector2f position, unsigned int size
 	_strStream.str(std::string());
 	_string.clear();
 
-
 	/* CONSOLE*/
 	/*
 	sf::RectangleShape rectangle;
@@ -994,8 +983,6 @@ void Game::DrawString(std::string text, sf::Vector2f position, unsigned int size
 	rectangle.setFillColor(sf::Color(0, 0, 0, 100));
 	_window.draw(rectangle);
 	*/
-
-
 
 	_strStream << text;
 	_string = _strStream.str();
@@ -1173,6 +1160,7 @@ void Game::Draw(float timeDelta)
 	
 }
 
+
 //Choose a random, unused spawn location if not overriden.
 void Game::SpawnItem(ITEM itemType, sf::Vector2f position){
 
@@ -1216,6 +1204,8 @@ void Game::SpawnItem(ITEM itemType, sf::Vector2f position){
 
 }
 
+
+
 void Game::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
 {
 	/*Spawn location of enemy*/
@@ -1226,9 +1216,7 @@ void Game::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
 	else
 		spawnLocation = _level.GetRandomSpawnLocation();
 
-
 	/*create the enemy*/
-
 	std::unique_ptr<Enemy> enemy;
 
 	switch (enemyType) {
@@ -1243,6 +1231,7 @@ void Game::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
 		enemy->SetPosition(spawnLocation);
 		_enemies.push_back(std::move(enemy));
 }
+
 
 void Game::SpawnRandomTiles(TILE tileType, int count)
 {
@@ -1259,7 +1248,6 @@ void Game::SpawnRandomTiles(TILE tileType, int count)
 
 		_level.SetTile(columnIndex, rowIndex, tileType);
 	}
-
 }
 
 

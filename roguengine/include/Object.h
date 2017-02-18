@@ -132,46 +132,16 @@ private:
 	void NextFrame();
 
 private:
-	/**
-	 * The animation speed of the image if applicable.
-	 * Value is frames per second.
-	 */
-	int _animationSpeed;
 
-	/**
-	 * Used to determine if the given sprite is animated.
-	 */
-	bool _animated;
-
-	/**
-	 * The total number of frames the sprite has.
-	 */
-	int _nframe;
-
-	/**
-	 * The current frame of the sprite.
-	 */
-	int _currentFrame;
-
-	/**
-	 * The width of each frame of the animated sprite if applicable.
-	 */
-	int _frameWidth;
-
-	/**
-	 * The height of each frame of the animated sprite if applicable.
-	 */
-	int _frameHeight;
-
-	/**
-	 * An aggregate of the time passed between draw calls.
-	 */
-	float _timeDelta;
+	int _animationSpeed; //The animation speed of the image if applicable, Value is frames per second.
+	bool _animated; //Used to determine if the given sprite is animated.
+	int _nframe; //The total number of frames the sprite has.
+	int _currentFrame; //The current frame of the sprite.
+	int _frameWidth; //The width of each frame of the animated sprite if applicable.
+	int _frameHeight; //The height of each frame of the animated sprite if applicable.
+	float _timeDelta; //An aggregate of the time passed between draw calls.
 
 
-	/*
-	* Collection 4 all the components attached to the object
-	*/
-	std::vector<std::shared_ptr<Component>> _components;
+	std::vector<std::shared_ptr<Component>> _components; //Collection 4 all the components attached to the object
 };
 #endif

@@ -16,7 +16,7 @@ int main()
 	Game game(&window);
 
 	// Initialize and run the game object.
-	game.Initialize();
+	game.Init();
 	game.Run();
 
 

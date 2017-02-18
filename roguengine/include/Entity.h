@@ -91,69 +91,23 @@ public:
 	void SetStamina(int staminaValue);
 
 protected:
-	/**
-	 * A vector of all texture IDs.
-	 */
-	int _textureIDs[static_cast<int>(ANIMATION_STATE::COUNT)];
 
-	/**
-	 * The index of the current texture.
-	 */
-	int _currentTextureIndex;
+	int _textureIDs[static_cast<int>(ANIMATION_STATE::COUNT)]; //A vector of all texture IDs.
+	int _currentTextureIndex; //The index of the current texture.
 
-	/**
-	 * The entities current health.
-	 */
-	int _health;
+	int _health; //The entities current health.
+	int _maxHealth; //The entities maximum health.
+	int _mana; //The entities current mana.
+	int _maxMana; //The entities maximum mana.
 
-	/**
-	 * The entities maximum health.
-	 */
-	int _maxHealth;
 
-	/**
-	 * The entities current mana.
-	 */
-	int _mana;
+	int _attack; //The entities attack stat. Effects damage dealt.
+	int _defense; //The entities defense stat. Effects damage taken.
+	int _strength; //The entities strength. Effects damage dealt.
+	int _dexterity; //The entities dexterity. Effects movement speed.
+	int _stamina; //The entities stamina. Effects health.
+	int _speed; //The entities movement speed.
 
-	/**
-	 * The entities maximum mana.
-	 */
-	int _maxMana;
-
-	/**
-	 * The entities attack stat. Effects damage dealt.
-	 */
-	int _attack;
-
-	/**
-	 * The entities defense stat. Effects damage taken.
-	 */
-	int _defense;
-
-	/**
-	 * The entities strength. Effects damage dealt.
-	 */
-	int _strength;
-
-	/**
-	 * The entities dexterity. Effects movement speed.
-	 */
-	int _dexterity;
-
-	/**
-	 * The entities stamina. Effects health.
-	 */
-	int _stamina;
-
-	/**
-	 * The entities movement speed.
-	 */
-	int _speed;
-
-	/**
-	 * The entities current velocity.
-	 */
-	sf::Vector2f _velocity;
+	sf::Vector2f _velocity; //The entities current velocity.
 };
 #endif
