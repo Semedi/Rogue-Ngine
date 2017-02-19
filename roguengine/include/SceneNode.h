@@ -5,6 +5,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics/Drawable.hpp>
+#include <Command.h>
 
 #include <vector>
 #include <memory>
@@ -26,6 +27,9 @@ public:
 
 	sf::Vector2f			getWorldPosition() const;
 	sf::Transform			getWorldTransform() const;
+
+	void					onCommand(const Command& command, sf::Time dt);
+	virtual unsigned int	getCategory() const;
 
 
 private:

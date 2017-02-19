@@ -393,25 +393,16 @@ void Game::Run()
 		currentTime = newTime;
 
 		// Update all items in the level.
-		if (!_levelWasGenerated)
-		{
-			
-			
-			Update(frameTime, dt);
+	
+		Update(frameTime, dt);
 			
 			// Draw all items in the level.
-			Draw(frameTime);
+		Draw(frameTime);
 			
-		}
-		else
-		{
-			_levelWasGenerated = false;
-		}
 	}
 
-
+	//// Shut the game down.
 	ImGui::SFML::Shutdown();
-	// Shut the game down.
 	_window.close();
 }
 

@@ -1,6 +1,19 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+
+namespace Category
+{
+	enum Type
+	{
+		None	= 0,
+		Scene	= 1 << 0,
+		Player	= 1 << 1,
+		Npc		= 1 << 2,
+		Enemy	= 1 << 3
+	};
+}
+
 // Game states.
 enum class GAME_STATE {
 	MAIN_MENU,
@@ -15,6 +28,9 @@ enum class Layer
 	Top,
 	COUNT
 };
+
+
+
 
 //Player traits.
 enum class PLAYER_TRAIT {

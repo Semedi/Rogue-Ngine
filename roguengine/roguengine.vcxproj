@@ -119,6 +119,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio.h" />
+    <ClInclude Include="include\Command.h" />
+    <ClInclude Include="include\CommandQueue.h" />
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\Entity.h" />
