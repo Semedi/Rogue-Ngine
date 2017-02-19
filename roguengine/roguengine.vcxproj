@@ -136,6 +136,7 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Potion.h" />
     <ClInclude Include="include\Projectile.h" />
+    <ClInclude Include="include\SceneNode.h" />
     <ClInclude Include="include\Slime.h" />
     <ClInclude Include="include\SoundBufferManager.h" />
     <ClInclude Include="include\Sprite.h" />
@@ -149,6 +150,7 @@
     <ClCompile Include="include\modules\imgui\imgui.cpp" />
     <ClCompile Include="include\modules\imgui\imgui_draw.cpp" />
     <ClCompile Include="src\Audio.cpp" />
+    <ClCompile Include="src\core\SceneNode.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Game.cpp" />
