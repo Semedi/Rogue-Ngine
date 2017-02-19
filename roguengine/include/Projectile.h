@@ -22,9 +22,7 @@ public:
 	void Update(float timeDelta) override;
 
 private:
-	/**
-	 * The velocity of the projectile.
-	 */
-	sf::Vector2f _velocity;
+
+	sf::Vector2f _velocity; //The velocity of the projectile.
 };
 #endif

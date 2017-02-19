@@ -40,29 +40,11 @@ protected:
 	void SetItemName(std::string name);
 
 public:
-	/**
-	 * The name of the item.
-	 */
-	std::string _name;
 
-	/**
-	 * The type of item.
-	 */
-	ITEM _type;
-
-	/**
-	 * A text object storing the name of the item.
-	 */
-	sf::Text _text;
-
-	/**
-	 * A font object storing the name of the item.
-	 */
-	sf::Font _font;
-
-	/*
-	 * The dimensions of the items name in text.
-	 */
-	sf::Vector2f _textOffset;
+	std::string _name; //The name of the item.
+	ITEM _type; //The type of item.
+	sf::Text _text; //A text object storing the name of the item.
+	sf::Font _font; //A font object storing the name of the item.
+	sf::Vector2f _textOffset; //The dimensions of the items name in text.
 };
 #endif

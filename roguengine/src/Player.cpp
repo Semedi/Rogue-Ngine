@@ -27,8 +27,9 @@ _canTakeDamage(true)
 
 	
 
+	//with SetSprite method we can initizialice important properties of the entity as frames_per_animation or velocity
 	// Set initial sprite.
-	SetSprite(TextureManager::GetTexture(_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	SetSprite(TextureManager::GetTexture(_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 3, 12);
 	_currentTextureIndex = static_cast<int>(ANIMATION_STATE::WALK_UP);
 	_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
 
@@ -335,6 +336,7 @@ std::vector<std::string> Player::BuildPlayer(PLAYER_CLASS c)
 		break;
 	}
 
+	/*
 	paths.push_back("../resources/players/" + name + "/spr_walk_up.png");
 	paths.push_back("../resources/players/" + name + "/spr_walk_down.png");
 	paths.push_back("../resources/players/" + name + "/spr_walk_right.png");
@@ -343,6 +345,16 @@ std::vector<std::string> Player::BuildPlayer(PLAYER_CLASS c)
 	paths.push_back("../resources/players/" + name + "/spr_idle_down.png");
 	paths.push_back("../resources/players/" + name + "/spr_idle_right.png");
 	paths.push_back("../resources/players/" + name + "/spr_idle_left.png");
+	*/
+
+	paths.push_back("../resources/players/mario/player_v_u.png");
+	paths.push_back("../resources/players/mario/player_v_d.png");
+	paths.push_back("../resources/players/mario/player_h_r.png");
+	paths.push_back("../resources/players/mario/player_h_l.png");
+	paths.push_back("../resources/players/mario/player_u.png");
+	paths.push_back("../resources/players/mario/player_d.png");
+	paths.push_back("../resources/players/mario/player_r.png");
+	paths.push_back("../resources/players/mario/player_l.png");
 
 	this->SetRandomTraits();
 

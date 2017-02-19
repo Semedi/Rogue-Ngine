@@ -49,35 +49,12 @@ public:
 
 private:
 
-	/**
-	* The potion type.
-	*/
-	POTION _potionType;
+	POTION _potionType; //The potion type.
 
-
-	/**
-	 * The attack value of the potion.
-	 */
-	int _attack;
-
-	/**
-	 * The defense value of the potion.
-	 */
-	int _defense;
-
-	/**
-	* The strength value of the potion.
-	*/
-	int _strength;
-
-	/**
-	 * The dexterity value of the potion.
-	 */
-	int _dexterity;
-
-	/**
-	 * The stamina value of the potion.
-	 */
-	int _stamina;
+	int _attack; //The attack value of the potion.
+	int _defense; //The defense value of the potion.
+	int _strength; //The strength value of the potion.
+	int _dexterity; //The dexterity value of the potion.
+	int _stamina; //The stamina value of the potion.
 };
 #endif

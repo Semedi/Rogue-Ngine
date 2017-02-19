@@ -14,33 +14,7 @@ _roomNumber(0),
 _doorTileIndices({ 0, 0 })
 {
 	// Load all tiles.
-	AddTile("../resources/tiles/spr_tile_floor.png", TILE::FLOOR);
-
-	AddTile("../resources/tiles/spr_tile_wall_top.png", TILE::WALL_TOP);
-	AddTile("../resources/tiles/spr_tile_wall_top_left.png", TILE::WALL_TOP_LEFT);
-	AddTile("../resources/tiles/spr_tile_wall_top_right.png", TILE::WALL_TOP_RIGHT);
-	AddTile("../resources/tiles/spr_tile_wall_top_t.png", TILE::WALL_TOP_T);
-	AddTile("../resources/tiles/spr_tile_wall_top_end.png", TILE::WALL_TOP_END);
-
-	AddTile("../resources/tiles/spr_tile_wall_bottom_left.png", TILE::WALL_BOTTOM_LEFT);
-	AddTile("../resources/tiles/spr_tile_wall_bottom_right.png", TILE::WALL_BOTTOM_RIGHT);
-	AddTile("../resources/tiles/spr_tile_wall_bottom_t.png", TILE::WALL_BOTTOM_T);
-	AddTile("../resources/tiles/spr_tile_wall_bottom_end.png", TILE::WALL_BOTTOM_END);
-
-	AddTile("../resources/tiles/spr_tile_wall_side.png", TILE::WALL_SIDE);
-	AddTile("../resources/tiles/spr_tile_wall_side_left_t.png", TILE::WALL_SIDE_LEFT_T);
-	AddTile("../resources/tiles/spr_tile_wall_side_left_end.png", TILE::WALL_SIDE_LEFT_END);
-	AddTile("../resources/tiles/spr_tile_wall_side_right_t.png", TILE::WALL_SIDE_RIGHT_T);
-	AddTile("../resources/tiles/spr_tile_wall_side_right_end.png", TILE::WALL_SIDE_RIGHT_END);
-
-	AddTile("../resources/tiles/spr_tile_wall_intersection.png", TILE::WALL_INTERSECTION);
-	AddTile("../resources/tiles/spr_tile_wall_single.png", TILE::WALL_SINGLE);
-
-	AddTile("../resources/tiles/spr_tile_wall_entrance.png", TILE::WALL_ENTRANCE);
-	AddTile("../resources/tiles/spr_tile_door_locked.png", TILE::WALL_DOOR_LOCKED);
-	AddTile("../resources/tiles/spr_tile_door_unlocked.png", TILE::WALL_DOOR_UNLOCKED);
-
-	AddTile("../resources/tiles/crate.png", TILE::CRATE);
+	LoadTiles();
 
 	// Calculate the top left of the grid.
 	_origin.x = (window.getSize().x - (GRID_WIDTH * TILE_SIZE));
@@ -506,6 +480,46 @@ void Level::GenerateEntryExit()
 	// Calculate the spawn location.
 	_spawnLocation = GetActualTileLocation(startI, GRID_HEIGHT - 2);
 
+}
+
+void Level::LoadTiles()
+{
+	//Floor
+	AddTile("../resources/tiles/floor.png", TILE::FLOOR);
+
+	//Top
+	AddTile("../resources/tiles/wall_top_left.png", TILE::WALL_TOP_LEFT);
+	AddTile("../resources/tiles/wall_top_right.png", TILE::WALL_TOP_RIGHT);
+	AddTile("../resources/tiles/wall_top_t.png", TILE::WALL_TOP_T);
+	AddTile("../resources/tiles/wall_top_end.png", TILE::WALL_TOP_END);
+
+	//Bottom
+	AddTile("../resources/tiles/wall_bottom_left.png", TILE::WALL_BOTTOM_LEFT);
+	AddTile("../resources/tiles/wall_bottom_right.png", TILE::WALL_BOTTOM_RIGHT);
+	AddTile("../resources/tiles/wall_bottom_t.png", TILE::WALL_BOTTOM_T);
+	AddTile("../resources/tiles/wall_bottom_end.png", TILE::WALL_BOTTOM_END);
+
+	//Side
+	AddTile("../resources/tiles/wall_side_left_t.png", TILE::WALL_SIDE_LEFT_T);
+	AddTile("../resources/tiles/wall_side_left_end.png", TILE::WALL_SIDE_LEFT_END);
+	AddTile("../resources/tiles/wall_side_right_t.png", TILE::WALL_SIDE_RIGHT_T);
+	AddTile("../resources/tiles/wall_side_right_end.png", TILE::WALL_SIDE_RIGHT_END);
+
+	//Specials
+	AddTile("../resources/tiles/wall_top.png", TILE::WALL_TOP);
+	AddTile("../resources/tiles/wall_side.png", TILE::WALL_SIDE);
+	AddTile("../resources/tiles/wall_intersection.png", TILE::WALL_INTERSECTION);
+	AddTile("../resources/tiles/wall_single.png", TILE::WALL_SINGLE);
+
+
+	/* EXITS */
+	AddTile("../resources/tiles/wall_entrance.png", TILE::WALL_ENTRANCE);
+	AddTile("../resources/tiles/door_locked.png", TILE::WALL_DOOR_LOCKED);
+	AddTile("../resources/tiles/door_unlocked.png", TILE::WALL_DOOR_UNLOCKED);
+
+
+	/* ITEMS*/
+	AddTile("../resources/tiles/crate.png", TILE::CRATE);
 }
 
 void Level::SpawnTorches(int torchCount)
