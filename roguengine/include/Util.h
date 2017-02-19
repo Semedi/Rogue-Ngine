@@ -8,6 +8,14 @@ enum class GAME_STATE {
 	GAME_OVER
 };
 
+enum class Layer
+{
+	Background,
+	Mid,
+	Top,
+	COUNT
+};
+
 //Player traits.
 enum class PLAYER_TRAIT {
 	ATTACK,

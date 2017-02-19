@@ -2,6 +2,7 @@
 #define LEVEL_H
 
 #include <Torch.h>
+#include <Util.h>
 
 // Constants for the game grid size.
 static int const GRID_WIDTH = 19;
