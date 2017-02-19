@@ -1,6 +1,6 @@
 #include <PCH.h>
 #include <Game.h>
-#include <polla/polla.h>
+
 
 // Default constructor.
 Game::Game(sf::RenderWindow* window) :

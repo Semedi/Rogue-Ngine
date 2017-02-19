@@ -23,7 +23,6 @@ set (SRC
 	TextureManager.cpp
 	Torch.cpp
 	Transform.cpp
-	polla/polla.cpp
 	../include/modules/imgui/imgui.cpp
 	../include/modules/imgui/imgui_draw.cpp
 	../include/modules/imgui/imgui-SFML.cpp)

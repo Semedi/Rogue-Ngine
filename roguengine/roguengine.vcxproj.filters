@@ -164,9 +164,6 @@
     <ClCompile Include="src\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\polla\polla.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="include\modules\imgui\imgui_draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
