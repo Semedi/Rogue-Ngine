@@ -2,7 +2,7 @@
 #include <World.h>
 
 
-// Entry point of the application.
+// Entry point of the Engine.
 int main()
 {
 	// Set a random seed.

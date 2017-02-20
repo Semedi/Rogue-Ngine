@@ -16,6 +16,9 @@
     <Filter Include="Source Files\core">
       <UniqueIdentifier>{2380067b-ff1d-4026-ae17-9ab93096761a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\FSM">
+      <UniqueIdentifier>{af491f00-4aa5-4738-a925-eec1bc9497f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio.h">
@@ -100,6 +103,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -187,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="src\core\World.cpp">
       <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

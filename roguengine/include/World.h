@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef WORLD_H
+#define WORLD_H
 
 #include <Player.h>
 #include <Item.h>
