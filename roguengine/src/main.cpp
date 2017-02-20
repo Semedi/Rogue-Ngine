@@ -24,7 +24,7 @@ int main()
 
 	Engine app;
 
-	app.test();
+	app.run();
 
 
 	// Exit the application.

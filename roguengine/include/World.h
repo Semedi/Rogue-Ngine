@@ -35,12 +35,6 @@ public:
 	void Init();
 
 	/**
-	 * The main game loop. This loop in turn updates the game, and draws all objects to screen.
-	 * It's also responsible for the game logic timing.
-	 */
-	void Run();
-
-	/**
 	 * Returns true if the game is currently running.
 	 * @return True if the game is running.
 	 */

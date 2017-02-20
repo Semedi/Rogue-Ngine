@@ -18,12 +18,6 @@ _projectileTextureID(0),
 _levelWasGenerated(false)
 {
 	
-	// Enable VSync.
-	_window.setVerticalSyncEnabled(true);
-	
-	// Hide the mouse cursor.
-	_window.setMouseCursorVisible(false);
-
 	//_window.setSize(_screenSize);
 	// Calculate and store the center of the screen.
 	_screenCenter = { _window.getSize().x / 2.f, _window.getSize().y / 2.f };
@@ -363,50 +357,6 @@ bool World::IsRunning()
 	return _isRunning;
 }
 
-// Main game loop.
-void World::Run()
-{
-	float currentTime = _stepCLK.restart().asSeconds();
-	float timeDelta = 0.f;
-
-
-
-	sf::Clock clk;
-
-	// Loop until there is a quite message from the window or the user pressed escape.
-	while (_isRunning)
-	{
-		sf::Time dt = clk.restart();
-
-		// Check if the game was closed.
-		sf::Event event;
-		if (_window.pollEvent(event))
-		{
-			ImGui::SFML::ProcessEvent(event);
-			if ((event.type == sf::Event::Closed) || (Input::IsKeyPressed(Input::KEY::KEY_ESC)))
-			{
-				_window.close();
-				return;
-			}
-		}
-
-		float newTime = _stepCLK.getElapsedTime().asSeconds();
-		float frameTime = std::max(0.f, newTime - currentTime);
-		currentTime = newTime;
-
-		// Update all items in the level.
-	
-		Update(frameTime, dt);
-			
-			// Draw all items in the level.
-		Draw(frameTime);
-			
-	}
-
-	//// Shut the game down.
-	ImGui::SFML::Shutdown();
-	_window.close();
-}
 
 void World::processInput()
 {

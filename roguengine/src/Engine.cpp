@@ -14,8 +14,19 @@
 const sf::Time Engine::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Engine::Engine()
+	:_window(sf::VideoMode(1.5 * 960, 1.5 * 544, sf::VideoMode::getDesktopMode().bitsPerPixel), "Rogue Ngine", sf::Style::Default)
+	,_world(&_window)
 {
 
+	srand(static_cast<unsigned int>(time(nullptr)));
+	// Enable VSync.
+	_window.setVerticalSyncEnabled(true);
+
+	// Hide the mouse cursor.
+	_window.setMouseCursorVisible(false);
+
+	_world.Init();
+	
 }
 /*
 Engine::Engine()
@@ -43,24 +54,6 @@ Engine::Engine()
 */
 
 
-void Engine::test()
-{
-	// Set a random seed.
-	srand(static_cast<unsigned int>(time(nullptr)));
-
-	// Create the main game object.
-	sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-	sf::RenderWindow window(sf::VideoMode(1.5 * 960, 1.5 * 544, desktop.bitsPerPixel), "Rogue Ngine", sf::Style::Default);
-
-
-	World game(&window);
-
-	// Initialize and run the game object.
-	game.Init();
-	game.Run();
-
-
-}
 void Engine::run()
 {
 	sf::Clock clock;
@@ -82,30 +75,40 @@ void Engine::run()
 			ImGui::SFML::ProcessEvent(event);
 			if ((event.type == sf::Event::Closed) || (Input::IsKeyPressed(Input::KEY::KEY_ESC)))
 			{
+				ImGui::SFML::Shutdown();
 				_window.close();
 				return;
 			}
 		}
 
+		float newTime = _clk.getElapsedTime().asSeconds();
+		float frameTime = std::max(0.f, newTime - currentTime);
+		currentTime = newTime;
+
+		update(dt, frameTime);
+		render(frameTime);
 
 		/*
 		timeSinceLastUpdate += dt;
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
-			timeSinceLastUpdate -= TimePerFrame;
+		timeSinceLastUpdate -= TimePerFrame;
 
-			processInput();
-			update(TimePerFrame);
+		processInput();
+		update(TimePerFrame);
 
-			// Check inside this loop, because stack might be empty before update() call
-			//if (mStateStack.isEmpty())
-				//mWindow.close();
+		// Check inside this loop, because stack might be empty before update() call
+		//if (mStateStack.isEmpty())
+		//mWindow.close();
 		}
 		*/
 		//updateStatistics(dt);
 
-		//render();
 	}
+}
+void Engine::update(sf::Time dt, float frametime)
+{
+	_world.Update(frametime, dt);
 }
 /*
 void Engine::processInput()
@@ -124,9 +127,12 @@ void Engine::update(sf::Time dt)
 {
 	mStateStack.update(dt);
 }
-
-void Engine::render()
+*/
+void Engine::render(float frametime)
 {
+
+	_world.Draw(frametime);
+	/*
 	mWindow.clear();
 
 	mStateStack.draw();
@@ -135,8 +141,9 @@ void Engine::render()
 	mWindow.draw(mStatisticsText);
 
 	mWindow.display();
+	*/
 }
-
+/*
 void Engine::updateStatistics(sf::Time dt)
 {
 	mStatisticsUpdateTime += dt;

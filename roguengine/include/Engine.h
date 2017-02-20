@@ -2,8 +2,6 @@
 #define ENGINE_H
 
 
-#include <TextureManager.h>
-#include <SoundBufferManager.h>
 #include <Player.h>
 #include <World.h>
 //#include <Book/StateStack.hpp>
@@ -18,13 +16,12 @@ class Engine
 public:
 	Engine();
 	void run();
-	void test();
 
 
 private:
 	void processInput();
-	void update(sf::Time dt);
-	void render();
+	void update(sf::Time dt, float frametime);
+	void render(float frametime);
 
 	void updateGui(sf::Time dt);
 	void registerStates();
@@ -43,7 +40,7 @@ private:
 	Player _Player;
 
 	//StateStack				mStateStack;
-
+	World _world;
 	sf::Text _StatisticsText;
 	sf::Time __statisticsUpdateTime;
 	std::size_t	_StatisticsNumFrames;
