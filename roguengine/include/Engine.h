@@ -18,6 +18,7 @@ class Engine
 public:
 	Engine();
 	void run();
+	void test();
 
 
 private:
@@ -27,6 +28,8 @@ private:
 
 	void updateGui(sf::Time dt);
 	void registerStates();
+
+	
 
 
 private:

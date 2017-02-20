@@ -1,10 +1,11 @@
 #include <PCH.h>
-#include <World.h>
+#include <Engine.h>
 
 
 // Entry point of the Engine.
 int main()
 {
+	/*
 	// Set a random seed.
 	srand(static_cast<unsigned int>(time(nullptr)));
 
@@ -18,6 +19,12 @@ int main()
 	// Initialize and run the game object.
 	game.Init();
 	game.Run();
+
+	*/
+
+	Engine app;
+
+	app.test();
 
 
 	// Exit the application.
