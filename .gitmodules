@@ -1,0 +1,3 @@
+[submodule "roguengine/include/modules/RE_imgui-sfml_binds"]
+	path = roguengine/include/modules/RE_imgui-sfml_binds
+	url = https://github.com/Semedi/RE_imgui-sfml_binds.git
