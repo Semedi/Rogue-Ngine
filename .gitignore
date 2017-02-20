@@ -281,3 +281,5 @@ build/
 
 
 imgui.ini
+
+\.vscode/\.cmaketools\.json

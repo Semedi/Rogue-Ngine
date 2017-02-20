@@ -1,5 +1,5 @@
 #include <PCH.h>
-#include <Game.h>
+#include <World.h>
 
 
 // Entry point of the application.
@@ -13,7 +13,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1.5 * 960, 1.5 * 544, desktop.bitsPerPixel), "Rogue Ngine", sf::Style::Default);
 
 
-	Game game(&window);
+	World game(&window);
 
 	// Initialize and run the game object.
 	game.Init();

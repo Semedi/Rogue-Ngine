@@ -19,14 +19,14 @@ static float const MS_PER_STEP = 1.0f / FPS;		// Roughly (0.017) @ 60fps.
 static int const MAX_ITEM_SPAWN_COUNT = 50;
 static int const MAX_ENEMY_SPAWN_COUNT = 20;
 
-class Game
+class World
 {
 public:
 	/**
 	 * Constructor.
 	 * @param window A pointer to the main render window.
 	 */
-	Game(sf::RenderWindow* window);
+	World(sf::RenderWindow* window);
 	
 	/**
 	 * Initializes the game object by initializing all objects the main game uses.
@@ -137,6 +137,8 @@ private:
 
 	/* Generates a lavel goal*/
 	void GenerateLevelGoal();
+
+	void processInput();
 
 private:
 

@@ -124,7 +124,7 @@
     <ClInclude Include="include\Component.h" />
     <ClInclude Include="include\Enemy.h" />
     <ClInclude Include="include\Entity.h" />
-    <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\World.h" />
     <ClInclude Include="include\Gem.h" />
     <ClInclude Include="include\Gold.h" />
     <ClInclude Include="include\Heart.h" />
@@ -153,9 +153,9 @@
     <ClCompile Include="include\modules\imgui\imgui_draw.cpp" />
     <ClCompile Include="src\Audio.cpp" />
     <ClCompile Include="src\core\SceneNode.cpp" />
+    <ClCompile Include="src\core\World.cpp" />
     <ClCompile Include="src\Enemy.cpp" />
     <ClCompile Include="src\Entity.cpp" />
-    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Gem.cpp" />
     <ClCompile Include="src\Gold.cpp" />
     <ClCompile Include="src\Heart.cpp" />

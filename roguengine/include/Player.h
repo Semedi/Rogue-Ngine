@@ -6,9 +6,24 @@
 #include <Level.h>
 #include <Projectile.h>
 #include <Util.h>
+#include <Command.h>
+
+
+class CommandQueue;
 
 class Player : public Entity
 {
+
+public:
+	enum Action
+	{
+		MoveLeft,
+		MoveRight,
+		MoveUp,
+		MoveDown,
+		ActionCount
+	};
+
 public:
 	/**
 	 * Default constructor.
@@ -98,6 +113,15 @@ public:
 
 	void SetRandomTraits();
 
+
+	void handleEvent(const sf::Event& event, CommandQueue& commands);
+
+	void handleRealtimeInput(CommandQueue& commands);
+
+	void assignKey(Action action, sf::Keyboard::Key key);
+
+	sf::Keyboard::Key getAssignedKey(Action action) const;
+
 private:
 
 	/**
@@ -111,10 +135,17 @@ private:
 
 	std::vector<std::string> BuildPlayer(PLAYER_CLASS c);
 
+	void initializeActions();
+
+	static bool isRealtimeAction(Action action);
+
 private:
 
 
-	sf::Sprite _aimSprite; //The sprite for the player's aim cross hair.
+	std::map<sf::Keyboard::Key, Action>		mKeyBinding;
+	std::map<Action, Command>				mActionBinding;
+
+	sf::Sprite	_aimSprite; //The sprite for the player's aim cross hair.
 
 	float _attackDelta; //The time since the player's last attack
 	float _damageDt; //The time since the player last took damage.

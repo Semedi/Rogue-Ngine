@@ -1,9 +1,9 @@
 #include <PCH.h>
-#include <Game.h>
+#include <World.h>
 
 
 // Default constructor.
-Game::Game(sf::RenderWindow* window) :
+World::World(sf::RenderWindow* window) :
 _window(*window),
 _gameState(GAME_STATE::PLAYING),
 _isRunning(true),
@@ -42,7 +42,7 @@ _levelWasGenerated(false)
 }
 
 // Initializes the game.
-void Game::Init()
+void World::Init()
 {
 
 	ImGui::SFML::Init(_window);
@@ -72,6 +72,8 @@ void Game::Init()
 		_projectileTextureID = TextureManager::AddTexture("../resources/projectiles/spr_sword.png");
 		break;
 	}
+
+
 
 	// Initialize the UI.
 	LoadUI();
@@ -115,7 +117,7 @@ void Game::Init()
 }
 
 // Constructs the grid of sprites that are used to draw the game light system.
-void Game::ConstructLightGrid()
+void World::ConstructLightGrid()
 {
 	// Load the light tile texture and store a reference.
 	int textureID = TextureManager::AddTexture("../resources/spr_light_grid.png");
@@ -158,7 +160,7 @@ void Game::ConstructLightGrid()
 }
 
 // Loads and prepares all UI assets.
-void Game::LoadUI()
+void World::LoadUI()
 {
 	// Initialize the player ui texture and sprite.
 	_playerUiSprite = std::make_shared<sf::Sprite>();
@@ -298,7 +300,7 @@ void Game::LoadUI()
 	
 }
 // Plays the given soiund effect, with randomized parameters
-void Game::PlaySound(sf::Sound & sound, sf::Vector2f position)
+void World::PlaySound(sf::Sound & sound, sf::Vector2f position)
 {
 	// Generate and set a random pitch.
 	float pitch = (rand() % 11 + 95) / 100.f;
@@ -312,7 +314,7 @@ void Game::PlaySound(sf::Sound & sound, sf::Vector2f position)
 }
 
 // Populate the level with items.
-void Game::PopulateLevel()
+void World::PopulateLevel()
 {
 
 	int iterations = std::rand() % 10 + 1;
@@ -332,7 +334,7 @@ void Game::PopulateLevel()
 
 
 
-void Game::GenerateLevel()
+void World::GenerateLevel()
 {
 	// Generate a new level.
 	_level.GenerateLevel();
@@ -356,13 +358,13 @@ void Game::GenerateLevel()
 }
 
 // Returns the running state of the game.
-bool Game::IsRunning()
+bool World::IsRunning()
 {
 	return _isRunning;
 }
 
 // Main game loop.
-void Game::Run()
+void World::Run()
 {
 	float currentTime = _stepCLK.restart().asSeconds();
 	float timeDelta = 0.f;
@@ -406,8 +408,21 @@ void Game::Run()
 	_window.close();
 }
 
+void World::processInput()
+{
+	sf::Event event;
+	while (_window.pollEvent(event))
+	{
+		//Player_handleEvents
+
+		if ((event.type == sf::Event::Closed) || (Input::IsKeyPressed(Input::KEY::KEY_ESC)))
+			_window.close();
+		
+	}
+}
+
 // Updates the game.
-void Game::Update(float timeDelta, sf::Time dt)
+void World::Update(float timeDelta, sf::Time dt)
 {
 	// Check what state the game is in.
 	switch (_gameState)
@@ -437,6 +452,8 @@ void Game::Update(float timeDelta, sf::Time dt)
 		}
 		else
 		{
+
+			/* COMMANDQUEUE ACTIVART EVENTOS*/
 			// Update the player.
 			_player.Update(timeDelta, _level);
 
@@ -462,9 +479,9 @@ void Game::Update(float timeDelta, sf::Time dt)
 					_player.SetMana(_player.GetMana() - 2);
 				}
 			}
+			/*******************************************/
 
-
-
+			// UPDATE DEL GRAFO DE LA ESCENA
 			/* UPDATE PART*/
 			// Update all items.
 			UpdateItems(playerPosition);
@@ -585,6 +602,7 @@ void Game::Update(float timeDelta, sf::Time dt)
 			//=============================================================================================================================================================================
 
 			/* LAST INSTRUCTION*/
+			// AdaptPlayerPosition();
 			// Center the view.
 			_views[static_cast<int>(VIEW::MAIN)].setCenter(playerPosition);
 		}
@@ -598,7 +616,7 @@ void Game::Update(float timeDelta, sf::Time dt)
 }
 
 // Updates the level light.
-void Game::UpdateLight(sf::Vector2f playerPosition)
+void World::UpdateLight(sf::Vector2f playerPosition)
 {
 	for (sf::Sprite& sprite : _lightGrid)
 	{
@@ -649,7 +667,7 @@ void Game::UpdateLight(sf::Vector2f playerPosition)
 }
 
 // Updates all items in the level.
-void Game::UpdateItems(sf::Vector2f playerPosition)
+void World::UpdateItems(sf::Vector2f playerPosition)
 {
 	// Update all items.
 	auto itemIterator = _items.begin();
@@ -761,7 +779,7 @@ void Game::UpdateItems(sf::Vector2f playerPosition)
 
 
 // Updates all enemies in the level.
-void Game::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
+void World::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 {
 	// Store player tile.
 	Tile* playerTile = _level.GetTile(_player.GetPosition());
@@ -890,7 +908,7 @@ void Game::UpdateEnemies(sf::Vector2f playerPosition, float timeDelta)
 
 
 // Updates all projectiles in the level.
-void Game::UpdateProjectiles(float timeDelta)
+void World::UpdateProjectiles(float timeDelta)
 {
 	auto projectileIterator = _playerProjectiles.begin();
 	while (projectileIterator != _playerProjectiles.end())
@@ -916,7 +934,7 @@ void Game::UpdateProjectiles(float timeDelta)
 }
 
 // Generates a random level goal
-void Game::GenerateLevelGoal()
+void World::GenerateLevelGoal()
 {
 	std::ostringstream ss;
 
@@ -952,14 +970,15 @@ void Game::GenerateLevelGoal()
 }
 
 
+
 // Calculates the distance between two given points.
-float Game::DistanceBetweenPoints(sf::Vector2f position1, sf::Vector2f position2)
+float World::DistanceBetweenPoints(sf::Vector2f position1, sf::Vector2f position2)
 {
 	return (abs(sqrt(((position1.x - position2.x) * (position1.x - position2.x)) + ((position1.y - position2.y) * (position1.y - position2.y)))));
 }
 
 // Draw the given string at the given position.
-void Game::DrawString(std::string text, sf::Vector2f position, unsigned int size)
+void World::DrawString(std::string text, sf::Vector2f position, unsigned int size)
 {
 	// Clear the old data.
 	_strStream.str(std::string());
@@ -988,7 +1007,7 @@ void Game::DrawString(std::string text, sf::Vector2f position, unsigned int size
 }
 
 // Draw the current game scene.
-void Game::Draw(float timeDelta)
+void World::Draw(float timeDelta)
 {
 	// Clear the screen.
 	_window.clear(sf::Color(3, 3, 3, 225));		// Gray
@@ -1005,6 +1024,7 @@ void Game::Draw(float timeDelta)
 
 		/* DEBUG MODE, commnet setView to get a general view of the map*/
 		// Set the main game view.
+		// mWorld.draw()->setView(NORMAL)
 		_window.setView(_views[static_cast<int>(VIEW::MAIN)]);
 
 
@@ -1031,13 +1051,13 @@ void Game::Draw(float timeDelta)
 		/****************************************************************************************************************************/
 		/****************************************************************************************************************************/
 
-
+		//mWindow.getDefaultView() --> la de la interfaz
+		// Switch to UI view.
+		_window.setView(_views[static_cast<int>(VIEW::UI)]);
 		/* GUI*/
 		/****************************************************************************************************************************/
 		/****************************************************************************************************************************/
-			
-		// Switch to UI view.
-		_window.setView(_views[static_cast<int>(VIEW::UI)]);
+
 		// Draw player aim.
 		_window.draw(_player.GetAimSprite());
 		ImGui::Render();
@@ -1153,7 +1173,7 @@ void Game::Draw(float timeDelta)
 
 
 //Choose a random, unused spawn location if not overriden.
-void Game::SpawnItem(ITEM itemType, sf::Vector2f position){
+void World::SpawnItem(ITEM itemType, sf::Vector2f position){
 
 	std::unique_ptr<Item> item;
 	int oIndex;
@@ -1197,7 +1217,7 @@ void Game::SpawnItem(ITEM itemType, sf::Vector2f position){
 
 
 
-void Game::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
+void World::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
 {
 	/*Spawn location of enemy*/
 	sf::Vector2f spawnLocation;
@@ -1224,7 +1244,7 @@ void Game::SpawnEnemy(ENEMY enemyType, sf::Vector2f position)
 }
 
 
-void Game::SpawnRandomTiles(TILE tileType, int count)
+void World::SpawnRandomTiles(TILE tileType, int count)
 {
 
 	//Loop the number of tiles we need.
