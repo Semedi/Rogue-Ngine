@@ -72,7 +72,7 @@ void Engine::run()
 		{
 			timeSinceLastUpdate -= TimePerFrame;
 			processInput();
-			update(TimePerFrame, TimePerFrame.asSeconds());
+			update(TimePerFrame);
 		}
 
 
@@ -86,9 +86,9 @@ void Engine::run()
 
 
 
-void Engine::update(sf::Time dt, float frametime)
+void Engine::update(sf::Time dt)
 {
-	_world.Update(frametime, dt);
+	_world.Update(dt);
 }
 
 void Engine::processInput()

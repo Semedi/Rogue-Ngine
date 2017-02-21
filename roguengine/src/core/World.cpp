@@ -372,9 +372,10 @@ void World::processInput()
 }
 
 // Updates the game.
-void World::Update(float timeDelta, sf::Time dt)
+void World::Update(sf::Time dt)
 {
 
+	float timeDelta = dt.asSeconds();
 
 	// First check if the player is at the exit. If so there's no need to update anything.
 	Tile& playerTile = *_level.GetTile(_player.GetPosition());

@@ -20,7 +20,7 @@ public:
 
 private:
 	void processInput();
-	void update(sf::Time dt, float frametime);
+	void update(sf::Time dt);
 	void render(float frametime);
 
 	void updateGui(sf::Time dt);
