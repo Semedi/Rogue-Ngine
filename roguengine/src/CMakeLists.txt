@@ -2,8 +2,8 @@
 set (SRC
 	Audio.cpp
 	Enemy.cpp
+	Engine.cpp
 	Entity.cpp
-	Game.cpp
 	Gem.cpp
 	Gold.cpp
 	Heart.cpp
@@ -23,6 +23,8 @@ set (SRC
 	TextureManager.cpp
 	Torch.cpp
 	Transform.cpp
+	core/SceneNode.cpp
+	core/World.cpp
 	../include/modules/imgui/imgui.cpp
 	../include/modules/imgui/imgui_draw.cpp
 	../include/modules/imgui/imgui-SFML.cpp)
