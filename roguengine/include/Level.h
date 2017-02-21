@@ -3,6 +3,7 @@
 
 #include <Torch.h>
 #include <Util.h>
+#include <SpriteNode.h>
 
 // Constants for the game grid size.
 static int const GRID_WIDTH = 19;
@@ -12,10 +13,15 @@ static int const GRID_HEIGHT = 19;
 static int const TILE_SIZE = 50;
 
 // The level tile type.
-struct Tile {
+struct Tile :SpriteNode  {
+	Tile()
+	{
+	}
+public:
 	TILE type;							// The type of tile this is.
 	int columnIndex;					// The column index of the tile.
 	int rowIndex;						// The row index of the tile.
+
 	sf::Sprite sprite;					// The tile sprite.
 	int H;								// Heuristic / movement cost to goal.
 	int G;								// Movement cost. (Total of entire path)

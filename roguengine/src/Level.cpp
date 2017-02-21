@@ -28,10 +28,19 @@ _doorTileIndices({ 0, 0 })
 	{
 		for (int j = 0; j < GRID_HEIGHT; j++)
 		{
+			/*
+			std::unique_ptr<Tile> toStore(new Tile());
+			toStore->columnIndex = i;
+			toStore->rowIndex = j;
+			_grid[i][j] = toStore;
+			*/
+			/*
 			auto cell = &_grid[i][j];
 			cell->columnIndex = i;
 			cell->rowIndex = j;
+			*/
 		}
+
 	}
 
 

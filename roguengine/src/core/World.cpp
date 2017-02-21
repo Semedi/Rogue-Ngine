@@ -343,8 +343,8 @@ void World::GenerateLevel()
 	// Add a key to the level.
 	SpawnItem(ITEM::KEY);
 
-	// Populate the level with items.
-	PopulateLevel();
+	// Populate the level with items and enemies
+	//PopulateLevel();
 
 	// 1 in 3 change of creating a level goal.
 	if (((std::rand() % 3) == 0) && (!_activeGoal))
@@ -354,8 +354,6 @@ void World::GenerateLevel()
 
 	// Moves the player to the start.
 	_player.SetPosition(_level.SpawnLocation());
-	_player.GetComponent<Transform>()->SetPosition(_level.SpawnLocation());
-
 }
 
 // Returns the running state of the game.
