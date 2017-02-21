@@ -59,89 +59,69 @@ void Engine::run()
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-	float currentTime = _clk.restart().asSeconds();
-	float timeDelta = 0.f;
-
 
 	while (_window.isOpen())
 	{
 		sf::Time dt = clock.restart();
-
-
-		// Check if the game was closed.
-		sf::Event event;
-		if (_window.pollEvent(event))
-		{
-			ImGui::SFML::ProcessEvent(event);
-			if ((event.type == sf::Event::Closed) || (Input::IsKeyPressed(Input::KEY::KEY_ESC)))
-			{
-				ImGui::SFML::Shutdown();
-				_window.close();
-				return;
-			}
-		}
-
-		float newTime = _clk.getElapsedTime().asSeconds();
-		float frameTime = std::max(0.f, newTime - currentTime);
-		currentTime = newTime;
-
-		update(dt, frameTime);
-		render(frameTime);
-
-		/*
 		timeSinceLastUpdate += dt;
+
+		ImGui::SFML::Update(_window, dt);
+
+		//Fixed Update:
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
-		timeSinceLastUpdate -= TimePerFrame;
-
-		processInput();
-		update(TimePerFrame);
-
-		// Check inside this loop, because stack might be empty before update() call
-		//if (mStateStack.isEmpty())
-		//mWindow.close();
+			timeSinceLastUpdate -= TimePerFrame;
+			processInput();
+			update(TimePerFrame, TimePerFrame.asSeconds());
 		}
-		*/
-		//updateStatistics(dt);
+
+
+		render(dt.asSeconds());
+
 
 	}
+
+	ImGui::SFML::Shutdown();
 }
+
+
+
 void Engine::update(sf::Time dt, float frametime)
 {
 	_world.Update(frametime, dt);
 }
-/*
+
 void Engine::processInput()
 {
-	sf::Event event;
-	while (mWindow.pollEvent(event))
-	{
-		mStateStack.handleEvent(event);
 
-		if (event.type == sf::Event::Closed)
-			mWindow.close();
+	// Check if the game was closed.
+	sf::Event event;
+	if (_window.pollEvent(event))
+	{
+		ImGui::SFML::ProcessEvent(event);
+		if ((event.type == sf::Event::Closed) || (Input::IsKeyPressed(Input::KEY::KEY_ESC)))
+		{		
+			_window.close();
+			return;
+		}
 	}
+
 }
 
+/*
 void Engine::update(sf::Time dt)
 {
 	mStateStack.update(dt);
 }
 */
 void Engine::render(float frametime)
-{
+{ 
+	_window.clear(); // Clear the screen.
 
 	_world.Draw(frametime);
-	/*
-	mWindow.clear();
 
-	mStateStack.draw();
+	_window.display(); // Present the back-buffer to the screen.
 
-	mWindow.setView(mWindow.getDefaultView());
-	mWindow.draw(mStatisticsText);
-
-	mWindow.display();
-	*/
 }
 /*
 void Engine::updateStatistics(sf::Time dt)

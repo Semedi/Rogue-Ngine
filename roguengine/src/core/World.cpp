@@ -374,196 +374,180 @@ void World::processInput()
 // Updates the game.
 void World::Update(float timeDelta, sf::Time dt)
 {
-	// Check what state the game is in.
-	switch (_gameState)
+
+
+	// First check if the player is at the exit. If so there's no need to update anything.
+	Tile& playerTile = *_level.GetTile(_player.GetPosition());
+	//_posTile& playerTile = *_level.GetTile(_player.transform.GetPosition());
+
+	/* THE PLAYER ENTER IN A NEW AREA*/
+	if (playerTile.type == TILE::WALL_DOOR_UNLOCKED)
 	{
-	case GAME_STATE::MAIN_MENU:
-		// Main menu code ...
-		break;
 
-	case GAME_STATE::PLAYING:
+		//flush and generate random!
+		_items.clear();
+		_enemies.clear();
+		GenerateLevel();
+		_keyUiSprite->setColor(sf::Color(255, 255, 255, 60));
+
+		return;
+	}
+
+	/* COMMANDQUEUE ACTIVART EVENTOS*/
+	// Update the player.
+	_player.Update(timeDelta, _level);
+
+	// Store the player position as it's used many times.
+	sf::Vector2f playerPosition = _player.GetPosition();
+	//_possf::Vector2f playerPosition = _player.GetComponent<Transform>()->GetPosition();
+
+	// move the listener to players location.
+	sf::Listener::setPosition(playerPosition.x, playerPosition.y, 0.f);
+
+
+
+	// If the player is attacking create a projectile.
+	if (_player.IsAttacking())
 	{
-
-
-		ImGui::SFML::Update(_window, dt);
-		// First check if the player is at the exit. If so there's no need to update anything.
-		Tile& playerTile = *_level.GetTile(_player.GetPosition());
-		//_posTile& playerTile = *_level.GetTile(_player.transform.GetPosition());
-
-		/* THE PLAYER ENTER IN A NEW AREA*/
-		if (playerTile.type == TILE::WALL_DOOR_UNLOCKED)
+		if (_player.GetMana() >= 2)
 		{
+			sf::Vector2f target(static_cast<float>(sf::Mouse::getPosition().x), static_cast<float>(sf::Mouse::getPosition().y));
+			std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(TextureManager::GetTexture(_projectileTextureID), playerPosition, _screenCenter, target);
+			_playerProjectiles.push_back(std::move(proj));
 
-			//flush and generate random!
-			_items.clear();
-			_enemies.clear();
-			GenerateLevel();
-			_keyUiSprite->setColor(sf::Color(255, 255, 255, 60));
+			// Reduce player mana.
+			_player.SetMana(_player.GetMana() - 2);
+		}
+	}
+	/*******************************************/
+
+	// UPDATE DEL GRAFO DE LA ESCENA
+	/* UPDATE PART*/
+	// Update all items.
+	UpdateItems(playerPosition);
+
+	// Update level light.
+	UpdateLight(playerPosition);
+
+	// Update all enemies.
+	UpdateEnemies(playerPosition, timeDelta);
+
+	// Update all projectiles.
+	UpdateProjectiles(timeDelta);
+
+	/*********************************************/
+
+
+
+	/*
+	* AMBIANCE =================================================================================
+	*/
+
+	// Find the nearest torch 4 playing de sound
+	auto torches = _level.GetTorches();
+
+	if (!torches->empty())
+	{
+		//Store the closest torch
+		std::shared_ptr<Torch> nearestTorch = torches->front();
+		float lowestDistanceToPlayer = DistanceBetweenPoints(playerPosition, nearestTorch->GetPosition());
+
+		for (std::shared_ptr<Torch> torch : *torches)
+		{
+			//Distance to player
+			float distanceToPlayer = DistanceBetweenPoints(playerPosition, torch->GetPosition());
+			if (distanceToPlayer < lowestDistanceToPlayer)
+			{
+				lowestDistanceToPlayer = distanceToPlayer;
+				nearestTorch = torch;
+			}
+		}
+		_fireSound.setPosition(nearestTorch->GetPosition().x, nearestTorch->GetPosition().y, 0.0f);
+
+	}
+
+	/**                           LLAMAMOS A LA INTELIGENCIA ARTIFICIAL DEL ENEMIGO solo si
+	*********************************************************************************************
+	*********************************************************************************************
+	*/
+	// Check if the player has moved grid square.
+	Tile* playerCurrentTile = _level.GetTile(playerPosition);
+	if (_playerPrevTile != playerCurrentTile)
+	{
+		// Store the new tile.
+		_playerPrevTile = playerCurrentTile;
+
+		// Update path finding for all enemies if within range of the player.
+		for (const auto& enemy : _enemies)
+		{
+			/* vision 4 the enemy? 
+				we check 4 every position the actual distance between player and enemy
+				if is less than 300.f we call pathfinding
+			*/
+			if (DistanceBetweenPoints(enemy->GetPosition(), playerPosition) < 300.f)
+			{
+				enemy->UpdatePathfinding(_level, playerPosition);
+			}
+		}
+	}
+
+	//==========================================================================================
+
+
+	/*
+	*QUEST COMPLETION SYSTEM =========================================================================================================================================================
+	*/
+	// Check if we have completed an active goal.
+	if (_activeGoal)
+	{
+
+
+		if ((_gemGoal <= 0) &&
+			(_goldGoal <= 0) &&
+			(_killGoal <= 0))
+		{
+			_scoreTotal += std::rand() % 1001 + 1000;
+			_activeGoal = false;
 		}
 		else
 		{
 
-			/* COMMANDQUEUE ACTIVART EVENTOS*/
-			// Update the player.
-			_player.Update(timeDelta, _level);
-
-			// Store the player position as it's used many times.
-			sf::Vector2f playerPosition = _player.GetPosition();
-			//_possf::Vector2f playerPosition = _player.GetComponent<Transform>()->GetPosition();
-
-			// move the listener to players location.
-			sf::Listener::setPosition(playerPosition.x, playerPosition.y, 0.f);
 
 
+			std::ostringstream ss;
 
-			// If the player is attacking create a projectile.
-			if (_player.IsAttacking())
+			if (_goldGoal > 0)
 			{
-				if (_player.GetMana() >= 2)
-				{
-					sf::Vector2f target(static_cast<float>(sf::Mouse::getPosition().x), static_cast<float>(sf::Mouse::getPosition().y));
-					std::unique_ptr<Projectile> proj = std::make_unique<Projectile>(TextureManager::GetTexture(_projectileTextureID), playerPosition, _screenCenter, target);
-					_playerProjectiles.push_back(std::move(proj));
-
-					// Reduce player mana.
-					_player.SetMana(_player.GetMana() - 2);
-				}
+				ss << "Current Goal: Collect " << _goldGoal << " gold" << "!" << std::endl;
 			}
-			/*******************************************/
-
-			// UPDATE DEL GRAFO DE LA ESCENA
-			/* UPDATE PART*/
-			// Update all items.
-			UpdateItems(playerPosition);
-
-			// Update level light.
-			UpdateLight(playerPosition);
-
-			// Update all enemies.
-			UpdateEnemies(playerPosition, timeDelta);
-
-			// Update all projectiles.
-			UpdateProjectiles(timeDelta);
-
-			/*********************************************/
-
-
-
-			/*
-			* AMBIANCE =================================================================================
-			*/
-
-			// Find the nearest torch 4 playing de sound
-			auto torches = _level.GetTorches();
-
-			if (!torches->empty())
+			else if (_gemGoal > 0)
 			{
-				//Store the closest torch
-				std::shared_ptr<Torch> nearestTorch = torches->front();
-				float lowestDistanceToPlayer = DistanceBetweenPoints(playerPosition, nearestTorch->GetPosition());
-
-				for (std::shared_ptr<Torch> torch : *torches)
-				{
-					//Distance to player
-					float distanceToPlayer = DistanceBetweenPoints(playerPosition, torch->GetPosition());
-					if (distanceToPlayer < lowestDistanceToPlayer)
-					{
-						lowestDistanceToPlayer = distanceToPlayer;
-						nearestTorch = torch;
-					}
-				}
-				_fireSound.setPosition(nearestTorch->GetPosition().x, nearestTorch->GetPosition().y, 0.0f);
-
+				ss << "Current Goal: Collect " << _gemGoal << " gem" << "!" << std::endl;
 			}
-
-			/**                           LLAMAMOS A LA INTELIGENCIA ARTIFICIAL DEL ENEMIGO solo si
-			*********************************************************************************************
-			*********************************************************************************************
-			*/
-			// Check if the player has moved grid square.
-			Tile* playerCurrentTile = _level.GetTile(playerPosition);
-			if (_playerPrevTile != playerCurrentTile)
+			else if (_killGoal > 0)
 			{
-				// Store the new tile.
-				_playerPrevTile = playerCurrentTile;
-
-				// Update path finding for all enemies if within range of the player.
-				for (const auto& enemy : _enemies)
-				{
-					/* vision 4 the enemy? 
-					   we check 4 every position the actual distance between player and enemy
-					   if is less than 300.f we call pathfinding
-					*/
-					if (DistanceBetweenPoints(enemy->GetPosition(), playerPosition) < 300.f)
-					{
-						enemy->UpdatePathfinding(_level, playerPosition);
-					}
-				}
+				ss << "Current Goal: Kill " << _killGoal << " enemies" << "!" << std::endl;
 			}
+			_goalString = ss.str();
+			/* NEW GUI, DEBUG PURPOSES !*/
+			ImGui::Begin("Bienvenido a Rogue Ngine!");
+			ImGui::Text("Eres un parguelon, hijo puta ha ve si aprendeeeeeeeh");
+			ImGui::Text("y por eso te voy a mandar esta tarea:");
+			ImGui::Text(ss.str().c_str());
+			ImGui::End();
 
-			//==========================================================================================
-
-
-			/*
-			*QUEST COMPLETION SYSTEM =========================================================================================================================================================
-			*/
-			// Check if we have completed an active goal.
-			if (_activeGoal)
-			{
-
-
-				if ((_gemGoal <= 0) &&
-					(_goldGoal <= 0) &&
-					(_killGoal <= 0))
-				{
-					_scoreTotal += std::rand() % 1001 + 1000;
-					_activeGoal = false;
-				}
-				else
-				{
-
-
-
-					std::ostringstream ss;
-
-					if (_goldGoal > 0)
-					{
-						ss << "Current Goal: Collect " << _goldGoal << " gold" << "!" << std::endl;
-					}
-					else if (_gemGoal > 0)
-					{
-						ss << "Current Goal: Collect " << _gemGoal << " gem" << "!" << std::endl;
-					}
-					else if (_killGoal > 0)
-					{
-						ss << "Current Goal: Kill " << _killGoal << " enemies" << "!" << std::endl;
-					}
-					_goalString = ss.str();
-					/* NEW GUI, DEBUG PURPOSES !*/
-					ImGui::Begin("Bienvenido a Rogue Ngine!");
-					ImGui::Text("Eres un parguelon, hijo puta ha ve si aprendeeeeeeeh");
-					ImGui::Text("y por eso te voy a mandar esta tarea:");
-					ImGui::Text(ss.str().c_str());
-					ImGui::End();
-
-				}
-
-			}
-			//=============================================================================================================================================================================
-
-			/* LAST INSTRUCTION*/
-			// AdaptPlayerPosition();
-			// Center the view.
-			_views[static_cast<int>(VIEW::MAIN)].setCenter(playerPosition);
 		}
-	}
-	break;
 
-	case GAME_STATE::GAME_OVER:
-		// Game over code
-		break;
 	}
+	//=============================================================================================================================================================================
+
+	/* LAST INSTRUCTION*/
+	// AdaptPlayerPosition();
+	// Center the view.
+	_views[static_cast<int>(VIEW::MAIN)].setCenter(playerPosition);
 }
+
+
 
 // Updates the level light.
 void World::UpdateLight(sf::Vector2f playerPosition)
@@ -959,19 +943,6 @@ void World::DrawString(std::string text, sf::Vector2f position, unsigned int siz
 // Draw the current game scene.
 void World::Draw(float timeDelta)
 {
-	// Clear the screen.
-	_window.clear(sf::Color(3, 3, 3, 225));		// Gray
-
-	// Check what state the game is in.
-	switch (_gameState)
-	{
-	case GAME_STATE::MAIN_MENU:
-		// Draw main menu ...
-		break;
-
-	case GAME_STATE::PLAYING:
-	{
-
 		/* DEBUG MODE, commnet setView to get a general view of the map*/
 		// Set the main game view.
 		// mWorld.draw()->setView(NORMAL)
@@ -1106,18 +1077,6 @@ void World::Draw(float timeDelta)
 		_manaBarSprite->setTextureRect(sf::IntRect(0, 0, (213.f / _player.GetMaxMana()) * _player.GetMana(), 8));
 		_window.draw(*_manaBarSprite);
 		
-		//
-	}
-	break;
-
-	case GAME_STATE::GAME_OVER:
-		// Draw game over screen ...
-		break;
-	}
-
-	
-	// Present the back-buffer to the screen.
-	_window.display();
 	
 }
 
