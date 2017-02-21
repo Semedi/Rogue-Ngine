@@ -1,6 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+
 #include <Player.h>
 #include <Item.h>
 #include <Level.h>
@@ -11,6 +12,10 @@
 #include <Heart.h>
 #include <Slime.h>
 #include <Humanoid.h>
+#include <SceneNode.h>
+
+#include <array>
+
 
 
 static float const FPS = 60.0;						// Constant for fixed time - step loop. We'll lock it at 60fps.
@@ -133,36 +138,64 @@ private:
 	void GenerateLevelGoal();
 
 	void processInput();
+	void Build();
+
 
 private:
 
-	sf::RenderWindow& _window; //The main application window.
+	enum Layer
+	{
+		Background,
+		Air,
+		Top,
+		LayerCount
+	};
+
+private:
+
+	/* MAIN GRAPHICS*/
+	sf::RenderWindow& _window;						//The main application window.
 	sf::View _views[static_cast<int>(VIEW::COUNT)]; //An array of the different views the game needs.
-	sf::Clock _stepCLK; //Used in the main game time step.
-
-	Tile* _playerPrevTile; //Player's prev tile
-
-	sf::Font _font; //The default font to be used when drawing text.
-
-	GAME_STATE _gameState; //The game state.
+	sf::Clock _stepCLK;								//Used in the main game time step.
+	sf::Vector2u _screenSize;						//The size of the screen and window.
+	sf::Vector2f _screenCenter;						//The center of the screen.
 
 
+	// AUX
+	bool _levelWasGenerated; //A boolean denoting if a new level was generated.
+	bool _isRunning;		//A bool that tracks the running state of the game. It's used in the main loop.
+
+	
 	std::vector<std::unique_ptr<Item>> _items; //A vector that holds all items within the level.
 	std::vector<std::unique_ptr<Enemy>> _enemies; //A vector that holds all the enemies within the level.
 	
+	// new
+	SceneNode _Scene;
+	std::array<SceneNode*, LayerCount> _Layers;
+	
+
+
+	/*GAMEPLAY*/
 	Level _level; //The main level object. All data and functionally regarding the level lives in this class/object.
 	Player _player; //The main player object. Only one instance of this object should be created at any one time.
+	Tile* _playerPrevTile; //Player's prev tile
 
-	std::ostringstream _strStream; //String stream used by the DrawText() function.
-	std::string _string; //String used by the DrawText() function.
 
-	sf::Text _text; //Text used by the DrawText() function.
 
+	//VISUAL EFFECTS
 	std::vector<sf::Sprite> _lightGrid; //A vector containing all sprites that make up the lighting grid.
 
-	sf::Vector2u _screenSize; //The size of the screen and window.
 
-	sf::Vector2f _screenCenter; //The center of the screen.
+	/********************************************************
+	* GUI
+	*********************************************************/
+
+	sf::Font _font;					//The default font to be used when drawing text.
+	std::ostringstream _strStream;	//String stream used by the DrawText() function.
+	std::string _string;			//String used by the DrawText() function.
+	sf::Text _text;					//Text used by the DrawText() function.
+
+
 	int _scoreTotal; //The current game score.
 	int _goldTotal; //The amount of gold that the player currently has.
 
@@ -195,23 +228,20 @@ private:
 	int _projectileTextureID; //The ID of the player's projectile texture.
 
 
-	bool _levelWasGenerated; //A boolean denoting if a new level was generated.
-	bool _isRunning; //A bool that tracks the running state of the game. It's used in the main loop.
 
-
-	std::shared_ptr<sf::Sprite> _healthBarSprite; //Sprite for the health bar.
-	std::shared_ptr<sf::Sprite> _healthBarOutlineSprite; //Sprite for the health bar outline.
-	std::shared_ptr<sf::Sprite> _manaBarSprite; //Sprite for the mana bar.
-	std::shared_ptr<sf::Sprite> _manaBarOutlineSprite; //Sprite for the mana bar outline.
-	std::vector<std::shared_ptr<sf::Sprite>> _uiSprites; //A vector of all ui sprites.
+	std::shared_ptr<sf::Sprite> _healthBarSprite;			//Sprite for the health bar.
+	std::shared_ptr<sf::Sprite> _healthBarOutlineSprite;	//Sprite for the health bar outline.
+	std::shared_ptr<sf::Sprite> _manaBarSprite;				//Sprite for the mana bar.
+	std::shared_ptr<sf::Sprite> _manaBarOutlineSprite;		//Sprite for the mana bar outline.
+	std::vector<std::shared_ptr<sf::Sprite>> _uiSprites;	//A vector of all ui sprites.
 
 	/****************************************************
 	*
 	*    MUSIC PART
 	*****************************************************/
-	sf::Music _music;
-	sf::Sound _fireSound; //Torch sound.
-	sf::Sound _enemyDieSound; //Enemy die sound.
+	sf::Music _music;			//Main Music
+	sf::Sound _fireSound;		//Torch sound.
+	sf::Sound _enemyDieSound;	//Enemy die sound.
 
 
 
@@ -225,6 +255,8 @@ private:
 	sf::String _goalString;
 
 	bool _activeGoal;
+
+
 
 
 

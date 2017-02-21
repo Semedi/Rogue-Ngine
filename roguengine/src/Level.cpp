@@ -287,11 +287,19 @@ void Level::GenerateLevel()
 	CreatePath(1, 1);
 	// Add some rooms to the level to create some open space.
 	CreateRooms(10);
+
 	CalculateTextures();
 
 	_roomNumber++;
 
-	if (_roomNumber == 5)
+	GenerateEntryExit();
+
+	_torches.clear();
+	SpawnTorches(5);
+
+
+	//CAMBIAR EL COLOR SI LLEGAMOS AL NIVEL 2<= to deprecate
+	if (_roomNumber == 2)
 	{
 		_roomNumber = 0;
 		_floorNumber++;
@@ -303,10 +311,6 @@ void Level::GenerateLevel()
 		SetColor(sf::Color(r, g, b, 255));
 	}
 
-	GenerateEntryExit();
-	_torches.clear();
-
-	SpawnTorches(5);
 }
 
 // Checks if a given tile is a wall block.
@@ -329,6 +333,7 @@ void Level::CreatePath(int columnIndex, int rowIndex)
 	//used to rearange randomly swapping each element given first and last
 	std::random_shuffle(std::begin(directions), std::end(directions));
 
+	//we iterate over the random directions(4)
 	for (int i = 0; i < 4; ++i)
 	{
 		int dx = currentTile->columnIndex + directions[i].x;
@@ -486,6 +491,7 @@ void Level::LoadTiles()
 {
 	//Floor
 	AddTile("../resources/tiles/floor.png", TILE::FLOOR);
+	AddTile("../resources/tiles/floor_alt.png", TILE::FLOOR_ALT);
 
 	//Top
 	AddTile("../resources/tiles/wall_top_left.png", TILE::WALL_TOP_LEFT);

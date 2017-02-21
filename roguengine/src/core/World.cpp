@@ -5,7 +5,8 @@
 // Default constructor.
 World::World(sf::RenderWindow* window) :
 _window(*window),
-_gameState(GAME_STATE::PLAYING),
+_Scene(),
+_Layers(),
 _isRunning(true),
 _string(""),
 _playerPrevTile(nullptr),
@@ -41,7 +42,7 @@ void World::Init()
 
 	ImGui::SFML::Init(_window);
 
-	_level.AddTile("../resources/tiles/floor_alt.png", TILE::FLOOR_ALT);
+	
 
 	// Get the screen size.
 	_screenSize = _window.getSize();
@@ -80,11 +81,17 @@ void World::Init()
 	_views[static_cast<int>(VIEW::MAIN)].zoom(0.5f);
 	_views[static_cast<int>(VIEW::UI)] = _window.getDefaultView();
 
+
+
+
+
+
+
+
+
 	// Load the level.
 	//_level.LoadLevelFromFile("../resources/data/level_data.txt");
 	GenerateLevel();
-
-
 	//_player.SetPosition(pos);
 	//SpawnRandomTiles(TILE::FLOOR_ALT, 15);
 	//SpawnRandomTiles(TILE::CRATE, 15);
@@ -368,6 +375,17 @@ void World::processInput()
 		if ((event.type == sf::Event::Closed) || (Input::IsKeyPressed(Input::KEY::KEY_ESC)))
 			_window.close();
 		
+	}
+}
+
+void World::Build()
+{
+	// Initialize the different layers
+	for (std::size_t i = 0; i < LayerCount; ++i)
+	{
+		SceneNode::Ptr layer(new SceneNode());
+		_Layers[i] = layer.get();
+		_Scene.attachChild(std::move(layer));
 	}
 }
 

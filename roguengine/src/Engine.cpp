@@ -1,16 +1,7 @@
 #include <PCH.h>
 #include <Engine.h>
 
-/*
-#include <Book/Utility.hpp>
-#include <Book/State.hpp>
-#include <Book/StateIdentifiers.hpp>
-#include <Book/TitleState.hpp>
-#include <Book/GameState.hpp>
-#include <Book/MenuState.hpp>
-#include <Book/PauseState.hpp>
 
-*/
 const sf::Time Engine::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Engine::Engine()
@@ -18,7 +9,9 @@ Engine::Engine()
 	,_world(&_window)
 {
 
+	//SEED: TIME_BASED
 	srand(static_cast<unsigned int>(time(nullptr)));
+
 	// Enable VSync.
 	_window.setVerticalSyncEnabled(true);
 
@@ -28,31 +21,6 @@ Engine::Engine()
 	_world.Init();
 	
 }
-/*
-Engine::Engine()
-	: mWindow(sf::VideoMode(640, 480), "States", sf::Style::Close)
-	, mTextures()
-	, mFonts()
-	, mPlayer()
-	, mStateStack(State::Context(mWindow, mTextures, mFonts, mPlayer))
-	, mStatisticsText()
-	, mStatisticsUpdateTime()
-	, mStatisticsNumFrames(0)
-{
-	mWindow.setKeyRepeatEnabled(false);
-
-	mFonts.load(Fonts::Main, "Media/Sansation.ttf");
-	mTextures.load(Textures::TitleScreen, "Media/Textures/TitleScreen.png");
-
-	mStatisticsText.setFont(mFonts.get(Fonts::Main));
-	mStatisticsText.setPosition(5.f, 5.f);
-	mStatisticsText.setCharacterSize(10u);
-
-	registerStates();
-	mStateStack.pushState(States::Title);
-}
-*/
-
 
 void Engine::run()
 {
@@ -75,7 +43,7 @@ void Engine::run()
 			update(TimePerFrame);
 		}
 
-
+		//updatear estadisticas
 		render(dt.asSeconds());
 
 
@@ -108,40 +76,15 @@ void Engine::processInput()
 
 }
 
-/*
-void Engine::update(sf::Time dt)
-{
-	mStateStack.update(dt);
-}
-*/
+
 void Engine::render(float frametime)
 { 
 	_window.clear(); // Clear the screen.
 
 	_world.Draw(frametime);
 
+	//set  View
+	//llamar al draw de la gui
 	_window.display(); // Present the back-buffer to the screen.
 
 }
-/*
-void Engine::updateStatistics(sf::Time dt)
-{
-	mStatisticsUpdateTime += dt;
-	mStatisticsNumFrames += 1;
-	if (mStatisticsUpdateTime >= sf::seconds(1.0f))
-	{
-		mStatisticsText.setString("FPS: " + toString(mStatisticsNumFrames));
-
-		mStatisticsUpdateTime -= sf::seconds(1.0f);
-		mStatisticsNumFrames = 0;
-	}
-}
-
-void Engine::registerStates()
-{
-	mStateStack.registerState<TitleState>(States::Title);
-	mStateStack.registerState<MenuState>(States::Menu);
-	mStateStack.registerState<GameState>(States::Game);
-	mStateStack.registerState<PauseState>(States::Pause);
-}
-*/
