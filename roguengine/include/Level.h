@@ -5,6 +5,8 @@
 #include <Util.h>
 #include <SpriteNode.h>
 
+
+
 // Constants for the game grid size.
 static int const GRID_WIDTH = 19;
 static int const GRID_HEIGHT = 19;
@@ -13,11 +15,8 @@ static int const GRID_HEIGHT = 19;
 static int const TILE_SIZE = 50;
 
 // The level tile type.
-struct Tile :SpriteNode  {
-	Tile()
-	{
-	}
-public:
+struct Tile : SpriteNode  {
+
 	TILE type;							// The type of tile this is.
 	int columnIndex;					// The column index of the tile.
 	int rowIndex;						// The row index of the tile.
@@ -27,6 +26,7 @@ public:
 	int G;								// Movement cost. (Total of entire path)
 	int F;								// Estimated cost for full path. (G + H)
 	Tile* parentNode;					// Node to reach this node.
+
 };
 
 class Level
@@ -44,6 +44,7 @@ public:
 	 */
 	Level(sf::RenderWindow& window);
 
+	void init(sf::RenderWindow& window);
 	/**
 	 * Returns true if the given tile index is solid.
 	 * @param columnIndex The tile's column index.

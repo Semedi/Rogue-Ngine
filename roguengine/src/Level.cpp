@@ -13,6 +13,19 @@ _floorNumber(1),
 _roomNumber(0),
 _doorTileIndices({ 0, 0 })
 {
+	init(window);
+
+
+}
+
+void Level::init(sf::RenderWindow& window)
+{
+
+	_origin = { 0, 0 };
+	_floorNumber = 1;
+	_roomNumber = 0;
+	_doorTileIndices = { 0, 0 };
+
 	// Load all tiles.
 	LoadTiles();
 
@@ -34,15 +47,12 @@ _doorTileIndices({ 0, 0 })
 			toStore->rowIndex = j;
 			_grid[i][j] = toStore;
 			*/
-			/*
 			auto cell = &_grid[i][j];
 			cell->columnIndex = i;
 			cell->rowIndex = j;
-			*/
 		}
 
 	}
-
 
 }
 

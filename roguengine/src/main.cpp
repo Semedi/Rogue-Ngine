@@ -7,7 +7,7 @@ int main()
 {
 
 	Engine app;
-	//app.run();
+	app.run();
 
 	// Exit the application.
 	return 0;

@@ -24,7 +24,8 @@ _levelWasGenerated(false)
 	_screenCenter = { _window.getSize().x / 2.f, _window.getSize().y / 2.f };
 
 	// Create the level object.
-	_level = Level(*window);
+	_level.init(*window);
+	//_level = Level(*window);
 
 	// Create the game font.
 	_font.loadFromFile("../resources/fonts/ADDSBP__.TTF");
@@ -354,6 +355,7 @@ void World::GenerateLevel()
 
 	// Moves the player to the start.
 	_player.SetPosition(_level.SpawnLocation());
+
 }
 
 // Returns the running state of the game.
