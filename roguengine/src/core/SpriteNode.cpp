@@ -13,6 +13,26 @@ SpriteNode::SpriteNode(const sf::Texture& texture, const sf::IntRect& textureRec
 {
 }
 
+void SpriteNode::Set(const sf::Texture & texture)
+{
+	_Sprite.setTexture(texture);
+}
+
+void SpriteNode::Set(const sf::IntRect & textureRect)
+{
+	_Sprite.setTextureRect(textureRect);
+}
+
+void SpriteNode::Set(const sf::Color tileColor)
+{
+	_Sprite.setColor(tileColor);
+}
+
+void SpriteNode::Set(float x, float y)
+{
+	_Sprite.setPosition(x, y);
+}
+
 void SpriteNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(_Sprite, states);

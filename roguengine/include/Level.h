@@ -208,6 +208,7 @@ public:
 	*/
 	void ResetNodes();
 
+	std::unique_ptr<SpriteNode> GetTileMap();
 	// Returns spawn location
 	sf::Vector2f SpawnLocation()
 	{
@@ -244,12 +245,15 @@ private:
 	/**/
 	void LoadTiles();
 
+	
+
 private:
 	/**
 	 * A 2D array that describes the level data.
 	 * The type is Tile, which holds a sprite and an index.
 	 */
 	Tile _grid[GRID_WIDTH][GRID_HEIGHT]; 
+	std::unique_ptr<SpriteNode> _tileMap;
 
 	std::vector<sf::Sprite> _tileSprites; //A vector off all the sprites in the level.
 
@@ -269,5 +273,7 @@ private:
 	sf::Vector2i _doorTileIndices; //The indices of the tile containing the levels door.
 	std::vector<std::shared_ptr<Torch>> _torches; //A vector of all tiles in the level.
 	sf::Vector2f _spawnLocation; //The spawn location for the current level
+
+	
 };
 #endif

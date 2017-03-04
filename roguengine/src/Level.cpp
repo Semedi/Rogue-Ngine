@@ -16,11 +16,12 @@ _doorTileIndices({ 0, 0 })
 	init(window);
 
 
+
 }
 
 void Level::init(sf::RenderWindow& window)
 {
-
+	_tileMap = std::unique_ptr<SpriteNode>(new SpriteNode());
 	_origin = { 0, 0 };
 	_floorNumber = 1;
 	_roomNumber = 0;
@@ -41,12 +42,14 @@ void Level::init(sf::RenderWindow& window)
 	{
 		for (int j = 0; j < GRID_HEIGHT; j++)
 		{
+			
 			/*
 			std::unique_ptr<Tile> toStore(new Tile());
 			toStore->columnIndex = i;
 			toStore->rowIndex = j;
-			_grid[i][j] = toStore;
+			&_grid[i][j] = toStore;
 			*/
+
 			auto cell = &_grid[i][j];
 			cell->columnIndex = i;
 			cell->rowIndex = j;
@@ -124,7 +127,11 @@ void Level::SetTile(int columnIndex, int rowIndex, TILE tileType)
 
 	// change that tiles sprite to the new index
 	_grid[columnIndex][rowIndex].type = tileType;
+
+	//to deprecate:
 	_grid[columnIndex][rowIndex].sprite.setTexture(TextureManager::GetTexture(_textureIDs[static_cast<int>(tileType)]));
+	 //new sprite storage:
+	_grid[columnIndex][rowIndex].Set(TextureManager::GetTexture(_textureIDs[static_cast<int>(tileType)]));
 }
 
 // Gets the current floor number.
@@ -157,6 +164,7 @@ void Level::SetColor(sf::Color tileColor)
 		for (int j = 0; j < GRID_HEIGHT; j++)
 		{
 			_grid[i][j].sprite.setColor(tileColor);
+			_grid[i][j].Set(tileColor);
 		}
 	}
 }
@@ -298,9 +306,10 @@ void Level::GenerateLevel()
 			{
 				_grid[i][j].type = TILE::WALL_TOP;
 				_grid[i][j].sprite.setTexture(TextureManager::GetTexture(_textureIDs[static_cast<int>(TILE::WALL_TOP)]));
+				_grid[i][j].Set(TextureManager::GetTexture(_textureIDs[static_cast<int>(TILE::WALL_TOP)]));
 			}
 			_grid[i][j].sprite.setPosition(_origin.x + (TILE_SIZE * i), _origin.y + (TILE_SIZE*j));
-
+			_grid[i][j].Set(_origin.x + (TILE_SIZE * i), _origin.y + (TILE_SIZE*j));
 		}
 	}
 	CreatePath(1, 1);
@@ -463,6 +472,7 @@ void Level::CalculateTextures()
 				// Set the new type.
 				_grid[i][j].type = (TILE)value;
 				_grid[i][j].sprite.setTexture(TextureManager::GetTexture(_textureIDs[value]));
+				_grid[i][j].Set(TextureManager::GetTexture(_textureIDs[value]));
 			}
 		}
 	}
@@ -545,6 +555,11 @@ void Level::LoadTiles()
 
 	/* ITEMS*/
 	AddTile("../resources/tiles/crate.png", TILE::CRATE);
+}
+
+std::unique_ptr<SpriteNode> Level::GetTileMap()
+{
+	return std::move(_tileMap);
 }
 
 void Level::SpawnTorches(int torchCount)

@@ -41,6 +41,7 @@ _levelWasGenerated(false)
 void World::Init()
 {
 
+	
 	ImGui::SFML::Init(_window);
 
 	
@@ -83,16 +84,9 @@ void World::Init()
 	_views[static_cast<int>(VIEW::UI)] = _window.getDefaultView();
 
 
+	
+	Build();
 
-
-
-
-
-
-
-	// Load the level.
-	//_level.LoadLevelFromFile("../resources/data/level_data.txt");
-	GenerateLevel();
 	//_player.SetPosition(pos);
 	//SpawnRandomTiles(TILE::FLOOR_ALT, 15);
 	//SpawnRandomTiles(TILE::CRATE, 15);
@@ -345,7 +339,7 @@ void World::GenerateLevel()
 	SpawnItem(ITEM::KEY);
 
 	// Populate the level with items and enemies
-	//PopulateLevel();
+	PopulateLevel();
 
 	// 1 in 3 change of creating a level goal.
 	if (((std::rand() % 3) == 0) && (!_activeGoal))
@@ -380,6 +374,12 @@ void World::processInput()
 
 void World::Build()
 {
+
+	// Load the level.
+	//_level.LoadLevelFromFile("../resources/data/level_data.txt");
+	GenerateLevel();
+
+
 	// Initialize the different layers
 	for (std::size_t i = 0; i < LayerCount; ++i)
 	{
@@ -387,6 +387,10 @@ void World::Build()
 		_Layers[i] = layer.get();
 		_Scene.attachChild(std::move(layer));
 	}
+	std::unique_ptr<SpriteNode> backgroundSprite = _level.GetTileMap();
+	
+
+
 }
 
 // Updates the game.
