@@ -43,12 +43,15 @@ void Level::init(sf::RenderWindow& window)
 		for (int j = 0; j < GRID_HEIGHT; j++)
 		{
 			
-			/*
+			
+			
 			std::unique_ptr<Tile> toStore(new Tile());
 			toStore->columnIndex = i;
 			toStore->rowIndex = j;
-			&_grid[i][j] = toStore;
-			*/
+
+			__grid[i][j] = toStore.get();
+			_tileMap->attachChild(std::move(toStore));
+
 
 			auto cell = &_grid[i][j];
 			cell->columnIndex = i;

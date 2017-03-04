@@ -32,6 +32,8 @@ struct Tile : SpriteNode  {
 class Level
 {
 public:
+
+	typedef std::unique_ptr<Tile> Ptr;
 	/**
 	 * Default constructor.
 	 */
@@ -253,7 +255,11 @@ private:
 	 * The type is Tile, which holds a sprite and an index.
 	 */
 	Tile _grid[GRID_WIDTH][GRID_HEIGHT]; 
+	
+	Tile* __grid[GRID_HEIGHT][GRID_HEIGHT];
+
 	std::unique_ptr<SpriteNode> _tileMap;
+	
 
 	std::vector<sf::Sprite> _tileSprites; //A vector off all the sprites in the level.
 
