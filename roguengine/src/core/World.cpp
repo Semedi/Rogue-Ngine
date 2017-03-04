@@ -388,6 +388,8 @@ void World::Build()
 		_Scene.attachChild(std::move(layer));
 	}
 	std::unique_ptr<SpriteNode> backgroundSprite = _level.GetTileMap();
+
+	_Layers[Background]->attachChild(std::move(backgroundSprite));
 	
 
 

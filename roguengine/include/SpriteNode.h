@@ -20,6 +20,8 @@ public:
 	void Set(const sf::Color tileColor);
 	void Set(float x, float y);
 
+	sf::Sprite Get();
+
 private:
 	virtual void		drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 

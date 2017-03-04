@@ -253,9 +253,7 @@ private:
 	/**
 	 * A 2D array that describes the level data.
 	 * The type is Tile, which holds a sprite and an index.
-	 */
-	Tile _grid[GRID_WIDTH][GRID_HEIGHT]; 
-	
+	 */	
 	Tile* __grid[GRID_HEIGHT][GRID_HEIGHT];
 
 	std::unique_ptr<SpriteNode> _tileMap;

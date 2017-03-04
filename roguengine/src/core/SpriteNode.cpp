@@ -33,6 +33,11 @@ void SpriteNode::Set(float x, float y)
 	_Sprite.setPosition(x, y);
 }
 
+sf::Sprite SpriteNode::Get()
+{
+	return _Sprite;
+}
+
 void SpriteNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(_Sprite, states);
