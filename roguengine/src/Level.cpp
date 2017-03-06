@@ -294,9 +294,7 @@ void Level::GenerateLevel()
 		{
 			if ((i % 2 != 0) && (j %2 != 0))
 				__grid[i][j]->type = TILE::EMPTY;
-				
-			
-				
+							
 			else
 			{
 				__grid[i][j]->type = TILE::WALL_TOP;

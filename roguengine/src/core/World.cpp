@@ -339,7 +339,7 @@ void World::GenerateLevel()
 	SpawnItem(ITEM::KEY);
 
 	// Populate the level with items and enemies
-	PopulateLevel();
+	//PopulateLevel();
 
 	// 1 in 3 change of creating a level goal.
 	if (((std::rand() % 3) == 0) && (!_activeGoal))
@@ -390,6 +390,8 @@ void World::Build()
 	std::unique_ptr<SpriteNode> backgroundSprite = _level.GetTileMap();
 
 	_Layers[Background]->attachChild(std::move(backgroundSprite));
+	// Populate the level with items and enemies
+	PopulateLevel();
 	
 
 
@@ -978,7 +980,9 @@ void World::Draw(float timeDelta)
 		/****************************************************************************************************************************/
 		/****************************************************************************************************************************/
 		// Draw the level.
-		_level.Draw(_window, timeDelta);
+		//_level.Draw(_window, timeDelta);
+		_window.draw(_Scene);
+		
 
 		// Draw all objects.
 		for (const auto& item : _items)
