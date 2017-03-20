@@ -3,6 +3,9 @@
 
 #include <Torch.h>
 #include <Util.h>
+#include <SpriteNode.h>
+
+
 
 // Constants for the game grid size.
 static int const GRID_WIDTH = 19;
@@ -12,20 +15,24 @@ static int const GRID_HEIGHT = 19;
 static int const TILE_SIZE = 50;
 
 // The level tile type.
-struct Tile {
+struct Tile : SpriteNode  {
+
 	TILE type;							// The type of tile this is.
 	int columnIndex;					// The column index of the tile.
 	int rowIndex;						// The row index of the tile.
-	sf::Sprite sprite;					// The tile sprite.
+
 	int H;								// Heuristic / movement cost to goal.
 	int G;								// Movement cost. (Total of entire path)
 	int F;								// Estimated cost for full path. (G + H)
 	Tile* parentNode;					// Node to reach this node.
+
 };
 
 class Level
 {
 public:
+
+	typedef std::unique_ptr<Tile> Ptr;
 	/**
 	 * Default constructor.
 	 */
@@ -38,6 +45,7 @@ public:
 	 */
 	Level(sf::RenderWindow& window);
 
+	void init(sf::RenderWindow& window);
 	/**
 	 * Returns true if the given tile index is solid.
 	 * @param columnIndex The tile's column index.
@@ -201,6 +209,7 @@ public:
 	*/
 	void ResetNodes();
 
+	std::unique_ptr<SpriteNode> GetTileMap();
 	// Returns spawn location
 	sf::Vector2f SpawnLocation()
 	{
@@ -237,12 +246,17 @@ private:
 	/**/
 	void LoadTiles();
 
+	
+
 private:
 	/**
 	 * A 2D array that describes the level data.
 	 * The type is Tile, which holds a sprite and an index.
-	 */
-	Tile _grid[GRID_WIDTH][GRID_HEIGHT]; 
+	 */	
+	Tile* __grid[GRID_HEIGHT][GRID_HEIGHT];
+
+	std::unique_ptr<SpriteNode> _tileMap;
+	
 
 	std::vector<sf::Sprite> _tileSprites; //A vector off all the sprites in the level.
 
@@ -262,5 +276,7 @@ private:
 	sf::Vector2i _doorTileIndices; //The indices of the tile containing the levels door.
 	std::vector<std::shared_ptr<Torch>> _torches; //A vector of all tiles in the level.
 	sf::Vector2f _spawnLocation; //The spawn location for the current level
+
+	
 };
 #endif

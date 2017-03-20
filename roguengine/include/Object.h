@@ -5,8 +5,9 @@
 #include <Transform.h>
 #include <Audio.h>
 #include <Sprite.h>
+#include <SceneNode.h>
 
-class Object
+class Object : public SceneNode
 {
 public:
 	/**
@@ -114,6 +115,7 @@ public:
 
 protected:
 
+	
 	/**
 	 * The object's sprite.
 	 */
@@ -124,6 +126,25 @@ protected:
 	 */
 	Transform transform;
 
+	virtual void updateCurrent(sf::Time dt) {
+
+		float timeDelta = dt.asSeconds();
+		// check if the sprite is animated
+		if (_animated)
+		{
+			// add the elapsed time since the last draw call to the aggregate
+			_timeDelta += timeDelta;
+
+			// check if the frame should be updated
+			if (_timeDelta >= (1.f / _animationSpeed))
+			{
+				NextFrame();
+				_timeDelta = 0;
+			}
+		}
+	};
+
+
 private:
 
 	/**
@@ -131,17 +152,21 @@ private:
 	 */
 	void NextFrame();
 
-private:
+	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
+	{
+		target.draw(_sprite, states);
+	}
 
-	int _animationSpeed; //The animation speed of the image if applicable, Value is frames per second.
+	
+
+private:
 	bool _animated; //Used to determine if the given sprite is animated.
+	float _timeDelta; //An aggregate of the time passed between draw calls.
+	int _animationSpeed; //The animation speed of the image if applicable, Value is frames per second.
 	int _nframe; //The total number of frames the sprite has.
 	int _currentFrame; //The current frame of the sprite.
 	int _frameWidth; //The width of each frame of the animated sprite if applicable.
 	int _frameHeight; //The height of each frame of the animated sprite if applicable.
-	float _timeDelta; //An aggregate of the time passed between draw calls.
-
-
 	std::vector<std::shared_ptr<Component>> _components; //Collection 4 all the components attached to the object
 };
 #endif

@@ -37,6 +37,7 @@ void SceneNode::update(sf::Time dt)
 void SceneNode::updateCurrent(sf::Time)
 {
 	// Do nothing by default
+	
 }
 
 void SceneNode::updateChildren(sf::Time dt)
@@ -45,6 +46,8 @@ void SceneNode::updateChildren(sf::Time dt)
 		child->update(dt);
 }
 
+//override from drawble, this function make possible to draw the object on the screen passed to a window
+//in our tree structure we want to draw ourselves and then childrens
 void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	// Apply transform of current node

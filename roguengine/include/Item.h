@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <Object.h>
+#include <accesible.h>
 
 class Item : public Object
 {
@@ -33,11 +34,25 @@ public:
 	ITEM GetType() const;
 
 protected:
+
+	bool collision = false;
+
 	/**
 	 * Sets the item name.
 	 * @param name The new item name.
 	 */
 	void SetItemName(std::string name);
+	virtual void updateCurrent(sf::Time dt) {
+
+		Object::updateCurrent(dt);
+		if (accesible::DistanceBetweenPoints(getPosition(), accesible::playerPositiond) < 20.f)
+			collision = true;
+		else
+			collision = false;
+	};
+
+private:
+	
 
 public:
 

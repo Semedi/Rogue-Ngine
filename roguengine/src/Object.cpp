@@ -119,6 +119,8 @@ void Object::Draw(sf::RenderWindow &window, float timeDelta)
 	window.draw(_sprite);
 }
 
+
+
 // Advances the sprite forward a frame.
 void Object::NextFrame()
 {

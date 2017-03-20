@@ -24,3 +24,8 @@ int Gem::GetScoreValue() const
 {
 	return _scoreValue;
 }
+
+void Gem::updateCurrent(sf::Time)
+{
+
+}

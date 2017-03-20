@@ -22,5 +22,8 @@ private:
 	 * The value of this gold pickup.
 	 */
 	int goldValue;
+
+protected:
+	virtual void updateCurrent(sf::Time);
 };
 #endif

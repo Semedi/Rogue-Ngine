@@ -31,9 +31,11 @@ public:
 	void					onCommand(const Command& command, sf::Time dt);
 	virtual unsigned int	getCategory() const;
 
+protected:
+	virtual void			updateCurrent(sf::Time dt);
 
 private:
-	virtual void			updateCurrent(sf::Time dt);
+	
 	void					updateChildren(sf::Time dt);
 
 	virtual void			draw(sf::RenderTarget& target, sf::RenderStates states) const;

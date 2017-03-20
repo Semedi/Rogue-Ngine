@@ -22,5 +22,8 @@ private:
 	 * The value of this gem pickup.
 	 */
 	int _scoreValue;
+
+protected:
+	virtual void updateCurrent(sf::Time);
 };
 #endif

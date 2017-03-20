@@ -31,3 +31,7 @@ int Gold::GetGoldValue() const
 {
 	return this->goldValue;
 }
+
+void Gold::updateCurrent(sf::Time)
+{
+}
