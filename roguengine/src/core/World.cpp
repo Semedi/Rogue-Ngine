@@ -87,10 +87,14 @@ void World::Init()
 	
 	Build();
 
+
+	/***************************/
+	/***************************/
+	/* TO DEPRECATE: */
+
 	//_player.SetPosition(pos);
 	//SpawnRandomTiles(TILE::FLOOR_ALT, 15);
 	//SpawnRandomTiles(TILE::CRATE, 15);
-	//PopulateLevel();
 
 	// Load all game sounds.
 	int soundBufferId;
@@ -312,6 +316,7 @@ void World::PlaySound(sf::Sound & sound, sf::Vector2f position)
 // Populate the level with items.
 void World::PopulateLevel()
 {
+	SpawnItem(ITEM::KEY);
 
 	int iterations = std::rand() % 10 + 1;
 
@@ -334,9 +339,7 @@ void World::GenerateLevel()
 {
 	// Generate a new level.
 	_level.GenerateLevel();
-
-	// Add a key to the level.
-	SpawnItem(ITEM::KEY);
+	
 
 	// Populate the level with items and enemies
 	//PopulateLevel();
@@ -390,6 +393,7 @@ void World::Build()
 	std::unique_ptr<SpriteNode> backgroundSprite = _level.GetTileMap();
 
 	_Layers[Background]->attachChild(std::move(backgroundSprite));
+
 	// Populate the level with items and enemies
 	PopulateLevel();
 	
@@ -402,9 +406,10 @@ void World::Update(sf::Time dt)
 {
 
 	float timeDelta = dt.asSeconds();
-
 	// First check if the player is at the exit. If so there's no need to update anything.
+
 	Tile& playerTile = *_level.GetTile(_player.GetPosition());
+
 	//_posTile& playerTile = *_level.GetTile(_player.transform.GetPosition());
 
 	/* THE PLAYER ENTER IN A NEW AREA*/
@@ -433,6 +438,9 @@ void World::Update(sf::Time dt)
 
 
 
+	/******************************/
+	/*TO DEPRECATE:*/
+	/****************************/
 	// If the player is attacking create a projectile.
 	if (_player.IsAttacking())
 	{
@@ -451,7 +459,10 @@ void World::Update(sf::Time dt)
 	// UPDATE DEL GRAFO DE LA ESCENA
 	/* UPDATE PART*/
 	// Update all items.
+
+	/* LAYER ORDER ?*/
 	UpdateItems(playerPosition);
+	_Scene.update(dt);
 
 	// Update level light.
 	UpdateLight(playerPosition);
@@ -572,6 +583,8 @@ void World::Update(sf::Time dt)
 	// AdaptPlayerPosition();
 	// Center the view.
 	_views[static_cast<int>(VIEW::MAIN)].setCenter(playerPosition);
+
+	//Scene.update()
 }
 
 
@@ -630,7 +643,9 @@ void World::UpdateLight(sf::Vector2f playerPosition)
 // Updates all items in the level.
 void World::UpdateItems(sf::Vector2f playerPosition)
 {
+	
 	// Update all items.
+	/*
 	auto itemIterator = _items.begin();
 	while (itemIterator != _items.end())
 	{
@@ -646,7 +661,7 @@ void World::UpdateItems(sf::Vector2f playerPosition)
 			case ITEM::GOLD:
 			{
 				// Get the amount of gold.
-				Gold gold = dynamic_cast<Gold&>(item);
+				Gold* gold = dynamic_cast<Gold&>(item);
 				int goldvalue = gold.GetGoldValue();
 				// Add to the gold total.
 				_goldTotal += goldvalue;
@@ -735,6 +750,7 @@ void World::UpdateItems(sf::Vector2f playerPosition)
 			++itemIterator;
 		}
 	}
+	*/
 }
 
 
@@ -985,8 +1001,12 @@ void World::Draw(float timeDelta)
 		
 
 		// Draw all objects.
+		/*
 		for (const auto& item : _items)
 			item->Draw(_window, timeDelta);	
+
+			*/
+		_player.Draw(_window, timeDelta);
 		// Draw all enemies.
 		for (const auto& enemy : _enemies)
 			enemy->Draw(_window, timeDelta);
@@ -994,7 +1014,7 @@ void World::Draw(float timeDelta)
 		for (const auto& proj : _playerProjectiles)
 			_window.draw(proj->GetSprite());
 		// Draw the player.
-		_player.Draw(_window, timeDelta);
+		
 		// Draw level light.
 		for (const sf::Sprite& sprite : _lightGrid)
 			_window.draw(sprite);	
@@ -1129,27 +1149,29 @@ void World::SpawnItem(ITEM itemType, sf::Vector2f position){
 
 	switch (itemType) {
 		case ITEM::POTION:
-			item = std::make_unique<Potion>();
+			item = std::unique_ptr<Item>(new Potion());
 			break;
 		case ITEM::GEM:
-			item = std::make_unique<Gem>();
+			item = std::unique_ptr<Item>(new Gem());
 			break;
 		case ITEM::GOLD:
-			item = std::make_unique<Gold>();
+			item = std::unique_ptr<Item>(new Gold());
 			break;
 		case ITEM::KEY:
-			item = std::make_unique<Key>();
+			item = std::unique_ptr<Item>(new Key());
 			break;
 		case ITEM::HEART:
-			item = std::make_unique<Heart>();
+			item = std::unique_ptr<Item>(new Heart());
 			break;
 	}
 
 	//Set the item position.
-	item->SetPosition(spawnLocation);
+	item.get()->setPosition(spawnLocation);
 
+
+	_Layers[Air]->attachChild(std::move(item));
 	//add the item to the list of all items.
-	_items.push_back(std::move(item));
+	//_items.push_back(std::move(item));
 
 }
 

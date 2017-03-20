@@ -20,3 +20,9 @@ int Heart::GetHealth() const
 {
 	return _health;
 }
+
+void Heart::updateCurrent(sf::Time dt)
+{ 
+	Item::updateCurrent(dt);
+}
+

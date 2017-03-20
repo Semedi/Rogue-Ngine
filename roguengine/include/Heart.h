@@ -21,5 +21,8 @@ public:
 private:
 
 	int _health; //The amount of health the heart gives.
+
+protected:
+	virtual void updateCurrent(sf::Time);
 };
 #endif

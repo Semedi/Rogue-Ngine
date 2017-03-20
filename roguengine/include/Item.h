@@ -38,6 +38,13 @@ protected:
 	 * @param name The new item name.
 	 */
 	void SetItemName(std::string name);
+	virtual void updateCurrent(sf::Time dt) {
+
+		Object::updateCurrent(dt);
+	};
+
+private:
+	
 
 public:
 
