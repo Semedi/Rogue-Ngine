@@ -13,7 +13,6 @@
 #include <Slime.h>
 #include <Humanoid.h>
 #include <SceneNode.h>
-
 #include <array>
 
 
@@ -27,6 +26,7 @@ static int const MAX_ENEMY_SPAWN_COUNT = 20;
 class World
 {
 public:
+
 	/**
 	 * Constructor.
 	 * @param window A pointer to the main render window.
@@ -263,3 +263,4 @@ private:
 	
 };
 #endif
+

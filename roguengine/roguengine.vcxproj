@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\accesible.h" />
     <ClInclude Include="include\Audio.h" />
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\CommandQueue.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="include\modules\imgui\imgui-SFML.cpp" />
     <ClCompile Include="include\modules\imgui\imgui.cpp" />
     <ClCompile Include="include\modules\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\accesible.cpp" />
     <ClCompile Include="src\Audio.cpp" />
     <ClCompile Include="src\core\SceneNode.cpp" />
     <ClCompile Include="src\core\SpriteNode.cpp" />

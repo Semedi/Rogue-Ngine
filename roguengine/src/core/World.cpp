@@ -1,6 +1,7 @@
 #include <PCH.h>
 #include <World.h>
 
+#include <accesible.h>
 
 // Default constructor.
 World::World(sf::RenderWindow* window) :
@@ -431,6 +432,9 @@ void World::Update(sf::Time dt)
 
 	// Store the player position as it's used many times.
 	sf::Vector2f playerPosition = _player.GetPosition();
+
+	accesible::playerPositiond = playerPosition;
+
 	//_possf::Vector2f playerPosition = _player.GetComponent<Transform>()->GetPosition();
 
 	// move the listener to players location.
@@ -1167,6 +1171,7 @@ void World::SpawnItem(ITEM itemType, sf::Vector2f position){
 
 	//Set the item position.
 	item.get()->setPosition(spawnLocation);
+	
 
 
 	_Layers[Air]->attachChild(std::move(item));
@@ -1220,5 +1225,6 @@ void World::SpawnRandomTiles(TILE tileType, int count)
 		_level.SetTile(columnIndex, rowIndex, tileType);
 	}
 }
+
 
 

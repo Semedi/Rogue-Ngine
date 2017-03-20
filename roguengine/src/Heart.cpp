@@ -24,5 +24,10 @@ int Heart::GetHealth() const
 void Heart::updateCurrent(sf::Time dt)
 { 
 	Item::updateCurrent(dt);
+
+	if (collision)
+		delete this;
+
+	
 }
 

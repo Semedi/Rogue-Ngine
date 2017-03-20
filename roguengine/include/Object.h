@@ -115,6 +115,7 @@ public:
 
 protected:
 
+	
 	/**
 	 * The object's sprite.
 	 */
