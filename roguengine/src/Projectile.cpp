@@ -1,5 +1,6 @@
 #include <PCH.h>
 #include <Projectile.h>
+#include <cmath>
 
 // Default constructor.
 Projectile::Projectile(sf::Texture& texture, sf::Vector2f origin, sf::Vector2f _screenCenter, sf::Vector2f target)

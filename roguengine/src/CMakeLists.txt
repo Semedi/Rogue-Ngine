@@ -17,12 +17,14 @@ set (SRC
 	Player.cpp
 	Potion.cpp
 	Projectile.cpp
+    accesible.cpp
 	Slime.cpp
 	SoundBufferManager.cpp
 	Sprite.cpp
 	TextureManager.cpp
 	Torch.cpp
 	Transform.cpp
+    core/SpriteNode.cpp
 	core/SceneNode.cpp
 	core/World.cpp
     ../include/modules/RE_imgui-sfml_binds/imgui.cpp
