@@ -1,7 +1,7 @@
 #ifndef ACCESIBLE_H
 #define ACCESIBLE_H
 
-#include <SFML\System\Vector2.hpp>;
+#include <SFML/System/Vector2.hpp>;
 #include <cmath>
 
 class accesible

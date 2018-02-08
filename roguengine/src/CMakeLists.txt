@@ -25,8 +25,8 @@ set (SRC
 	Transform.cpp
 	core/SceneNode.cpp
 	core/World.cpp
-	../include/modules/imgui/imgui.cpp
-	../include/modules/imgui/imgui_draw.cpp
-	../include/modules/imgui/imgui-SFML.cpp)
+    ../include/modules/RE_imgui-sfml_binds/imgui.cpp
+    ../include/modules/RE_imgui-sfml_binds/imgui_draw.cpp
+    ../include/modules/RE_imgui-sfml_binds/imgui-SFML.cpp)
 
 build(roguengine SOURCES ${SRC})

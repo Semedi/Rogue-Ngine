@@ -12,8 +12,8 @@
 #include <SoundBufferManager.h>
 #include <iostream>
 
-#include <modules/imgui/imgui.h>
-#include <modules/imgui/imgui-SFML.h>
+#include <modules/RE_imgui-sfml_binds/imgui.h>
+#include <modules/RE_imgui-sfml_binds/imgui-SFML.h>
 
 // Preprocessor trick to allow nested loops
 #define _PP_CAT_IMPL(a, b) a ## b
